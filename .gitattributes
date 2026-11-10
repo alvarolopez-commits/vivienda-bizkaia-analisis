@@ -5,3 +5,4 @@ sprint-01/_qa/original-hashes.json -text
 sprint-02/atlas/original/** -text
 # Lanzadores de Windows
 *.bat text eol=crlf
+sprint-03/medidas/original/** -text
