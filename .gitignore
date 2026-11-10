@@ -1,0 +1,12 @@
+# Maquetas temporales del brainstorming
+.superpowers/
+
+# Página generada para el artifact (se crea con tools/build_artifact.py)
+prototipo-situacion/dist/
+
+# Sistema y editores
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log

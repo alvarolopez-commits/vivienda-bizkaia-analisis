@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Situación · Vivienda en Bizkaia</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/prototipo.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="salto" href="#main">Saltar al contenido</a>
+
+  <div class="app">
+    <div class="dock-cell">
+      <nav class="dock glass-rail" aria-label="Vistas del análisis" data-nuevo>
+        <a class="dock-logo" href="https://vizcaya-vivienda-analisis.vercel.app/#situacion" title="Vivienda en Bizkaia"><span aria-hidden="true">VB</span><span class="label">Vivienda en Bizkaia</span></a>
+        <ul class="dock-list">
+          <li><a href="#main" aria-current="page"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-globe"/></svg><span class="label">Situación</span></a></li>
+          <li><a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-squares"/></svg><span class="label">Municipios</span></a></li>
+          <li><a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-wallet"/></svg><span class="label">Acceso</span></a></li>
+          <li><a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-lightning"/></svg><span class="label">Medidas</span></a></li>
+          <li><a href="https://vizcaya-vivienda-analisis.vercel.app/#normas"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-ladder"/></svg><span class="label">Normas</span></a></li>
+          <li><a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-database"/></svg><span class="label">Método</span></a></li>
+        </ul>
+        <ul class="dock-list dock-ext">
+          <li><a href="https://vizcaya-vivienda.vercel.app/" rel="noopener"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-trend"/></svg><span class="label">Radar ↗</span></a></li>
+          <li><a href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener"><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-play"/></svg><span class="label">Resumen ↗</span></a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <main id="main" class="main" tabindex="-1">
+      <div class="bar glass-toolbar" data-nuevo>
+        <div class="field-pill">
+          <label for="elige-muni">Municipio</label>
+          <select id="elige-muni"></select>
+        </div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="field-pill">
+          <label for="elige-tipo">Tipo</label>
+          <select id="elige-tipo"></select>
+        </div>
+        <span class="sep" aria-hidden="true"></span>
+        <div class="seg" role="group" aria-label="Vista del mapa" id="vista"></div>
+        <span class="chip bar-fin"><b>Prototipo</b> de diseño · escritorio</span>
+      </div>
+
+      <header class="head">
+        <div>
+          <h1 id="titulo">113 municipios, cinco problemas</h1>
+          <p class="lede">Dónde falla el acceso a la vivienda en Bizkaia, a quién afecta y qué se puede hacer, con datos oficiales.</p>
+        </div>
+        <div class="head-acc">
+          <span class="chip"><b>113</b> municipios</span>
+          <span class="chip">Datos de <b>2024 y 2025</b></span>
+          <a class="btn primary" href="#explorar" id="busca"><span>Busca tu municipio</span><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-arrow"/></svg></a>
+        </div>
+      </header>
+
+      <section class="keybox" aria-label="Los cinco problemas">
+        <div class="kb-grid">
+          <div class="kb-lead" id="kb-lead" aria-live="polite"></div>
+          <div class="kb-duo" id="kb-duo" role="group" aria-label="Elige otro problema"></div>
+        </div>
+        <div class="kb-foot" id="tesis"></div>
+      </section>
+
+      <section class="card atlas" id="explorar" aria-labelledby="explorar-t">
+        <div class="panel-h">
+          <div>
+            <h2 id="explorar-t">Cada municipio, con su dato</h2>
+            <p>Elige un problema y toca un municipio.</p>
+          </div>
+        </div>
+        <div class="atlas-grid">
+          <div class="map-wrap">
+            <div class="mapa" id="mapa" aria-busy="true"><p class="cargando" data-nuevo>Cargando los datos de los 113 municipios…</p></div>
+            <div class="ramp" id="ramp"></div>
+            <p class="mapa-nota" id="mapa-nota"></p>
+          </div>
+          <div class="rank">
+            <div class="ficha" id="ficha" aria-label="Municipio elegido"></div>
+            <div class="rank-h">
+              <h3 id="ranking-t">Los 113 municipios, de más a menos</h3>
+            </div>
+            <ol class="rank-list" id="bandas" aria-labelledby="ranking-t"></ol>
+            <div class="pager">
+              <span id="cuenta"></span>
+              <button type="button" class="btn" id="mas"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tools-sec" aria-labelledby="pestanas-t">
+        <div class="sec-h">
+          <h2 id="pestanas-t">Cada pregunta tiene su pestaña</h2>
+          <p class="lede">Municipios, acceso, medidas y normas, con todos los datos para explorar.</p>
+        </div>
+        <ul class="tools">
+          <li><a class="card tool" href="https://vizcaya-vivienda-analisis.vercel.app/#municipios"><span class="tool-h"><span class="nombre">Municipios</span><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-arrow"/></svg></span><span class="num">113</span><span class="rot">fichas</span><span class="desc">Cada municipio frente a Bizkaia y a los de su tipo, con su plan de medidas.</span></a></li>
+          <li><a class="card tool" href="https://vizcaya-vivienda-analisis.vercel.app/#acceso"><span class="tool-h"><span class="nombre">Acceso</span><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-arrow"/></svg></span><span class="num">10,8 a 16,9</span><span class="rot">años para la entrada</span><span class="desc">Cuánto se tarda en reunir la entrada y cuánto cuesta alquilar, con tus supuestos.</span></a></li>
+          <li><a class="card tool" href="https://vizcaya-vivienda-analisis.vercel.app/#medidas"><span class="tool-h"><span class="nombre">Medidas</span><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-arrow"/></svg></span><span class="num">34</span><span class="rot">medidas comparadas</span><span class="desc">Por evidencia, plazo, coste y quién decide cada una.</span></a></li>
+          <li><a class="card tool" href="https://vizcaya-vivienda-analisis.vercel.app/#normas"><span class="tool-h"><span class="nombre">Normas</span><svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-arrow"/></svg></span><span class="num">4</span><span class="rot">niveles de gobierno</span><span class="desc">Quién decide cada herramienta, del Estado a los ayuntamientos.</span></a></li>
+        </ul>
+      </section>
+
+      <footer class="pie">
+        <p>Prototipo no publicado. Original: <a href="https://vizcaya-vivienda-analisis.vercel.app/">vizcaya-vivienda-analisis.vercel.app</a></p>
+        <p><a href="https://vizcaya-vivienda-resumen.vercel.app/">vizcaya-vivienda-resumen.vercel.app</a> · <a href="https://vizcaya-vivienda.vercel.app/">vizcaya-vivienda.vercel.app</a> · <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método y fuentes</a></p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Abierto con doble clic (file://), el navegador bloquea los módulos y los datos: se explica cómo abrirlo.
+    if (location.protocol === "file:") {
+      const c = document.querySelector(".cargando");
+      if (c) c.textContent = "Así no cargan los datos. Abre el fichero «Abrir prototipo.bat» de esta carpeta.";
+    }
+  </script>
+  <div class="solo-lectores" role="status" aria-live="polite" data-anuncio></div>
+  <div class="tip glass-popover" id="tip" role="presentation" hidden></div>
+</body>
+</html>
