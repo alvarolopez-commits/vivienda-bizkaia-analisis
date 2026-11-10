@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vivienda en Bizkaia · Situación · Living Atlas (prototipo Sprint 02)</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/atlas.css?v=3">
+  <script type="module" src="js/main.js?v=3"></script>
+  <script type="module" src="js/nav.js?v=3"></script>
+</head>
+<body>
+  <a class="salto" href="#atlas">Saltar al contenido</a>
+
+  <!-- Cabecera de Sprint 01 (seis vistas). Solo Situación vive en este prototipo; las demás vistas abren la web publicada. -->
+  <header class="banda">
+    <a class="marca" href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">Vivienda en Bizkaia</a>
+    <nav class="vistas" aria-label="Pestañas">
+      <a href="#situacion" aria-current="page">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <p class="vista-activa">Situación</p>
+    <div class="banda-dcha">
+      <ul class="otros-productos" aria-label="Otros productos">
+        <li class="otro-resumen"><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+      <button type="button" class="menu-boton" id="menu-abrir" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false">Menú</button>
+    </div>
+  </header>
+
+  <dialog id="menu" class="menu" aria-label="Pestañas">
+    <nav class="menu-lista" aria-label="Vistas">
+      <a href="#situacion" aria-current="page">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <section class="menu-otros" aria-labelledby="menu-otros-t">
+      <h2 id="menu-otros-t">Otros productos</h2>
+      <ul>
+        <li><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </section>
+    <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
+  </dialog>
+
+  <main class="atlas" id="atlas" tabindex="-1" aria-busy="true">
+    <!-- Cabecera del explorador: título y subtítulo literales de situacion/mapa-vivo.js; fecha con el patrón de main.js -->
+    <div class="atlas-cab">
+      <div class="atlas-titulo">
+        <h1 id="atlas-t">Cada municipio, con su dato</h1>
+        <p class="sub">Elige un problema y toca un municipio.</p>
+      </div>
+      <div class="problemas" id="problemas" role="group" aria-label="Problema"></div>
+    </div>
+
+    <div class="escenario">
+      <section class="lienzo" aria-labelledby="ind-titulo">
+        <div class="lienzo-cab">
+          <p class="ind-titulo" id="ind-titulo"></p>
+        </div>
+        <div class="mapa-zona">
+          <div class="mapa" id="mapa"><p class="cargando">Cargando los datos de los 113 municipios…</p></div>
+          <div class="herramientas" role="toolbar" aria-label="Vista del mapa" data-propuesta>
+            <button type="button" class="herr" id="alejar" aria-label="Alejar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10"/></svg></button>
+            <button type="button" class="herr" id="acercar" aria-label="Acercar"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M8 3v10"/></svg></button>
+            <button type="button" class="herr herr-texto" id="restablecer">Restablecer</button>
+          </div>
+        </div>
+        <div class="tip" id="tip" hidden></div>
+        <div class="leyenda-bloque" id="leyenda"></div>
+      </section>
+
+      <aside class="panel" aria-label="Municipio elegido y lista">
+        <div class="ficha" id="ficha"></div>
+        <section class="lista" aria-labelledby="lista-t">
+          <div class="lista-cab">
+            <h2 id="lista-t"><span class="suave">Los 113 municipios,</span> de más a menos</h2>
+            <div class="lista-filtros">
+              <label class="buscar" for="buscar">
+                <span class="solo-lectores">Buscar municipio</span>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+                <input id="buscar" type="search" placeholder="Buscar municipio" autocomplete="off" spellcheck="false" data-propuesta>
+              </label>
+              <label class="solo-lectores" for="tipo">Tipo de municipio</label>
+              <select id="tipo"></select>
+            </div>
+          </div>
+          <div class="lista-scroll" id="lista-scroll">
+            <ol class="filas" id="filas" aria-labelledby="lista-t"></ol>
+            <div class="lista-pie">
+              <button type="button" class="btn" id="mas" hidden></button>
+              <details class="sin-dato" id="sin-dato"><summary></summary><ul></ul></details>
+              <p class="nota" id="lista-nota"></p>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <p class="fecha" id="fecha"></p>
+  </main>
+
+  <footer class="pie">
+    <p>Prototipo Sprint 02 (Living Atlas), no publicado. La escena de portada y el mapa 3D siguen en la web original: <a href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">vizcaya-vivienda-analisis.vercel.app</a></p>
+    <p><a href="https://vizcaya-vivienda-resumen.vercel.app/">vizcaya-vivienda-resumen.vercel.app</a> · <a href="https://vizcaya-vivienda.vercel.app/">vizcaya-vivienda.vercel.app</a> · <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método y fuentes</a></p>
+  </footer>
+
+  <p class="proto-tag">Prototipo Sprint 02 · Living Atlas</p>
+  <div class="solo-lectores" role="status" aria-live="polite" data-anuncio></div>
+</body>
+</html>
