@@ -18,6 +18,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["sprint-02/servidor.py"],
       "port": 4177
+    },
+    {
+      "name": "sprint03-medidas",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["sprint-03/servidor.py"],
+      "port": 4178
     }
   ]
 }

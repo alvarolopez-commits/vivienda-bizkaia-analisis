@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Medidas · Explorador (prototipo Sprint 03)</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/medidas.css?v=1">
+  <link rel="stylesheet" href="css/explorador.css?v=5">
+  <script type="module" src="js/main.js?v=4"></script>
+  <script type="module" src="js/nav.js?v=1"></script>
+</head>
+<body>
+  <a class="salto" href="#main">Saltar al contenido</a>
+
+  <!-- Cabecera de Sprint 01 (seis vistas): aquí solo vive Medidas; las demás vistas abren la web publicada. -->
+  <header class="banda">
+    <a class="marca" href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">Vivienda en Bizkaia</a>
+    <nav class="vistas" aria-label="Pestañas">
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="#medidas" aria-current="page">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <p class="vista-activa">Medidas</p>
+    <div class="banda-dcha">
+      <ul class="otros-productos" aria-label="Otros productos">
+        <li class="otro-resumen"><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+      <button type="button" class="menu-boton" id="menu-abrir" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false">Menú</button>
+    </div>
+  </header>
+
+  <dialog id="menu" class="menu" aria-label="Pestañas">
+    <nav class="menu-lista" aria-label="Vistas">
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="#medidas" aria-current="page">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <section class="menu-otros" aria-labelledby="menu-otros-t">
+      <h2 id="menu-otros-t">Otros productos</h2>
+      <ul>
+        <li><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </section>
+    <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
+  </dialog>
+
+  <main class="medidas" id="main" tabindex="-1" aria-busy="true">
+    <header class="vista-cab" id="vista-cab"></header>
+
+    <div class="cabecera-modos" id="cabecera-modos">
+      <nav class="modos" id="modos" aria-label="Qué quieres hacer con las medidas"></nav>
+    </div>
+
+    <div class="shell" data-detalle="cerrado" data-modo="explorar">
+      <aside class="filtros" id="filtros" aria-label="Criterios y pesos"></aside>
+      <div class="escenario" id="escenario">
+        <section id="v-explorar" aria-labelledby="rep-t"></section>
+        <section id="v-entender" hidden aria-label="Entender las medidas"></section>
+        <section id="v-comparar" hidden aria-label="Comparar medidas"></section>
+        <section id="v-ficha" hidden aria-label="Ficha de la medida"></section>
+        <section id="v-alternativas" hidden aria-labelledby="alt-t"></section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bandeja de comparación: visible con 1 a 3 medidas elegidas -->
+  <section class="bandeja" id="bandeja" aria-label="Medidas elegidas para comparar" hidden></section>
+
+  <footer class="pie">
+    <p>Prototipo Sprint 03 (Explorador de Medidas), no publicado. Datos y textos: los de la web original, sin cambios. <a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas">vizcaya-vivienda-analisis.vercel.app</a></p>
+  </footer>
+
+  <p class="proto-tag">Prototipo Sprint 03 · Medidas</p>
+  <div class="solo-lectores" role="status" aria-live="polite" data-anuncio></div>
+</body>
+</html>
