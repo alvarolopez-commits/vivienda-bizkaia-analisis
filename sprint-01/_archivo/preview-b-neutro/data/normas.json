@@ -1,0 +1,173 @@
+{
+ "_nota": "Generado por analysis/exportar_analisis_visual.py desde analysis/normas.py. No editar a mano.",
+ "fecha": "2 de noviembre de 2026",
+ "niveles": [
+  "Estado",
+  "Gobierno Vasco y Parlamento",
+  "Diputación y Juntas Generales",
+  "Ayuntamientos"
+ ],
+ "competencias": [
+  {
+   "instrumento": "Ley 12/2023: derecho a la vivienda",
+   "papeles": {
+    "Estado": "decide",
+    "Gobierno Vasco y Parlamento": "aplica",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Contratos de alquiler: duración y renovación (LAU)",
+   "papeles": {
+    "Estado": "decide"
+   }
+  },
+  {
+   "instrumento": "Plan Estatal de Vivienda y sus ayudas",
+   "papeles": {
+    "Estado": "decide"
+   }
+  },
+  {
+   "instrumento": "Declarar una zona tensionada",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Vivienda protegida: quién accede y a qué precio",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Ayudas al alquiler (Gaztelagun) y Bizigune",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide"
+   }
+  },
+  {
+   "instrumento": "Reservas de vivienda protegida en el suelo nuevo",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Canon de las viviendas deshabitadas",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Viviendas turísticas: registro y requisitos",
+   "papeles": {
+    "Gobierno Vasco y Parlamento": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Dónde se permiten viviendas turísticas",
+   "papeles": {
+    "Ayuntamientos": "decide"
+   }
+  },
+  {
+   "instrumento": "Planeamiento urbanístico y licencias de obra",
+   "papeles": {
+    "Ayuntamientos": "decide",
+    "Gobierno Vasco y Parlamento": "aplica"
+   }
+  },
+  {
+   "instrumento": "IRPF: deducciones por alquiler y compra",
+   "papeles": {
+    "Diputación y Juntas Generales": "decide"
+   }
+  },
+  {
+   "instrumento": "Impuesto de transmisiones patrimoniales",
+   "papeles": {
+    "Diputación y Juntas Generales": "decide"
+   }
+  },
+  {
+   "instrumento": "IBI y su recargo a las viviendas vacías",
+   "papeles": {
+    "Diputación y Juntas Generales": "decide",
+    "Ayuntamientos": "aplica"
+   }
+  },
+  {
+   "instrumento": "Procedimiento de desahucio",
+   "papeles": {
+    "Estado": "decide"
+   }
+  }
+ ],
+ "hitos": [
+  {
+   "fecha": "Junio de 2015",
+   "texto": "Ley 3/2015 de Vivienda del País Vasco",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Mayo de 2023",
+   "texto": "Ley 12/2023 por el derecho a la vivienda",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Mayo de 2025",
+   "texto": "Barakaldo, primera zona tensionada de Bizkaia",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Mayo de 2025",
+   "texto": "Plan Director de Vivienda 2025-2027 del Gobierno Vasco",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Julio de 2025",
+   "texto": "Galdakao (distrito de Aperribai), zona tensionada",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Octubre de 2025",
+   "texto": "Bilbao, zona tensionada",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Abril de 2026",
+   "texto": "Plan Estatal de Vivienda 2026-2030 (Real Decreto 326/2026)",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Mayo de 2026",
+   "texto": "Plan Integral de Acceso a la Vivienda (decreto de medidas urgentes)",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Julio de 2026",
+   "texto": "Basauri, zona tensionada",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Agosto de 2026",
+   "texto": "Sopela y Urduliz: orden publicada en el BOPV, falta el BOE",
+   "estado": "pendiente"
+  },
+  {
+   "fecha": "Octubre de 2026",
+   "texto": "El Congreso no convalida los decretos-ley 26 y 27/2026",
+   "estado": "vigor"
+  },
+  {
+   "fecha": "Octubre de 2026",
+   "texto": "Decretos-ley 28 y 29/2026: pendientes de convalidar",
+   "estado": "pendiente"
+  }
+ ]
+}

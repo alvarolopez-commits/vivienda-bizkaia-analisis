@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vivienda en Bizkaia · Análisis · Sprint 01 · Opción B</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="css/b.css?v=3">
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/b-nav.js"></script>
+</head>
+<body>
+  <a class="salto" href="#main">Saltar al contenido</a>
+
+  <header class="banda">
+    <a class="marca" href="https://vizcaya-vivienda-analisis.vercel.app/#situacion">Vivienda en Bizkaia</a>
+    <nav class="vistas" aria-label="Pestañas">
+      <a href="#main" aria-current="page">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <p class="vista-activa" data-nuevo>Situación</p>
+    <div class="banda-dcha">
+      <ul class="otros-productos" aria-label="Otros productos" data-nuevo>
+        <li class="otro-resumen"><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+      <button type="button" class="menu-boton" id="menu-abrir" aria-haspopup="dialog" aria-controls="menu">Menú</button>
+    </div>
+  </header>
+
+  <dialog id="menu" class="menu" aria-label="Pestañas">
+    <nav class="menu-lista" aria-label="Vistas">
+      <a href="#main" aria-current="page">Situación</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios">Municipios</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso">Acceso</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#medidas">Medidas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas">Normas</a>
+      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método</a>
+    </nav>
+    <section class="menu-otros" aria-labelledby="menu-otros-t" data-nuevo>
+      <h2 id="menu-otros-t">Otros productos</h2>
+      <ul>
+        <li><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </section>
+    <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
+  </dialog>
+
+  <main id="main" tabindex="-1">
+    <section class="intro" aria-labelledby="titulo">
+      <div>
+        <h1 id="titulo">113 municipios, cinco problemas</h1>
+        <p class="entradilla">Dónde falla el acceso a la vivienda en Bizkaia, a quién afecta y qué se puede hacer, con datos oficiales.</p>
+        <a class="btn primary" href="#explorar" id="busca"><span>Busca tu municipio</span> <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="tesis" id="tesis"></div>
+    </section>
+
+    <section class="explorar" id="explorar" aria-labelledby="explorar-t">
+      <div class="cab">
+        <h2 id="explorar-t">Cada municipio, con su dato</h2>
+        <p class="sub">Elige un problema y toca un municipio.</p>
+      </div>
+      <div class="barra" data-nuevo>
+        <div class="campo"><label for="elige-muni">Municipio</label><select id="elige-muni"></select></div>
+        <div class="campo"><label for="elige-tipo">Tipo de municipio</label><select id="elige-tipo"></select></div>
+        <div class="seg" role="group" aria-label="Vista del mapa" id="vista"></div>
+      </div>
+      <div class="marco">
+        <div class="col-main">
+          <div class="problemas" aria-label="Los cinco problemas">
+            <div class="kb-lead" id="kb-lead" aria-live="polite"></div>
+            <div class="kb-duo" id="kb-duo" role="group" aria-label="Elige otro problema"></div>
+          </div>
+          <div class="mapa-bloque">
+            <div class="mapa" id="mapa" aria-busy="true"><p class="cargando">Cargando los datos de los 113 municipios…</p></div>
+            <div class="ramp" id="ramp"></div>
+            <p class="mapa-nota" id="mapa-nota"></p>
+          </div>
+        </div>
+        <div class="col-side">
+          <div class="ficha" id="ficha" aria-label="Municipio elegido"></div>
+          <div class="lista">
+            <h3 id="ranking-t">Los 113 municipios, de más a menos</h3>
+            <ol class="rank-list" id="bandas" aria-labelledby="ranking-t"></ol>
+            <div class="pager"><span id="cuenta"></span><button type="button" class="btn" id="mas"></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo" aria-label="Componente de demostración">
+      <p class="demo-etiqueta">DEMOSTRACIÓN · NO ES EL COMPONENTE ORIGINAL</p>
+      <h2>Siete tipos de municipio</h2>
+      <p>Bloque original: <code>js/situacion/hoja.js</code> (siete mapas pequeños, siluetas y cuatro fotos con crédito). No está incluido en este prototipo.</p>
+    </section>
+
+    <section class="herramientas-sec" aria-labelledby="pestanas-t">
+      <div class="cab">
+        <h2 id="pestanas-t">Cada pregunta tiene su pestaña</h2>
+        <p class="sub">Municipios, acceso, medidas y normas, con todos los datos para explorar.</p>
+      </div>
+      <ul class="herramientas" id="herramientas"></ul>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Prototipo Sprint 01, no publicado. Original: <a href="https://vizcaya-vivienda-analisis.vercel.app/">vizcaya-vivienda-analisis.vercel.app</a></p>
+    <p><a href="https://vizcaya-vivienda-resumen.vercel.app/">vizcaya-vivienda-resumen.vercel.app</a> · <a href="https://vizcaya-vivienda.vercel.app/">vizcaya-vivienda.vercel.app</a> · <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo">Método y fuentes</a></p>
+  </footer>
+
+  <p class="proto-tag" data-nuevo>Prototipo Sprint 01 · Opción B</p>
+  <div class="solo-lectores" role="status" aria-live="polite" data-anuncio></div>
+  <div class="tip" id="tip" role="presentation" hidden></div>
+</body>
+</html>

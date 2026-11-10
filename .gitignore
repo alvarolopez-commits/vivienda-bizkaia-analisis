@@ -10,3 +10,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.log
+
+# Sprint 01: copia íntegra de lo que sirve la web publicada, solo para comparar (los sha256 están en sprint-01/_qa/original-hashes.json)
+sprint-01/_original-servido/

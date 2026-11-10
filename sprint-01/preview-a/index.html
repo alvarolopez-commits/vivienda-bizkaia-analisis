@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vivienda en Bizkaia · Análisis</title>
+<meta name="description" content="El acceso a la vivienda en los 113 municipios de Bizkaia: dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.">
+<script src="js/js-on.js"></script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="vendor/taste/base.css">
+<link rel="stylesheet" href="vendor/taste/stage.css">
+<link rel="stylesheet" href="css/marco.css">
+<link rel="stylesheet" href="css/situacion.css">
+<link rel="stylesheet" href="css/vistas.css">
+<link rel="stylesheet" href="css/sprint01.css?v=4">
+</head>
+<body data-entrance="focus">
+<a class="saltar sr-only" href="#main">Saltar al contenido</a>
+
+<header class="banda" data-banda>
+  <a class="marca" href="#situacion" data-wordmark>Vivienda en Bizkaia</a>
+  <nav class="capitulos" aria-label="Pestañas">
+    <a href="#situacion" data-view="situacion">Situación</a><a href="#municipios" data-view="municipios">Municipios</a><a href="#acceso" data-view="acceso">Acceso</a><a href="#medidas" data-view="medidas">Medidas</a><a href="#normas" data-view="normas">Normas</a><a href="#metodo" data-view="metodo">Método</a>
+  </nav>
+  <p class="vista-activa" data-nuevo><span data-vista-activa>Situación</span></p>
+  <p class="capitulo-vivo" aria-hidden="true"><span data-capitulo>Situación</span></p>
+  <div class="banda-dcha">
+    <ul class="otros-productos" aria-label="Otros productos" data-nuevo>
+      <li class="otro-resumen"><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+      <li><a class="pildora pildora-banda" href="https://vizcaya-vivienda.vercel.app/" rel="noopener"><span class="rotulo"><span data-t="Ver el radar">Ver el radar</span></span><span class="chip" aria-hidden="true">↗</span></a></li>
+    </ul>
+    <button type="button" class="menu-boton" data-abre="menu">Menú</button>
+  </div>
+</header>
+<nav class="sub-situacion" id="sub-situacion" aria-label="En Situación" data-nuevo hidden>
+  <ul>
+    <li><button type="button" data-ir="mapa" aria-disabled="true">Mapa</button></li>
+    <li><button type="button" data-ir="lista" aria-disabled="true">Lista de municipios</button></li>
+    <li><button type="button" data-ir="tipos" aria-disabled="true">Tipos de municipio</button></li>
+    <li><button type="button" data-ir="pestanas" aria-disabled="true">Otras herramientas</button></li>
+  </ul>
+</nav>
+
+<main id="main" tabindex="-1">
+  <div id="view-situacion" class="view" data-vista="situacion">
+    <section class="scene hero" id="portada" data-escena="territorio" data-hero aria-labelledby="titulo">
+      <div class="scene-stage">
+        <div class="hero-pantalla">
+          <div class="bloques" aria-hidden="true"><div class="bloque b1"></div><div class="bloque b2"></div><div class="bloque b3"></div><div class="terr-map" data-map></div></div>
+          <div class="titular">
+            <div class="capa c1">
+              <h1 id="titulo" data-e="headline">113 municipios, <span class="linea">cinco problemas</span></h1>
+              <div class="hero-pie">
+                <p class="lead" data-e="lead">Dónde falla el acceso a la vivienda en Bizkaia, a quién afecta y qué se puede hacer, con datos oficiales.</p>
+                <p data-e="action"><a class="pildora primaria" href="#municipios"><span class="rotulo"><span data-t="Busca tu municipio">Busca tu municipio</span></span><span class="chip" aria-hidden="true">→</span></a></p>
+              </div>
+            </div>
+            <div class="capa c3" aria-hidden="true">
+              <p class="h1-copia" data-e="headline">113 municipios, <span class="linea">cinco problemas</span></p>
+              <div class="hero-pie"><p class="lead">Dónde falla el acceso a la vivienda en Bizkaia, a quién afecta y qué se puede hacer, con datos oficiales.</p><p><span class="pildora">Busca tu municipio</span></p></div>
+            </div>
+          </div>
+          <div class="terr-labels" aria-hidden="true"><span data-l="bilbao"></span></div>
+        </div>
+        <div class="pasos-terr" data-pasos></div>
+      </div>
+    </section>
+    <div data-situacion></div>
+  </div>
+  <div id="view-municipios" class="view" data-vista="municipios" hidden><header class="vista-cab"><h1>Cada municipio, frente a Bizkaia</h1></header></div>
+  <div id="view-acceso" class="view" data-vista="acceso" hidden><header class="vista-cab"><h1>Alquilar y comprar en Bizkaia</h1></header></div>
+  <div id="view-medidas" class="view" data-vista="medidas" hidden><header class="vista-cab"><h1>Las medidas, con los mismos criterios</h1></header></div>
+  <div id="view-normas" class="view" data-vista="normas" hidden><header class="vista-cab"><h1>Del Estado al ayuntamiento</h1></header></div>
+  <div id="view-metodo" class="view" data-vista="metodo" hidden><header class="vista-cab"><h1>Cómo se ha hecho</h1></header></div>
+  <p class="cargando" id="loading">Cargando datos…</p>
+</main>
+
+<footer class="pie">
+  <div class="pie-cartas">
+    <section class="pie-carta" aria-labelledby="pie-1">
+      <h2 id="pie-1">Bizkaia, sus 113 municipios</h2>
+      <p>El análisis del acceso a la vivienda que sigue el radar: alquiler, compra, viviendas turísticas, vacías y medidas.</p>
+      <p class="dir"><a href="https://vizcaya-vivienda-resumen.vercel.app/">vizcaya-vivienda-resumen.vercel.app</a> <button type="button" class="copiar" data-copia="https://vizcaya-vivienda-resumen.vercel.app/" aria-label="Copiar la dirección del resumen">Copiar</button></p>
+    </section>
+    <section class="pie-carta" aria-labelledby="pie-2">
+      <h2 id="pie-2">El radar</h2>
+      <p>Sigue cada mes los indicadores y las medidas de este análisis.</p>
+      <p class="dir"><a href="https://vizcaya-vivienda.vercel.app/">vizcaya-vivienda.vercel.app</a> <button type="button" class="copiar" data-copia="https://vizcaya-vivienda.vercel.app/" aria-label="Copiar la dirección del radar">Copiar</button></p>
+    </section>
+    <section class="pie-carta" aria-labelledby="pie-3">
+      <h2 id="pie-3">Los datos</h2>
+      <p data-fecha-datos>Datos oficiales y agregados: ninguna cifra identifica a una persona.</p>
+      <p><a href="#metodo">Método y fuentes</a></p>
+    </section>
+  </div>
+  <div class="pie-abajo">
+    <span>© 2026 Vivienda en Bizkaia</span>
+    <button type="button" class="enlace" data-abre="creditos">Créditos de las imágenes</button>
+  </div>
+</footer>
+
+<p class="proto-tag" data-nuevo>Prototipo Sprint 01 · Opción A</p>
+<p class="sr-only" role="status" data-anuncio></p>
+
+<dialog id="menu" class="menu" aria-label="Pestañas" data-lenis-prevent>
+  <nav class="menu-lista"><a href="#situacion">Situación</a><a href="#municipios">Municipios</a><a href="#acceso">Acceso</a><a href="#medidas">Medidas</a><a href="#normas">Normas</a><a href="#metodo">Método</a></nav>
+  <section class="menu-otros" aria-labelledby="menu-otros-t" data-nuevo>
+    <h2 id="menu-otros-t">Otros productos</h2>
+    <ul>
+      <li><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
+      <li><a class="pildora primaria" href="https://vizcaya-vivienda.vercel.app/" rel="noopener"><span class="rotulo"><span data-t="Ver el radar">Ver el radar</span></span><span class="chip" aria-hidden="true">↗</span></a></li>
+    </ul>
+  </section>
+  <form method="dialog"><button class="pildora"><span class="rotulo"><span data-t="Cerrar">Cerrar</span></span><span class="chip" aria-hidden="true">×</span></button></form>
+</dialog>
+<dialog id="creditos" aria-labelledby="creditos-t" data-lenis-prevent>
+  <h2 id="creditos-t">Créditos de las imágenes</h2>
+  <ul data-creditos></ul>
+  <p>Fotos de Wikimedia Commons, con licencia abierta. Las recortadas se publican con la misma licencia que el original. Los mapas se dibujan con los límites municipales de GeoEuskadi.</p>
+  <form method="dialog"><button class="pildora"><span class="rotulo"><span data-t="Cerrar">Cerrar</span></span><span class="chip" aria-hidden="true">×</span></button></form>
+</dialog>
+
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="vendor/gsap/SplitText.min.js"></script>
+<script src="vendor/lenis/lenis.min.js"></script>
+<script src="vendor/taste/stage.js"></script>
+<script src="vendor/taste/base.js"></script>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/sprint01.js?v=7"></script>
+</body>
+</html>
