@@ -1,4 +1,4 @@
-// Aplicación integrada · Sprint 03.1. Un marco, un almacén de datos y un router.
+// Aplicación integrada. Un marco, un almacén de datos y un router.
 //
 //   #situacion[/indicador[/INE]]   → Living Atlas (Sprint 02)
 //   #medidas[...]                  → Explorador de Medidas (Sprint 03), con todas sus rutas y su contexto en la query
@@ -22,7 +22,7 @@ const raiz = document.getElementById("vista");
 const hoja = (id) => document.getElementById(id);
 const HOJAS = { situacion: [hoja("css-situacion")], medidas: [hoja("css-medidas"), hoja("css-medidas-diseno")], municipios: [hoja("css-municipios")], acceso: [hoja("css-acceso")], normas: [hoja("css-normas")], metodo: [hoja("css-metodo")] };
 const NOMBRES = { situacion: "Situación", municipios: "Municipios", acceso: "Acceso", medidas: "Medidas", normas: "Normas", metodo: "Método" };
-const TITULOS = Object.fromEntries(Object.entries(NOMBRES).map(([k, v]) => [k, k === "situacion" ? "Vivienda en Bizkaia · Análisis (prototipo integrado)" : `${v} · Vivienda en Bizkaia (prototipo integrado)`]));
+const TITULOS = Object.fromEntries(Object.entries(NOMBRES).map(([k, v]) => [k, k === "situacion" ? "Vivienda en Bizkaia · Análisis" : `${v} · Vivienda en Bizkaia`]));
 let actual = null; // { nombre, vista: { alCambiarDireccion, desmontar } }
 let limpieza = null; // suelta los observadores de movimiento de la vista que se va
 

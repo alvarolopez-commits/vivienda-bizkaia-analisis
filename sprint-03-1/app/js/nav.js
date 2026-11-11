@@ -6,5 +6,4 @@ menu.addEventListener("close", () => { abrir.setAttribute("aria-expanded", "fals
 menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => menu.close()));
 menu.addEventListener("click", (e) => { if (e.target === menu) menu.close(); });
 const params = new URLSearchParams(location.search);
-if (params.has("limpio")) document.querySelector(".proto-tag").hidden = true;
 if (params.has("marcar")) document.documentElement.classList.add("marcar"); // contorno en los textos PROPUESTA_MICROCOPY

@@ -349,7 +349,7 @@ export async function montar(raiz, { store }) {
     if (S.mode === "comparar") renderComparar();
     if (S.mode === "ficha") renderFicha();
     renderBandeja();
-    document.title = `${MODE_NAMES[mode]} · Medidas · Vivienda en Bizkaia (prototipo integrado)`;
+    document.title = `${MODE_NAMES[mode]} · Medidas · Vivienda en Bizkaia`;
     syncUrl();
     if (activeKey) document.querySelector(`[data-sel="${activeKey}"]`)?.focus();
     else if (keepFocus && S.focus) panel.node.querySelector("button[aria-pressed]")?.focus();
