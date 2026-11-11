@@ -1,13 +1,16 @@
 /* Municipios · explorador de fichas. Barra de herramientas de vidrio (L1); perfil, indicadores, problemas, hogares, series, barrios y plan en
    superficies sólidas (L0). Estilos de las clases que dibuja el renderizador original (app/original/js/municipios). */
 
-/* ---------- Barra: selectores de municipio y de comparación ---------- */
-.v-municipios .eligen { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s3) var(--s4); padding: 10px 14px 12px; border-radius: var(--r-tarjeta); }
-.v-municipios .elige-muni { display: grid; gap: 4px; min-width: 13rem; }
-.v-municipios .elige-muni label { padding-left: 6px; font-size: .75rem; font-weight: 600; color: var(--muted); }
+/* ---------- Barra: buscador y selectores de municipio ----------
+   UNA sola barra de vidrio, del ancho de la vista (del margen izquierdo al borde derecho del banner), con tres campos de la misma altura y su etiqueta
+   encima. Debajo, el índice (columna izquierda) y el banner y las tarjetas (columna derecha) arrancan en el mismo renglón y comparten bordes. */
 .v-municipios .lec-cab { flex-direction: column; align-items: stretch; }
-.v-municipios .lec-herr { align-items: flex-end; justify-content: flex-start; }
-.v-municipios .buscar-lec { align-self: flex-end; height: 44px; }
+.v-municipios .lec-herr { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--s3) var(--s4); align-items: end; justify-content: normal; width: 100%; padding: 12px 16px 14px; border-radius: var(--r-tarjeta); }
+.v-municipios .eligen { display: contents; }
+.v-municipios .elige-muni { display: grid; gap: 4px; min-width: 0; }
+.v-municipios .elige-muni label { padding-left: 6px; font-size: .75rem; font-weight: 600; color: var(--muted); }
+.v-municipios .elige-muni select { width: 100%; }
+.v-municipios .buscar-lec { min-width: 0; border: 1px solid var(--vidrio-borde); background: rgba(255, 255, 255, .85); box-shadow: 0 0 0 1px var(--vidrio-contorno); }
 
 /* ---------- Perfil (una tarjeta por municipio) ---------- */
 .v-municipios .ficha { display: grid; gap: var(--s5); }
@@ -98,6 +101,7 @@ body[data-motion="still"] .v-municipios .muni-foto { transition: none; }
 .v-municipios .barrios-lista { display: grid; gap: 10px; }
 .v-municipios .barrios-lista b { font-size: 1.375rem; font-weight: 600; }
 
+@media (max-width: 899px) { .v-municipios .lec-herr { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 1279px) {
   .v-municipios .fila-ind { grid-template-columns: 1fr auto; gap: 8px 16px; }
   .v-municipios .pista-marco { grid-column: 1 / -1; grid-row: 2; }

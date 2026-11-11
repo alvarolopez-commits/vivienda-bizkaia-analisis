@@ -9,7 +9,8 @@ import { cifrasPlanas, envolver, lupa, norm } from "../lectura.js";
 import { bannerDe } from "./imagenes.js";
 
 export function montar(raiz, { store }) {
-  const lec = envolver(raiz, { clase: "v-municipios", indice: "lateral", dibujar: (c) => renderMunicipios(c, store), herramientas: (c) => { const n = c.querySelector(".eligen"); n.classList.add("vidrio"); return n; } });
+  const lec = envolver(raiz, { clase: "v-municipios", indice: "lateral", dibujar: (c) => renderMunicipios(c, store), herramientas: (c) => c.querySelector(".eligen") });
+  lec.nodos.herr.classList.add("vidrio");   // la barra entera (buscador + selectores) es el material de vidrio
 
   // buscador de municipios: escribe y elige; lleva a la misma dirección que los selectores de siempre (no cambia ningún dato)
   const lista = el("datalist", { id: "muni-lista" }, store.codes.map((c) => el("option", { value: store.municipios[c].nombre })));
@@ -25,7 +26,7 @@ export function montar(raiz, { store }) {
   };
   campo.addEventListener("change", ir);
   campo.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); ir(); } });
-  lec.nodos.herr.prepend(el("label", { class: "buscar-lec vidrio" }, [el("span", { class: "sr-only", text: "Buscar municipio" }), lupa(), campo, lista]));
+  lec.nodos.herr.prepend(el("div", { class: "elige-muni" }, [el("label", { for: "muni-buscar", text: "Buscar municipio" }), el("span", { class: "buscar-lec" }, [lupa(), campo, lista])]));
 
   // Banner de la cabecera del municipio PRIMARIO (el del selector «Municipio»). El texto sigue siendo el del renderizador original, que no se
   // toca: aquí solo se le añade la imagen detrás. El municipio comparado conserva su tarjeta. La imagen se crea de cero en cada ficha (las
