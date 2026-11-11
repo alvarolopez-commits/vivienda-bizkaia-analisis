@@ -57,3 +57,18 @@
 .v-metodo .lec-indice .lec-ir[aria-current="true"] { font-weight: 600; }
 .v-metodo .lec-indice .lec-grupo { padding: var(--s2) 10px 2px; }
 .v-metodo .lec-indice .lec-indice-t { padding: 4px 10px 0; }
+
+/* ---------- Índice lateral: más claro y menos denso ----------
+   Columna algo más ancha (menos líneas partidas), grupos separados por un filete y con su rótulo más legible, enlaces sangrados bajo su grupo y la fecha
+   del título en una segunda línea más suave. El enlace actual sigue siendo la píldora oscura. */
+.v-metodo .lec-cuerpo.con-lateral { grid-template-columns: 256px minmax(0, 1fr); }
+.v-metodo .lec-indice.lateral { gap: 1px; padding: var(--s3) var(--s3) var(--s4); }
+.v-metodo .lec-indice-t { padding-bottom: 6px; }
+.v-metodo .lec-grupo { margin-top: var(--s3); padding: var(--s3) 12px 6px; border-top: 1px solid var(--line); color: var(--ink-2); }
+.v-metodo .lec-indice-t + .lec-grupo { margin-top: 0; padding-top: 6px; border-top: 0; }
+.v-metodo .lec-ir { margin-left: 6px; padding: 7px 12px; font-size: .875rem; line-height: 1.3; }
+.v-metodo .lec-ir-t { display: block; }
+.v-metodo .lec-ir-d { display: block; margin-top: 1px; font-size: .75rem; font-weight: 400; color: var(--muted); }
+.v-metodo .lec-ir[aria-current="true"] .lec-ir-d { color: #c3cde6; }
+@media (max-width: 1279px) { .v-metodo .lec-cuerpo.con-lateral { grid-template-columns: 232px minmax(0, 1fr); } }
+@media (max-width: 1099px) { .v-metodo .lec-cuerpo.con-lateral { grid-template-columns: minmax(0, 1fr); } }

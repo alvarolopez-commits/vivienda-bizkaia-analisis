@@ -65,7 +65,8 @@ export function envolver(raiz, o) {
     obs?.disconnect();
     const secs = (o.secciones ? o.secciones() : [...contenido.querySelectorAll("section[data-capitulo]")].map((s) => ({ id: s.id, etiqueta: s.dataset.capitulo, nodo: s })));
     botones = secs.map((s) => {
-      const b = el("button", { type: "button", class: "lec-ir", "data-id": s.id, text: s.etiqueta });
+      // si el elemento trae `detalle` (p. ej. la fecha entre paréntesis del título), se pinta en una segunda línea más suave; el texto completo del botón no cambia
+      const b = el("button", { type: "button", class: "lec-ir", "data-id": s.id }, s.detalle ? [el("span", { class: "lec-ir-t", text: s.etiqueta }), " ", el("span", { class: "lec-ir-d", text: s.detalle })] : [s.etiqueta]);
       b.addEventListener("click", () => { fijarHasta = Date.now() + 1500; marcarActual(s.id); s.nodo.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); s.nodo.setAttribute("tabindex", "-1"); s.nodo.focus({ preventScroll: true }); });
       return b;
     });

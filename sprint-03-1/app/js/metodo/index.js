@@ -24,7 +24,8 @@ export function montar(raiz, { store }) {
     secciones: () => [...raiz.querySelectorAll(".method-block")].map((b) => {
       const t = b.querySelector("h2").textContent;
       if (!b.id) b.id = `m-${slug(t)}`;
-      return { id: b.id, etiqueta: t, nodo: b, grupo: grupoDe(t) };
+      const fecha = t.match(/^(.*?)\s*(\([^()]*\))$/);   // «Si cada medida ya se aplica (27/10/2026)»: título y fecha en dos líneas
+      return { id: b.id, etiqueta: fecha ? fecha[1] : t, detalle: fecha?.[2], nodo: b, grupo: grupoDe(t) };
     }),
   });
   // rótulo de tipo antes de cada título de bloque (distingue glosario, método, límites, historial y fuentes sin tocar su redacción)
