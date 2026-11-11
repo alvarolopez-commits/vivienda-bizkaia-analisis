@@ -1,13 +1,18 @@
 /* Inicio · hero + puerta a los tres productos. Design System Astara × Liquid Glass.
    Hero oscuro azul noche con una imagen «flow» como fondo atmosférico (nunca como dato) y, debajo, una zona clara con tres rutas: Análisis y medidas, Resumen y Radar.
-   Dos composiciones del MISMO contenido: html[data-hero="a"] editorial inmersiva (por defecto) y html[data-hero="b"] atlas primero (mapa real de Bizkaia).
    Solo se ve con la dirección raíz (html.con-inicio, puesto por js/pre-inicio.js). Sin desplazamiento secuestrado, sin cifras de adorno. */
 
 .hero { display: none; }
-.con-inicio .hero { display: block; max-width: 1520px; margin-inline: auto; padding: var(--s4) max(var(--margen), env(safe-area-inset-right, 0px)) var(--s7) max(var(--margen), env(safe-area-inset-left, 0px)); }
+
+/* La cabecera con las seis vistas es la del ANÁLISIS: mientras se ve el hero no está (el hero ocupa la pantalla entera) y aparece cuando se llega a Situación
+   (html.en-analisis, puesto por js/inicio.js con un IntersectionObserver). Fuera del hero, la cabecera es la de siempre. */
+.con-inicio .banda { position: fixed; inset: 0 0 auto 0; transform: translateY(-100%); visibility: hidden; transition: transform var(--t-base) var(--ease-out), visibility 0s linear var(--t-base); }
+.con-inicio.en-analisis .banda { transform: none; visibility: visible; transition: transform var(--t-base) var(--ease-out), visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .con-inicio .banda, .con-inicio.en-analisis .banda { transition: none; } }
+.con-inicio .hero { display: block; max-width: 1520px; margin-inline: auto; padding: var(--s4) max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); }
 
 /* ---------- Tarjeta del hero ---------- */
-.hero-card { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: stretch; height: clamp(520px, calc(100dvh - var(--banda) - 148px), 800px); padding: clamp(28px, 4vw, 64px); border-radius: var(--r-panel); background: var(--noche); color: #fff; box-shadow: 0 1px 2px rgba(26, 36, 70, .12), 0 28px 60px -28px rgba(26, 36, 70, .55); }
+.hero-card { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: stretch; height: clamp(520px, calc(100dvh - 148px), 860px); padding: clamp(28px, 4vw, 64px); border-radius: var(--r-panel); background: var(--noche); color: #fff; box-shadow: 0 1px 2px rgba(26, 36, 70, .12), 0 28px 60px -28px rgba(26, 36, 70, .55); }
 .hero-fondo { position: absolute; inset: 0; z-index: -3; overflow: hidden; background: var(--noche); }
 .hero-fondo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.15) contrast(1.05); }   /* el filtro es del fondo atmosférico, no del contenido */
 /* azul noche sobre la imagen: multiplica (conserva los reflejos del vidrio) y un velo a la izquierda para el texto */
@@ -16,8 +21,7 @@
   linear-gradient(100deg, rgba(20, 24, 58, .88) 0%, rgba(20, 24, 58, .62) 36%, rgba(20, 24, 58, .1) 70%, rgba(20, 24, 58, 0) 100%),
   linear-gradient(0deg, rgba(20, 24, 58, .45) 0%, rgba(20, 24, 58, 0) 38%); }
 
-.hero-texto { align-self: stretch; display: grid; grid-template-rows: auto 1fr auto auto; gap: var(--s4); max-width: 46rem; min-width: 0; }
-.hero-kicker { justify-self: start; margin: 0; padding: 7px 16px; border: 1px solid rgba(255, 255, 255, .26); border-radius: var(--r-pildora); background: rgba(20, 24, 58, .45); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: .8125rem; font-weight: 500; color: rgba(255, 255, 255, .94); }
+.hero-texto { align-self: stretch; display: grid; grid-template-rows: 1fr auto auto; gap: var(--s4); max-width: 46rem; min-width: 0; }
 .hero-t { align-self: center; margin: 0; font: 600 clamp(2.25rem, 1rem + 3.5vw, 4.5rem)/1.04 var(--f-display); letter-spacing: -.03em; text-wrap: balance; text-shadow: 0 2px 30px rgba(10, 14, 40, .35); }
 .hero-n { color: var(--ice); }
 .hero-sub { margin: 0; max-width: 34rem; font-size: 1.125rem; line-height: 1.5; color: rgba(255, 255, 255, .94); text-shadow: 0 1px 14px rgba(10, 14, 40, .4); }
@@ -30,17 +34,6 @@
 .hero-btn:active { transform: translateY(1px); }
 .hero-card :focus-visible { outline-color: var(--ice); }
 
-.hero-mapa { display: none; }
-
-/* ---------- Composición B · atlas primero: texto a la izquierda y el mapa real de Bizkaia como protagonista ---------- */
-html[data-hero="b"] .hero-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: var(--s6); }
-html[data-hero="b"] .hero-fondo img { opacity: .55; }
-html[data-hero="b"] .hero-card::after { background: linear-gradient(100deg, rgba(20, 24, 58, .86) 0%, rgba(20, 24, 58, .5) 55%, rgba(20, 24, 58, .25) 100%); }
-html[data-hero="b"] .hero-texto { grid-column: 1; grid-row: 1; }
-html[data-hero="b"] .hero-mapa { grid-column: 2; grid-row: 1; display: grid; place-items: center; min-width: 0; min-height: 0; }
-html[data-hero="b"] .hero-mapa svg { display: block; width: 100%; height: 100%; max-height: 100%; overflow: visible; filter: drop-shadow(0 16px 22px rgba(8, 10, 36, .5)); }
-html[data-hero="b"] .hero-mapa path { fill: rgba(255, 255, 255, .17); stroke: rgba(255, 255, 255, .62); stroke-width: .7px; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-
 /* ---------- Puerta a los tres productos ---------- */
 .puertas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s5); margin-top: var(--s5); }
 .puerta { display: grid; grid-template-rows: auto 1fr auto; gap: var(--s3); padding: var(--s6); border: 1px solid var(--opaco-borde); border-radius: var(--r-panel); background: var(--opaco-fondo); box-shadow: var(--elev-1); }
@@ -52,12 +45,17 @@ html[data-hero="b"] .hero-mapa path { fill: rgba(255, 255, 255, .17); stroke: rg
 .puerta:first-child .puerta-a { background: var(--ink); border-color: var(--ink); color: #fff; }
 .puerta:first-child .puerta-a:hover { background: var(--accent); border-color: var(--accent); }
 
+/* ---------- Umbral del análisis ---------- */
+.umbral { display: flex; align-items: center; gap: var(--s5); margin-top: var(--s8); padding-top: var(--s5); scroll-margin-top: var(--s4); }
+.umbral-t { margin: 0; font: 600 clamp(1.25rem, 1rem + .9vw, 1.75rem)/1.2 var(--f-display); letter-spacing: -.02em; color: var(--ink); white-space: nowrap; }
+.umbral::after { content: ""; flex: 1; height: 1px; background: var(--line-2); }
+
 /* ---------- Movimiento: ligero zoom del fondo, solo «expressive» (transform) ---------- */
 @keyframes hero-zoom { from { scale: 1.06; } to { scale: 1; } }
 body[data-motion="expressive"] .hero-fondo img { animation: hero-zoom 9s var(--ease-out) both; }
 
 /* ---------- Degradación ---------- */
-@media (prefers-reduced-transparency: reduce) { .hero-kicker, .hero-btn.vidrio { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); } }
+@media (prefers-reduced-transparency: reduce) { .hero-btn.vidrio { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); } }
 @media (prefers-contrast: more) { .hero-card::after { background: rgba(20, 24, 58, .82); } }
 @media (prefers-reduced-motion: reduce) { .hero-fondo img { animation: none !important; } }
-@media (max-width: 1099px) { .puertas { grid-template-columns: minmax(0, 1fr); } html[data-hero="b"] .hero-card { grid-template-columns: minmax(0, 1fr); } html[data-hero="b"] .hero-mapa { display: none; } }
+@media (max-width: 1099px) { .puertas { grid-template-columns: minmax(0, 1fr); } }

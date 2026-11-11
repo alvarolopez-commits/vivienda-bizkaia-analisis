@@ -1,8 +1,8 @@
-// Inicio (hero + puerta a los tres productos). En el navegador, con la app abierta en la RAÍZ (http://localhost:4179/ o /?hero=b, sin #), a 1440×900 y 1280×800:
+// Inicio (hero + puerta a los tres productos). En el navegador, con la app abierta en la RAÍZ (http://localhost:4179/, sin #), a 1440×900 y 1280×800:
 //   window.__qaRes = null; import('/_qa/qa-inicio.js').then(m => m.run()).then(r => window.__qaRes = r)
 // Comprueba: el hero sale solo con la dirección raíz; su texto es el de las webs publicadas y el nº de municipios sale de los datos; los tres enlaces
 // reales; que NO hay desplazamiento secuestrado (la rueda y el teclado son los del navegador); que los botones de «análisis» llevan a Situación;
-// que navegar o elegir un municipio no lo rompe; que la imagen carga; el mapa real de la composición B; accesibilidad, geometría y la legibilidad
+// que navegar o elegir un municipio no lo rompe; que la imagen carga; accesibilidad, geometría y la legibilidad
 // medida sobre los píxeles del fondo.
 import { cargarStore } from "/js/datos.js";
 import { es } from "/original/js/ui.js";
@@ -51,13 +51,12 @@ export async function run() {
   const store = await cargarStore();
   const sec = $("#inicio");
   const H = innerHeight, banda = $(".banda").offsetHeight;
-  const variante = document.documentElement.dataset.hero;
-  const destino = () => Math.round($("#vista").getBoundingClientRect().top + scrollY - banda);
+  const destino = () => Math.round($("#umbral").getBoundingClientRect().top + scrollY - banda);   // el umbral del análisis queda justo bajo la cabecera
   const rueda = (dy) => { const e = new WheelEvent("wheel", { deltaY: dy, cancelable: true, bubbles: true }); window.dispatchEvent(e); return e.defaultPrevented; };
 
   // ---------- presencia y texto ----------
   scrollTo(0, 0); await sleep(300);
-  ok(`Composición «${variante}»: con la dirección raíz el hero se ve y html.con-inicio está puesto`, document.documentElement.classList.contains("con-inicio") && getComputedStyle(sec).display !== "none");
+  ok("Con la dirección raíz el hero se ve y html.con-inicio está puesto", document.documentElement.classList.contains("con-inicio") && getComputedStyle(sec).display !== "none");
   const t = $(".hero-t"), n = es(store.codes.length);
   ok(`Titular: «El acceso a la vivienda en los ${n} municipios de Bizkaia» (el número sale de los datos)`, /^El acceso a la vivienda en los/.test(t.textContent.trim()) && t.textContent.includes(n) && /municipios de Bizkaia$/.test(t.textContent.trim()), t.textContent.trim());
   ok("Descripción del hero: la de la web publicada", $(".hero-sub").textContent === "Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.");
@@ -69,7 +68,7 @@ export async function run() {
   ok("Enlaces: Resumen y Radar a sus URL exactas, en pestaña nueva y con noopener; Análisis a #situacion", enl[1].href === "https://vizcaya-vivienda-resumen.vercel.app/" && enl[2].href === "https://vizcaya-vivienda.vercel.app/" && [enl[1], enl[2]].every((a) => a.target === "_blank" && /noopener/.test(a.rel)) && enl[0].getAttribute("href") === "#situacion");
   ok("Ningún enlace vacío (href=\"#\") ni botón sin destino en el hero y las puertas", $$("a, button", sec).every((a) => a.tagName !== "A" || (a.getAttribute("href") && a.getAttribute("href") !== "#")));
   ok("El botón principal del hero y «Ver el resumen» llevan a Análisis y al resumen", $(".hero-btn.primario").dataset.ir === "analisis" && $(".hero-btn.vidrio").href === "https://vizcaya-vivienda-resumen.vercel.app/");
-  ok("Sin cifras de adorno: no hay números en el hero salvo el de municipios (de los datos)", !/\d/.test($(".hero-kicker").textContent + $(".hero-sub").textContent + $$(".hero-btn").map((b) => b.textContent).join("")) && /^\d[\d.]*$/.test($(".hero-n").textContent.trim()) );
+  ok("Sin cifras de adorno: no hay números en el hero salvo el de municipios (de los datos)", !/\d/.test($(".hero-sub").textContent + $$(".hero-btn").map((b) => b.textContent).join("")) && /^\d[\d.]*$/.test($(".hero-n").textContent.trim()) );
   ok("El logotipo de la cabecera lleva al inicio (#inicio)", $(".marca").getAttribute("href") === "#inicio");
   const radar = $(".puerta-tag");
   ok("Radar: se muestra como propuesta (etiqueta marcada como propuesta de texto, por validar)", radar?.textContent.trim() === "Propuesta" && radar.hasAttribute("data-propuesta"));
@@ -77,7 +76,6 @@ export async function run() {
   // ---------- accesibilidad ----------
   ok("Un solo h1 de página: el del hero (el de Situación baja a nivel 2) y las puertas son h2", $(".hero-t").tagName === "H1" && $("#vista h1").getAttribute("aria-level") === "2" && $$(".puerta-t").every((h) => h.tagName === "H2"));
   ok("Fondo decorativo: alt vacío; el texto es HTML real", $(".hero-fondo img").alt === "" && $(".hero-fondo").getAttribute("aria-hidden") === "true");
-  ok("El mapa de la composición B (si está) es decorativo: aria-hidden y sin foco", variante !== "b" || ($(".hero-mapa svg")?.getAttribute("aria-hidden") === "true" && $$(".hero-mapa [tabindex], .hero-mapa a, .hero-mapa button").length === 0));
 
   // ---------- geometría ----------
   const r = sec.getBoundingClientRect(), card = $(".hero-card").getBoundingClientRect(), p0 = tarj[0].getBoundingClientRect();
@@ -88,12 +86,16 @@ export async function run() {
   ok("Geometría: las tres puertas tienen la misma altura y el mismo ancho", new Set(tarj.map((p) => Math.round(p.getBoundingClientRect().width))).size <= 2 && new Set(tarj.map((p) => Math.round(p.getBoundingClientRect().height))).size === 1);
   ok("Geometría: mismos márgenes que la vista de debajo (tarjeta y puertas alineadas)", Math.abs(card.left - p0.left) < 2 && Math.abs(card.right - tarj[2].getBoundingClientRect().right) < 2);
   ok("Tipografía: titular y títulos de puerta en Montserrat; texto en Geist", /Montserrat/.test(getComputedStyle(t).fontFamily) && tarj.every((p) => /Montserrat/.test(getComputedStyle($(".puerta-t", p)).fontFamily)) && /Geist/.test(getComputedStyle($(".hero-sub")).fontFamily) && /Geist/.test(getComputedStyle($(".puerta-d")).fontFamily));
-  ok("Vidrio acotado: solo la píldora y el botón secundario; la imagen y el mapa sin desenfoque", /blur/.test(getComputedStyle($(".hero-kicker")).backdropFilter) && !/blur/.test(getComputedStyle($(".hero-fondo img")).filter) && getComputedStyle($(".puerta")).backdropFilter === "none");
+  ok("Vidrio acotado: solo el botón secundario; la imagen y el mapa sin desenfoque", /blur/.test(getComputedStyle($(".hero-btn.vidrio")).backdropFilter) && !/blur/.test(getComputedStyle($(".hero-fondo img")).filter) && getComputedStyle($(".puerta")).backdropFilter === "none");
 
   // ---------- imagen ----------
   const img = $(".hero-fondo img");
-  ok("El fondo «flow» carga y es WebP optimizado (< 300 KB)", img.complete && img.naturalWidth >= 1900 && /\/img\/flow\/flow-[ab]\.webp$/.test(img.src) && (await fetch(img.src, { method: "HEAD" }).then((x) => +x.headers.get("content-length") < 300000)), img.src);
-  ok("Composición B: el mapa real de Bizkaia con los 113 municipios", variante !== "b" || $$(".hero-mapa path[data-code]").length === store.codes.length, `${$$(".hero-mapa path").length} formas`);
+  ok("El fondo «flow» carga y es WebP optimizado (< 300 KB)", img.complete && img.naturalWidth >= 1900 && /\/img\/flow\/flow-a\.webp$/.test(img.src) && (await fetch(img.src, { method: "HEAD" }).then((x) => +x.headers.get("content-length") < 300000)), img.src);
+
+  // ---------- la cabecera de las seis vistas es la del ANÁLISIS ----------
+  const cab = () => { const b = $(".banda"); return { vis: getComputedStyle(b).visibility, top: Math.round(b.getBoundingClientRect().top) }; };
+  ok("Cabecera: mientras se ve el hero NO está (oculta y fuera de pantalla, sin foco en sus enlaces)", cab().vis === "hidden" && cab().top < 0 && !document.documentElement.classList.contains("en-analisis"), JSON.stringify(cab()));
+  ok("Cabecera: el hero ocupa la pantalla entera desde arriba (tarjeta pegada al margen superior)", Math.round($(".hero-card").getBoundingClientRect().top) <= 24, `${Math.round($(".hero-card").getBoundingClientRect().top)}`);
 
   // ---------- SIN desplazamiento secuestrado ----------
   const evitado = rueda(120), evitado2 = rueda(-120);
@@ -105,7 +107,10 @@ export async function run() {
 
   // ---------- botones de análisis ----------
   $(".hero-btn.primario").click(); await sleep(1300);
-  ok("«Explorar el análisis» lleva a Situación (queda justo bajo la cabecera) y no cambia la dirección", Math.abs(scrollY - destino()) <= 2 && /^#(situacion|inicio)?/.test(location.hash) && document.documentElement.classList.contains("con-inicio"), `y=${scrollY} destino=${destino()}`);
+  ok("«Explorar el análisis» lleva al umbral del análisis (queda justo bajo la cabecera) y no cambia la dirección", Math.abs(scrollY - destino()) <= 2 && /^#(situacion|inicio)?/.test(location.hash) && document.documentElement.classList.contains("con-inicio"), `y=${scrollY} destino=${destino()}`);
+  ok("Cabecera: al llegar al análisis aparece (visible y arriba del todo), con el umbral «Análisis y medidas» justo debajo y Situación a continuación", cab().vis === "visible" && cab().top === 0 && document.documentElement.classList.contains("en-analisis") && Math.abs($("#umbral").getBoundingClientRect().top - banda) <= 2 && $("#vista").getBoundingClientRect().top < H, JSON.stringify(cab()));
+  scrollTo({ top: 300, behavior: "instant" }); await sleep(700);
+  ok("Cabecera: al volver hacia el hero se va otra vez", cab().vis === "hidden" && cab().top < 0, JSON.stringify(cab()));
   scrollTo(0, 0); await sleep(300);
   enl[0].click(); await sleep(1300);
   ok("«Entrar al análisis» de la puerta también", Math.abs(scrollY - destino()) <= 2, `y=${scrollY}`);
@@ -116,7 +121,7 @@ export async function run() {
   if (fila) { fila.click(); await sleep(500); }
   ok("Elegir un municipio debajo reescribe la dirección (#situacion/…) pero el hero se queda", getComputedStyle(sec).display !== "none" && document.documentElement.classList.contains("con-inicio") && /^#situacion/.test(location.hash), location.hash);
   location.hash = "#municipios/48020"; await sleep(1200);
-  ok("Navegar a otra vista oculta el hero y la vista empieza arriba", getComputedStyle(sec).display === "none" && !document.documentElement.classList.contains("con-inicio") && scrollY === 0 && $("#vista h1")?.getAttribute("aria-level") === null);
+  ok("Navegar a otra vista oculta el hero, la vista empieza arriba y la cabecera es la de siempre (visible, pegada arriba)", cab().vis === "visible" && getComputedStyle($(".banda")).position === "sticky" && getComputedStyle(sec).display === "none" && !document.documentElement.classList.contains("con-inicio") && scrollY === 0 && $("#vista h1")?.getAttribute("aria-level") === null);
   location.hash = "#situacion/alquiler"; await sleep(1000);
   ok("Un enlace a Situación (sin hero) no lo muestra", getComputedStyle(sec).display === "none");
   location.hash = "#inicio"; await sleep(1200);

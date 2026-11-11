@@ -21,7 +21,7 @@ Encargo: `CLAUDE_REVISION_GLOBAL_HOME_ECOSISTEMA_BIZKAIA.md`. Rama local `ux/hom
 | Enlaces externos de datos en Método/Medidas: incluyen fuentes que no son oficiales (p. ej. `roams.es`, `mof.gov.sg`, `elindependiente.com`) | Inventario de `a[href^=http]` en las seis vistas (27 enlaces) | Editorial, no de diseño | Media | **Revisión editorial del autor**: no se tocan |
 | Hay clases y reglas duplicadas entre hojas por vista | `.eligen` (Medidas y Municipios con reglas distintas), `.pie` (marco, Situación y Medidas), `.sr-only` (lectura y Medidas) | Bajo hoy; riesgo de divergencia | Baja | Consolidar en una pasada de limpieza aparte |
 | Componentes reutilizados | `.vidrio`, `.btn`, lienzo de mapa (Situación, Acceso, barrios), índice interno (`lectura.js`), banner municipal, píldora deslizante | Positivo | — | Mantener |
-| Assets realmente usados | `img/flow/flow-a.webp` (204 KB) o `flow-b.webp` (139 KB) en el hero; **un** banner municipal a la vez (de 52 WebP, 11,7 MB en el repo) | Bajo: solo se carga lo visible | — | Mantener; Lighthouse pendiente |
+| Assets realmente usados | `img/flow/flow-a.webp` (204 KB) en el hero; **un** banner municipal a la vez (de 52 WebP, 11,7 MB en el repo) | Bajo: solo se carga lo visible | — | Mantener; Lighthouse pendiente |
 | Al cargar la raíz, Situación reescribe la dirección a `#situacion/alquiler` | `js/situacion/index.js:283` (`replaceState`) | Bajo: copiar la URL tras entrar no devuelve la portada | Baja | Decidir si la raíz debe conservarse mientras el hero está |
 | La marca de la cabecera es texto; el logotipo existe solo en `ux/prueba-logo`, sin aprobar | rama `ux/prueba-logo`; el logotipo es azul oscuro y no sirve sobre el hero oscuro sin versión clara | Medio | Media | **Decisión del autor**: aprobar logotipo y su versión para fondo oscuro |
 | «Radar» no tiene verificada su operación | spec §1 | Editorial | Alta | Etiqueta «Propuesta» en su puerta, marcada como texto por validar |
@@ -37,4 +37,4 @@ Encargo: `CLAUDE_REVISION_GLOBAL_HOME_ECOSISTEMA_BIZKAIA.md`. Rama local `ux/hom
 | Enlaces externos de producto | Resumen, Radar (cabecera, hero y puertas) |
 
 ## 4. Entrega: portada de dos tiempos
-Detalle en [HOME_ECOSISTEMA.md](HOME_ECOSISTEMA.md). Dos composiciones del mismo contenido (`?hero=a` editorial inmersiva, `?hero=b` atlas primero) y una zona de tres puertas con enlaces reales. Capturas en `docs/diseno/capturas/home/`.
+Detalle en [HOME_ECOSISTEMA.md](HOME_ECOSISTEMA.md). Hero editorial inmersiva (composición A, elegida entre A y B) y una zona de tres puertas con enlaces reales. Capturas en `docs/diseno/capturas/home/`.

@@ -1,21 +1,15 @@
 // Inicio (hero + puerta a los tres productos). Se ve solo con la dirección raíz (vacía, «#» o «#inicio»); debajo está la vista Situación de siempre.
-//   · dos composiciones del MISMO contenido (?hero=a editorial inmersiva, por defecto; ?hero=b atlas primero con el mapa real de Bizkaia);
-//   · fondo «flow» (img/flow): ?fondo=1 o 2 para compararlos (A usa el 1 y B el 2 por defecto);
-//   · el número de municipios sale de los datos; el mapa de B usa la geometría real de la aplicación (sin datos coloreados);
+//   · hero editorial inmersiva con el fondo «flow» (img/flow);
+//   · el número de municipios sale de los datos;
 //   · NO secuestra el desplazamiento: la persona baja como siempre; «Explorar el análisis» y «Entrar al análisis» son botones que llevan a Situación.
 // No lee ni cambia ningún dato analítico.
 import { cargarStore } from "./datos.js";
-import { svgMap } from "../original/js/mapa.js";
 import { rollingFigures } from "../original/js/movimiento.js";
 import { es } from "../original/js/ui.js";
 import { cifrasPlanas } from "./lectura.js";
 import { modo, reducido } from "./movimiento.js";
 
 const ES_INICIO = /^#?(inicio)?$/;
-const params = new URLSearchParams(location.search);
-const VARIANTE = params.get("hero") === "b" ? "b" : "a";
-const FONDO = params.get("fondo") === "1" ? 1 : params.get("fondo") === "2" ? 2 : VARIANTE === "b" ? 2 : 1;
-document.documentElement.dataset.hero = VARIANTE;
 
 const sec = document.getElementById("inicio");
 const vista = document.getElementById("vista");
@@ -26,9 +20,21 @@ let construido = false;
 let visible = document.documentElement.classList.contains("con-inicio");
 export const esInicio = () => visible;
 
+// la cabecera (las seis vistas) solo se ve en el análisis: aparece cuando Situación llega a la parte alta de la pantalla (franja de 100 px) y se va al volver al hero
+const umbral = document.getElementById("umbral");   // marca donde empieza el análisis: es el punto al que llevan los botones y donde aparece la cabecera
+let io = null;
+const dentro = new Set();
+function vigilar() {
+  io?.disconnect(); dentro.clear();
+  io = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? dentro.add(e.target) : dentro.delete(e.target))); document.documentElement.classList.toggle("en-analisis", dentro.size > 0); }, { rootMargin: `0px 0px -${Math.max(1, innerHeight - 100)}px 0px` });
+  io.observe(umbral); io.observe(vista);
+}
+vigilar();
+addEventListener("resize", () => { clearTimeout(vigilar.t); vigilar.t = setTimeout(vigilar, 150); });
+
 const banda = () => document.querySelector(".banda")?.offsetHeight ?? 64;
 function irAlAnalisis() {
-  const y = Math.max(0, Math.round(vista.getBoundingClientRect().top + scrollY - banda()));
+  const y = Math.max(0, Math.round(umbral.getBoundingClientRect().top + scrollY - banda()));
   scrollTo({ top: y, behavior: reducido() || modo() === "still" ? "auto" : "smooth" });
   vista.setAttribute("tabindex", "-1"); vista.focus({ preventScroll: true });
 }
@@ -38,15 +44,10 @@ function limpiarEntrada() { sec.querySelectorAll(".rise").forEach((n) => n.class
 
 async function construir() {
   const img = sec.querySelector(".hero-fondo img");
-  img.src = new URL(`../img/flow/flow-${FONDO === 1 ? "a" : "b"}.webp`, import.meta.url).href;
+  img.src = new URL("../img/flow/flow-a.webp", import.meta.url).href;
   const store = await cargarStore();
   const n = es(store.codes.length);
   sec.querySelectorAll(".n-munis").forEach((s) => { s.textContent = n; });
-  if (VARIANTE === "b") {
-    const svg = svgMap(store.municipiosGeo, () => ({ fill: "#ffffff" }), { stroke: "#ffffff", label: "Mapa de los municipios de Bizkaia" });
-    svg.removeAttribute("role"); svg.setAttribute("aria-hidden", "true"); svg.setAttribute("focusable", "false");
-    sec.querySelector(".hero-mapa").replaceChildren(svg);
-  }
   if (modo() === "expressive") rollingFigures(sec); else cifrasPlanas(sec, true);
   setTimeout(limpiarEntrada, 1800);
 }

@@ -71,14 +71,12 @@
     <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
   </dialog>
 
-  <!-- Inicio: solo se ve con la dirección raíz (html.con-inicio). Primero el hero (dos composiciones del MISMO contenido: ?hero=a editorial inmersiva, ?hero=b atlas primero),
+  <!-- Inicio: solo se ve con la dirección raíz (html.con-inicio). Primero el hero (editorial inmersiva),
        después la puerta a los tres productos y, debajo, la vista Situación de siempre. Los textos son los de las tres webs publicadas (sus descripciones); no hay cifras de adorno. -->
   <section id="inicio" class="hero" aria-label="Inicio">
     <div class="hero-card">
       <div class="hero-fondo" aria-hidden="true"><img alt="" decoding="async"></div>
-      <div class="hero-mapa" aria-hidden="true"></div>
       <div class="hero-texto">
-        <p class="hero-kicker rise" style="--i:0">Vivienda en Bizkaia · Análisis</p>
         <h1 class="hero-t rise" style="--i:1">El acceso a la vivienda en los <span class="hero-n n-munis" data-roll></span> municipios de Bizkaia</h1>
         <p class="hero-sub rise" style="--i:2">Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.</p>
         <div class="hero-cta rise" style="--i:3">
@@ -105,6 +103,9 @@
         <a class="puerta-a" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Abrir el radar <span aria-hidden="true">↗</span></a>
       </article>
     </div>
+
+    <!-- Umbral: marca el punto donde empieza el análisis (aparece la cabecera de las seis vistas) -->
+    <div class="umbral" id="umbral" aria-hidden="true"><p class="umbral-t" data-propuesta>Análisis y medidas</p></div>
   </section>
 
   <!-- La vista activa se monta aquí; solo hay una montada a la vez -->
