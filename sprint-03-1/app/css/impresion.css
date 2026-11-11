@@ -1,0 +1,63 @@
+/* Impresión / PDF (Mejora E). Solo actúa al imprimir (media="print"): la ficha de consulta o la comparación de Municipios sobre papel A4, en una columna, con los mismos
+   datos que la pantalla, sin cabecera ni controles ni imágenes decorativas, y con la cabecera y el pie que añade js/exportar.js. */
+
+@page { size: A4 portrait; margin: 14mm 12mm 16mm; }
+
+@media print {
+  html, body { background: #fff !important; color: var(--ink); font-size: 10pt; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; animation: none !important; transition: none !important; text-shadow: none !important; }
+
+  /* fuera todo lo que es de pantalla */
+  .banda, #velo, #menu, .salto, .solo-lectores, [data-anuncio], .hero, .umbral, .lec-cab, .lec-indice, .ctx-enlaces, .cmp-acciones, .info-b, .info-panel, .muni-foto, .muni-velo, .btn, .sec-cab .info-b { display: none !important; }
+  .print-cab, .print-pie { display: block !important; }
+
+  /* una columna */
+  #vista, .lec, .lec-cuerpo, .lec-cuerpo.con-lateral, .lec-contenido, .ficha { display: block !important; max-width: none !important; width: auto !important; padding: 0 !important; margin: 0 !important; background: none !important; }
+  .lec-contenido > * + *, .ficha > * + * { margin-top: 5mm !important; }
+
+  /* cabecera de impresión */
+  .print-cab { margin: 0 0 6mm; padding-bottom: 4mm; border-bottom: 1.5pt solid var(--ink); }
+  .print-marca { margin: 0 0 1mm; font: 600 9pt/1.2 var(--f-ui); letter-spacing: .02em; color: var(--accent); }
+  .print-t { margin: 0 0 2mm; font: 600 20pt/1.15 var(--f-display); letter-spacing: -.01em; color: var(--ink); }
+  .print-meta { margin: 0; font-size: 8.5pt; line-height: 1.45; color: var(--ink-2); overflow-wrap: anywhere; }
+  .print-pie { margin-top: 8mm; padding-top: 4mm; border-top: .75pt solid #888; break-inside: avoid; }
+  .print-pie h2 { margin: 0 0 2mm; font: 600 11pt/1.2 var(--f-display); }
+  .print-pie ul { margin: 0; padding: 0; list-style: none; font-size: 8pt; line-height: 1.45; color: var(--ink-2); }
+  .print-pie li { margin-bottom: 1mm; overflow-wrap: anywhere; }
+  .print-url { color: var(--muted); }
+  .print-nota { margin: 3mm 0 0; font-size: 8pt; color: var(--ink-2); }
+
+  /* encabezados de municipio: sin imagen, texto oscuro sobre blanco */
+  .v-municipios .cabeceras { display: grid !important; gap: 4mm; }
+  .v-municipios .cabeceras.n2 { grid-template-columns: 1fr 1fr !important; }
+  .v-municipios .muni-cab, .v-municipios .muni-banner { min-height: 0 !important; padding: 4mm 5mm !important; border: .75pt solid #999 !important; border-radius: 3mm !important; background: #fff !important; color: var(--ink) !important; }
+  .v-municipios .muni-nombre, .v-municipios .muni-banner .muni-nombre { color: var(--ink) !important; font-size: 18pt !important; max-width: none !important; }
+  .v-municipios .muni-datos, .v-municipios .muni-banner .muni-datos { margin-top: 2mm !important; padding: 0 !important; border: 0 !important; background: none !important; color: var(--ink-2) !important; font-size: 9.5pt !important; }
+  .v-municipios .muni-banner .muni-datos b, .v-municipios .muni-datos [data-roll] { color: var(--ink) !important; }
+  .v-municipios .cmp-chip { box-shadow: none; }
+
+  /* bloques */
+  .lec-contenido .sec, .lec .sec { padding: 4mm 5mm !important; border: .75pt solid #aaa !important; border-radius: 3mm !important; background: #fff !important; }
+  .lec .sec-cab h2 { font-size: 13pt !important; break-after: avoid; }
+  .lec .sec-cab .sub { font-size: 9pt !important; }
+  .lec .sec-cuerpo { margin-top: 3mm !important; }
+  .fila-ind, .serie, .cmp-hogares tr, .fila-carta, .barrios-lista li, .cmp-precio, .tabla .fila { break-inside: avoid; }
+  .v-municipios .columnas.n2 { grid-template-columns: 1fr 1fr !important; gap: 5mm !important; }
+  .v-municipios .barrios { grid-template-columns: 1fr 1fr !important; gap: 4mm !important; }
+  .v-municipios .barrios-mapa { padding: 2mm !important; background: #fff !important; border: .5pt solid #ccc !important; border-radius: 2mm !important; }
+  .v-municipios .barrios-mapa svg { filter: none !important; max-height: 70mm !important; }
+
+  /* indicadores: tamaños de papel */
+  .v-municipios .fila-ind { grid-template-columns: 38mm 1fr 34mm !important; gap: 3mm !important; padding: 1.5mm 2mm !important; font-size: 8.5pt; }
+  .v-municipios .cmp .fila-ind, .v-municipios .cmp-cols { grid-template-columns: 28mm 27mm 1fr 27mm 22mm !important; gap: 2mm !important; font-size: 8pt; }
+  .v-municipios .cmp .cifra-dot .puesto { font-size: 6.5pt !important; white-space: nowrap; }
+  .v-municipios .cmp .cifra-dot b, .v-municipios .cifra-dot b { font-size: 10pt !important; }
+  .v-municipios .nombre-ind { font-size: 8.5pt !important; }
+  .v-municipios .cmp-hogares { font-size: 8.5pt; }
+  .v-municipios .cmp-hogares th, .v-municipios .cmp-hogares td { padding: 1.5mm 2mm; }
+  .v-municipios .filas-ind { gap: 0 !important; }
+  .mapa-lienzo, .barrios-mapa { background: #fff !important; }
+}
+
+/* en pantalla, la cabecera y el pie de impresión no existen */
+@media screen { .print-cab, .print-pie { display: none; } }

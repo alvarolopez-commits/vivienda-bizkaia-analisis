@@ -23,7 +23,7 @@ export async function run() {
   const store = await cargarStore();
   const listo = async (sel, ms = 8000) => { for (let i = 0; i < ms / 100; i++) { if ($(sel)) break; await sleep(100); } await sleep(350); };
   const ir = async (hash, sel) => { location.hash = hash; await listo(sel); };
-  const limpio = (el) => { const c = el.cloneNode(true); c.querySelectorAll(".lec-kicker, .glos-cuenta, .glos-vacio, .x-fijos, .x-lado-t, .ctx-enlaces, [data-barrios]").forEach((n) => n.remove()); cifrasPlanas(c, true); return c; };   // las cifras que ruedan se aplanan en la copia: se compara el texto
+  const limpio = (el) => { const c = el.cloneNode(true); c.querySelectorAll(".lec-kicker, .glos-cuenta, .glos-vacio, .x-fijos, .x-lado-t, .ctx-enlaces, .cmp-acciones, [data-barrios]").forEach((n) => n.remove()); cifrasPlanas(c, true); return c; };   // las cifras que ruedan se aplanan en la copia: se compara el texto
   const texto = (lec) => plano(limpio($(".lec-titulo", lec)).textContent + " " + limpio($(".lec-contenido", lec)).textContent);
   const sinFeos = (lec) => !/\b(null|undefined|NaN)\b/.test(lec.textContent);
 
@@ -34,7 +34,7 @@ export async function run() {
     const scratch = document.createElement("div");
     const v = renderMunicipios(scratch, store); v.show("48020"); cifrasPlanas(scratch, true);
     const ref = plano([...scratch.querySelectorAll("header.vista-cab, .ficha")].map((n) => { const c = n.cloneNode(true); c.querySelectorAll("[data-barrios]").forEach((x) => x.remove()); return c.textContent; }).join(" "));
-    const live = plano($(".lec-titulo", lec).textContent + " " + (() => { const c = $(".ficha", lec).cloneNode(true); c.querySelectorAll("[data-barrios], .ctx-enlaces").forEach((x) => x.remove()); cifrasPlanas(c, true); return c.textContent; })());
+    const live = plano($(".lec-titulo", lec).textContent + " " + (() => { const c = $(".ficha", lec).cloneNode(true); c.querySelectorAll("[data-barrios], .ctx-enlaces, .cmp-acciones").forEach((x) => x.remove()); cifrasPlanas(c, true); return c.textContent; })());
     ok("Municipios · Bilbao: el texto y las cifras son idénticos a los del renderizador original", ref === live, ref === live ? `${live.length} caracteres` : `${ref.length} vs ${live.length}`);
   }
   ok("Municipios · perfil, 13 indicadores, problemas, hogares, evolución, barrios y plan", $(".muni-nombre", lec).textContent === "Bilbao" && $$(".fila-ind", lec).length === 13 && $$("section.ficha-sec", lec).map((s) => s.id).join() === "indicadores,problemas,hogares,evolucion,barrios,plan");

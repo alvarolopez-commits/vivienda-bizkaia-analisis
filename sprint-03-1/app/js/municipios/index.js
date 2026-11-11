@@ -10,6 +10,7 @@ import { bannerDe } from "./imagenes.js";
 import { fijar, filaContexto } from "../contexto.js";
 import { componerComparacion } from "./comparador.js";
 import { botonInfo, descHogares, descMunicipal } from "../info-dato.js";
+import { botonExportar, prepararImpresion } from "../exportar.js";
 import { DOTS } from "../../original/js/municipios/puntos.js";
 
 export function montar(raiz, { store }) {
@@ -56,6 +57,10 @@ export function montar(raiz, { store }) {
     raiz.querySelector(".ficha")?.classList.remove("cmp");   // el mismo contenedor sirve a la ficha individual y a la comparación
     banner();
     { const A = raiz.querySelector("#muni-a")?.value, B = raiz.querySelector("#muni-b")?.value; if (A && B) componerComparacion({ raiz, store, A, B }); }   // comparación: composición analítica (js/municipios/comparador.js)
+    // exportación: «Exportar a PDF» en la comparación (junto a Intercambiar y Ver solo…) y en la ficha individual (en una fila propia bajo el encabezado)
+    { const acc = lec.nodos.contenido.querySelector(".cmp-acciones");
+      if (acc) acc.append(botonExportar(store));
+      else lec.nodos.contenido.querySelector(".cabeceras")?.after(el("div", { class: "cmp-acciones", role: "group", "aria-label": "Acciones de la ficha" }, [botonExportar(store)])); }
     // contexto de investigación: el municipio principal y el comparado; y los saltos a Situación, Acceso y Medidas con este municipio
     fijar({ muni: raiz.querySelector("#muni-a")?.value || null, muniB: raiz.querySelector("#muni-b")?.value || null });
     (lec.nodos.contenido.querySelector(".cmp-acciones") ?? lec.nodos.contenido.querySelector(".cabeceras"))?.after(filaContexto("municipios", { clase: "en-municipios" }));
@@ -73,5 +78,6 @@ export function montar(raiz, { store }) {
     if (!primera) window.scrollTo(0, 0);
   };
   mostrar(true);
+  if (new URLSearchParams(location.search).has("imprimir")) prepararImpresion(store);   // ?imprimir=1: deja la ficha ya preparada (cabecera y pie de impresión) para generar el PDF desde línea de órdenes
   return { alCambiarDireccion: () => mostrar(false), desmontar: () => lec.desmontar() };
 }
