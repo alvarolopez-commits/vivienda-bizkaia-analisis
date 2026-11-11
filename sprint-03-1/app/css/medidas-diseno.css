@@ -160,3 +160,5 @@ body.con-bandeja .medidas { padding-bottom: 96px; }
 .m-cab:has(.ctx-enlaces:not([hidden])) { padding: var(--s5) 0 var(--s4); }
 .medidas:has(.ctx-enlaces:not([hidden])) { --stage-h: clamp(540px, calc(100dvh - 360px), 760px); }
 .ctx-enlaces.en-medidas { margin: var(--s2) 0 0; }
+.rep-titulo { position: relative; }
+.rep-titulo .info-b { position: absolute; top: 2px; right: 0; }

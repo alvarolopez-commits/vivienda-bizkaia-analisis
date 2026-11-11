@@ -206,3 +206,5 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; scroll-behavior: auto !important; }
 }
+.ind-cab { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.ind-cab .info-b { margin-top: 1px; }

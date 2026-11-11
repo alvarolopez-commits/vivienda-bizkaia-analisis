@@ -14,6 +14,7 @@ import { el, es, sourceLine, TYPE_COLORS } from "../../original/js/ui.js";
 import { INDICADORES, ranking } from "../../original/js/situacion/indicadores.js";
 import { crearMapa } from "./mapa-atlas.js";
 import { filaContexto, fijar } from "../contexto.js";
+import { botonInfo, descSituacion } from "../info-dato.js";
 
 const FIRST = 10; // como lista.js: diez primeros y un botón para ver todos (solo cuando la lista no tiene su propio scroll)
 const $ = (s) => document.querySelector(s);
@@ -55,6 +56,11 @@ export async function montar(raiz, { store }) {
     return `#situacion/${ind().id}${S.code ? `/${S.code}` : ""}${qs ? `?${qs}` : ""}`;
   };
   const sincronizarFiltros = () => { tipoSel.value = S.tipo ?? ""; buscar.value = S.q; };
+
+  // ---------- información del dato (fuente, periodo, cobertura, naturaleza) junto al título del indicador ----------
+  { const titulo = $("#ind-titulo"), cab = el("div", { class: "ind-cab" });
+    titulo.before(cab);
+    cab.append(titulo, botonInfo(() => descSituacion(store, ind(), rankAll[S.i].length, TOTAL), { etiqueta: "Información sobre este indicador: fuente, periodo y cobertura" })); }
 
   // ---------- mapa ----------
   const tip = $("#tip");

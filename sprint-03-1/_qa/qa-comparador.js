@@ -30,12 +30,12 @@ export async function run() {
   ok("Dos encabezados diferenciados: A y B con el nombre de cada municipio, datos originales y chips A/B", $$(".cmp-chip").map((c) => c.textContent).join() === "A,B" && $$(".cabeceras .muni-nombre").map((n) => n.textContent).join() === `${nombre(BIL)},${nombre(BAR)}`);
   ok("Banner territorial en los DOS encabezados (Bilbao y Barakaldo son de los 16 identificados) y con la imagen de cada uno", $$(".cabeceras .muni-banner").length === 2 && $$(".cabeceras .muni-foto").map((i) => i.src.split("/").pop()).join() === "bilbao.webp,barakaldo.webp");
   const filas = $$(".filas-ind > li");
-  ok("Siguen los 13 indicadores originales, en su orden y con su nombre", filas.length === 13 && filas.map((f) => $(".nombre-ind", f).textContent).join("|") === DOTS.map((d) => d[1]).join("|"));
+  ok("Siguen los 13 indicadores originales, en su orden y con su nombre", filas.length === 13 && filas.map((f) => $(".nombre-ind", f).textContent.trim()).join("|") === DOTS.map((d) => d[1]).join("|"));
 
   // las cifras y los puestos son EXACTAMENTE los del renderizador original
   const scratch = dotPlot(store, [BIL, BAR]); cifrasPlanas(scratch, true);
   const ref = $$(".fila-ind", scratch).map((f) => [$(".nombre-ind", f).textContent, ...$$(".cifra-dot", f).map((c) => plano(c.textContent))].join("¦"));
-  const vivo = filas.map((f) => [$(".nombre-ind", f).textContent, ...$$(".cifra-dot", f).map((c) => plano(c.textContent))].join("¦"));
+  const vivo = filas.map((f) => [$(".nombre-ind", f).textContent.trim(), ...$$(".cifra-dot", f).map((c) => plano(c.textContent))].join("¦"));
   ok("Las 26 cifras (13 indicadores × 2 municipios) y sus puestos son idénticos a los del renderizador original", ref.length === 13 && ref.join("\n") === vivo.join("\n"), vivo.filter((v, i) => v !== ref[i])[0] ?? "");
   const leyOrig = plano($(".clave-puntos", scratch).textContent), leyVivo = plano($(".clave-puntos", ficha).textContent);
   ok("La leyenda original (municipios, mediana de su tipo, Bizkaia, cada municipio) se conserva", leyOrig === leyVivo, leyVivo);

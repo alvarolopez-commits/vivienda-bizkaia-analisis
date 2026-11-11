@@ -9,6 +9,8 @@ import { cifrasPlanas, envolver, lupa, norm } from "../lectura.js";
 import { bannerDe } from "./imagenes.js";
 import { fijar, filaContexto } from "../contexto.js";
 import { componerComparacion } from "./comparador.js";
+import { botonInfo, descHogares, descMunicipal } from "../info-dato.js";
+import { DOTS } from "../../original/js/municipios/puntos.js";
 
 export function montar(raiz, { store }) {
   const lec = envolver(raiz, { clase: "v-municipios", indice: "lateral", dibujar: (c) => renderMunicipios(c, store), herramientas: (c) => c.querySelector(".eligen") });
@@ -57,6 +59,13 @@ export function montar(raiz, { store }) {
     // contexto de investigación: el municipio principal y el comparado; y los saltos a Situación, Acceso y Medidas con este municipio
     fijar({ muni: raiz.querySelector("#muni-a")?.value || null, muniB: raiz.querySelector("#muni-b")?.value || null });
     (lec.nodos.contenido.querySelector(".cmp-acciones") ?? lec.nodos.contenido.querySelector(".cabeceras"))?.after(filaContexto("municipios", { clase: "en-municipios" }));
+    // información del dato: un botón «i» en cada uno de los 13 indicadores y en «Alquilar y comprar»
+    lec.nodos.contenido.querySelectorAll(".filas-ind > li").forEach((li, i) => {
+      const [key, label] = DOTS[i] ?? [];
+      if (key) li.querySelector(".nombre-ind")?.append(" ", botonInfo(() => descMunicipal(store, key, label), { etiqueta: `Información sobre el indicador: ${label}`, clase: "en-fila" }));
+    });
+    { const cab = lec.nodos.contenido.querySelector("#hogares .sec-cab");
+      if (cab) cab.append(botonInfo(() => descHogares(store, cab.querySelector(".sub")?.textContent ?? null), { etiqueta: "Información sobre alquilar y comprar: fuentes, periodo y naturaleza del precio", clase: "en-seccion" })); }
     cifrasPlanas(lec.nodos.contenido);
     // el nombre de cada municipio es el titular de su perfil (el original lo dibuja con un <p>): se anuncia como encabezado
     lec.nodos.contenido.querySelectorAll(".muni-nombre").forEach((n) => { n.setAttribute("role", "heading"); n.setAttribute("aria-level", "2"); });

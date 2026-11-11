@@ -55,7 +55,14 @@ export function montar(raiz, { store }) {
   dl.after(vacio);
   filtrar();
 
-  const mostrar = () => { lec.vista.show?.(parseHash(location.hash).sub); };
+  // «#metodo/<bloque>» lleva a ese bloque (por el principio de su título sin acentos: «#metodo/fuentes», «#metodo/datos-aproximados»): así la información del
+  // dato de las otras vistas enlaza al bloque metodológico original. «#metodo/glosario» sigue siendo la ancla de siempre.
+  const mostrar = () => {
+    const sub = parseHash(location.hash).sub;
+    lec.vista.show?.(sub);
+    const bloque = sub && sub !== "glosario" ? raiz.querySelector(`.method-block[id^="m-${sub}"]`) : null;
+    if (bloque) requestAnimationFrame(() => { bloque.scrollIntoView({ block: "start", behavior: "auto" }); bloque.setAttribute("tabindex", "-1"); bloque.focus({ preventScroll: true }); });
+  };
   mostrar();
   return { alCambiarDireccion: mostrar, desmontar: () => lec.desmontar() };
 }

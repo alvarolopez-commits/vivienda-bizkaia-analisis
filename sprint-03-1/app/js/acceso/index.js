@@ -5,7 +5,8 @@
 import { renderAcceso } from "../../original/js/acceso/index.js";
 import { el, es } from "../../original/js/ui.js";
 import { envolver } from "../lectura.js";
-import { fijar, filaContexto, leer } from "../contexto.js";
+import { fijar, filaContexto } from "../contexto.js";
+import { botonInfo, descAcceso } from "../info-dato.js";
 
 export function montar(raiz, { store }) {
   const lec = envolver(raiz, { clase: "v-acceso", indice: "pestanas", dibujar: (c) => renderAcceso(c, store) });
@@ -59,6 +60,12 @@ export function montar(raiz, { store }) {
   lugar?.addEventListener("change", () => { if (lugar.value !== "48") fijar({ muni: lugar.value }); });
   const alCambiar = () => queueMicrotask(escribir);
   ["click", "change"].forEach((ev) => lec.nodos.contenido.addEventListener(ev, (e) => { if (e.target.closest(".explorador, .alcance-controles")) alCambiar(); }));
+  // información del dato en cada una de las cuatro partes (el título, la entradilla y la línea de fuentes son los de la propia página)
+  ["alquilar", "escalera", "explorador", "alcance"].forEach((id) => {
+    const sec = raiz.querySelector(`#${id}`), cab = sec?.querySelector(".sec-cab");
+    if (!cab) return;
+    cab.append(botonInfo(() => descAcceso(store, id, { titulo: cab.querySelector("h2").textContent, definicion: cab.querySelector(".sub")?.textContent ?? null, fuenteOriginal: sec.querySelector(":scope > .fuente")?.textContent ?? null }), { etiqueta: `Información sobre «${cab.querySelector("h2").textContent}»: fuentes, periodo y cobertura`, clase: "en-seccion" }));
+  });
   lec.nodos.contenido.prepend(filaContexto("acceso", { clase: "en-acceso" }));
 
   // la leyenda del mapa «¿Hasta dónde llega mi hogar?» va encima del mapa, como la de Situación (el nodo no se vuelve a dibujar: solo cambia de sitio)

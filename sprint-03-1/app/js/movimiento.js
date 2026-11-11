@@ -75,7 +75,7 @@ const BLOQUES = {
   municipios: [".lec-cab", ".lec-indice", ".muni-cab", ".ficha > section:first-of-type"],
   lec: [".lec-cab", ".lec-indice", ".lec-contenido > :nth-child(1)", ".lec-contenido > :nth-child(2)"],
 };
-const FOCAL = { medidas: ".m-stage", municipios: ".muni-cab" };   // Situación: el mapa (css); Acceso y Normas: las cifras que ruedan
+const FOCAL = { medidas: ".m-stage", municipios: ".cabeceras .muni-cab:first-child" };   // con comparación hay dos tarjetas: el momento firma es solo el de la primera   // Situación: el mapa (css); Acceso y Normas: las cifras que ruedan
 
 export function entrada(nombre, raiz) {
   if (modo() === "still") return;

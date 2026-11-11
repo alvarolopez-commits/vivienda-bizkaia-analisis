@@ -100,7 +100,7 @@ PRESENTACION = {"background", "background-image", "background-color", "backgroun
 # Cambios de maquetación PEDIDOS por el autor (y, en la cabecera, el sitio del botón «Copiar enlace» y de la fila de contexto): la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo;
 # los bloques de Situación y Medidas comparten columnas y huecos (alineación de la página); y fuera el punto decorativo de la ficha (el tipo ya lo dice el texto).
 # Solo afecta a los contenedores del lienzo de Situación y a la leyenda del Plano; ningún dato, texto ni cálculo.
-LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario", ".marca", ".banda", ".vistas") or ":has(> .leyenda-lineas)" in s or s.startswith(".ctx-") or s == ".ficha-tipo .punto-tipo" or s == ".marca img" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
+LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario", ".marca", ".banda", ".vistas", ".ind-cab", ".rep-titulo") or ":has(> .leyenda-lineas)" in s or s.startswith(".ctx-") or s.startswith(".info-") or s.startswith(".ind-cab") or s == ".ficha-tipo .punto-tipo" or s == ".marca img" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
 
 
 def reglas(texto):
