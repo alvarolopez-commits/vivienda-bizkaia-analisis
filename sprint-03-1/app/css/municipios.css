@@ -22,6 +22,24 @@
 .v-municipios .cabeceras.n2 .muni-cab:first-child { box-shadow: inset 4px 0 0 var(--dato-a), var(--elev-1); }
 .v-municipios .cabeceras.n2 .muni-cab:last-child { box-shadow: inset 4px 0 0 var(--dato-b), var(--elev-1); }
 
+/* ---------- Banner territorial (cabecera del municipio primario) ----------
+   Imagen ilustrativa detrás del mismo texto de siempre (HTML real). Degradado azul marino a la izquierda para el nombre; la imagen no lleva
+   desenfoque ni filtros. Mientras carga (o si falla) se ve el fondo azul marino del sistema, nunca una imagen rota. */
+.v-municipios .muni-banner { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; min-height: 208px; border-color: rgba(34, 30, 65, .5); background: var(--noche); color: #fff; box-shadow: 0 1px 2px rgba(26, 36, 70, .1), 0 14px 30px -18px rgba(26, 36, 70, .45); }
+.v-municipios .muni-foto { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--t-base) var(--ease-out); }
+.v-municipios .muni-foto.lista { opacity: 1; }
+.v-municipios .muni-velo { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(20, 24, 58, .92) 0%, rgba(20, 24, 58, .78) 34%, rgba(20, 24, 58, .28) 64%, rgba(20, 24, 58, 0) 82%), linear-gradient(0deg, rgba(20, 24, 58, .5) 0%, rgba(20, 24, 58, 0) 46%); }
+.v-municipios .muni-banner .muni-nombre { color: #fff; text-shadow: 0 1px 18px rgba(10, 14, 40, .35); max-width: 24ch; }
+.v-municipios .muni-banner .muni-datos { align-self: flex-start; max-width: min(100%, 46rem); margin-top: var(--s3); padding: 7px 14px; border: 1px solid rgba(255, 255, 255, .22); border-radius: 16px; background: rgba(20, 24, 58, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: rgba(255, 255, 255, .92); font-size: .9375rem; line-height: 1.45; }
+.v-municipios .muni-banner .muni-datos b, .v-municipios .muni-banner .muni-datos [data-roll] { color: #fff; }
+.v-municipios .muni-banner .punto-tipo { box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); }
+/* con comparación: la identificación del primero (franja izquierda) pasa por encima de la imagen; sin dos banners gigantes */
+.v-municipios .cabeceras.n2 .muni-banner { min-height: 168px; }
+.v-municipios .cabeceras.n2 .muni-banner::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--dato-a); }
+@media (prefers-reduced-transparency: reduce) { .v-municipios .muni-banner .muni-datos { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); } }
+@media (prefers-contrast: more) { .v-municipios .muni-velo { background: rgba(20, 24, 58, .82); } }
+body[data-motion="still"] .v-municipios .muni-foto { transition: none; }
+
 /* ---------- Indicadores: una pista por indicador ---------- */
 .v-municipios .filas-ind { display: grid; gap: 2px; }
 .v-municipios .fila-ind { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) minmax(0, 14rem); gap: var(--s5); align-items: center; padding: 12px var(--s4); border-radius: 14px; }

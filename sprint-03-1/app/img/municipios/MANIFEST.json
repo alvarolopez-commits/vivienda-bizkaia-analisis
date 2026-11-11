@@ -1,0 +1,476 @@
+{
+  "total_imagenes": 52,
+  "municipios_identificados": 16,
+  "municipios_provisionales": 6,
+  "fondos_genericos": 30,
+  "archivos": [
+    {
+      "archivo": "01_municipios_identificados/bilbao.webp",
+      "municipio": "bilbao",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "972a025dd0839e4799b7a7d961832643c14bf768ab3d889a3270f9bc2545912f"
+    },
+    {
+      "archivo": "01_municipios_identificados/barakaldo.webp",
+      "municipio": "barakaldo",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "9e3d27f9c0643843acb30489f126a2925632c057e62ac3764dc58bfeb1d3d325"
+    },
+    {
+      "archivo": "01_municipios_identificados/getxo.webp",
+      "municipio": "getxo",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "3682e0d2a871a6a6f404e4d269057dcbed503e3840f55e5b682bee849adde7a8"
+    },
+    {
+      "archivo": "01_municipios_identificados/portugalete.webp",
+      "municipio": "portugalete",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "fe8b4c080d019ee626ca53df1f97c5318491bcd313082c0761864de140eaad8b"
+    },
+    {
+      "archivo": "01_municipios_identificados/santurtzi.webp",
+      "municipio": "santurtzi",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "c739f8adbd2edf2a07e85d861847f5ff8adc6e3c0af8c284f2328360ed0b39a5"
+    },
+    {
+      "archivo": "01_municipios_identificados/gernika_lumo.webp",
+      "municipio": "gernika_lumo",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "258ff4597cf4b86b2017a281771e856520013d1f8b047bc587ec10aedabea52b"
+    },
+    {
+      "archivo": "01_municipios_identificados/bermeo.webp",
+      "municipio": "bermeo",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "7c87d574dc503e5e1b5bb7ad75cfca0232e62400b42d38f579146103e4ce4837"
+    },
+    {
+      "archivo": "01_municipios_identificados/lekeitio.webp",
+      "municipio": "lekeitio",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "81a5c891095b2f723f1a77cdae91d4472ed706284f154f9f34404e5898ae5e91"
+    },
+    {
+      "archivo": "01_municipios_identificados/mundaka.webp",
+      "municipio": "mundaka",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "8d35fa6a425c7c9eb6341726f24bda8de6b36f1b308beac8b22a9656017ddbb9"
+    },
+    {
+      "archivo": "01_municipios_identificados/elantxobe.webp",
+      "municipio": "elantxobe",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "b41d04fc68f4a8078080edd56b6d0579952e886db9b8d7dce44a81701dc6eede"
+    },
+    {
+      "archivo": "01_municipios_identificados/ondarroa.webp",
+      "municipio": "ondarroa",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "77878557cf6224c995df772f49230bd2a8874bdfc059508df4f15b958d6fb3a9"
+    },
+    {
+      "archivo": "01_municipios_identificados/balmaseda.webp",
+      "municipio": "balmaseda",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "c8a68fa58b437c22ca10ebf8939b285c448729205ba8defb8f06a4029a6423fd"
+    },
+    {
+      "archivo": "01_municipios_identificados/orduna.webp",
+      "municipio": "orduna",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "75beea5d7bc67132758b7d90477603278574e2251b4cbd1b4918331e32c6bae9"
+    },
+    {
+      "archivo": "01_municipios_identificados/plentzia.webp",
+      "municipio": "plentzia",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "c8e1b09d1b43258c2d7d59f9042a0eda99147de9ed44dc7274db3b76a7adf355"
+    },
+    {
+      "archivo": "01_municipios_identificados/gorliz.webp",
+      "municipio": "gorliz",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "f9802f0f0ea441fa9b4f4ee4f6923d328ef658b0af42c60ded936c39e05dbc40"
+    },
+    {
+      "archivo": "01_municipios_identificados/bakio.webp",
+      "municipio": "bakio",
+      "tipo": "municipio",
+      "estado": "banner nombrado de tanda anterior; exactitud geografica no verificada",
+      "ancho": 1600,
+      "alto": 686,
+      "sha256": "717962551d70862271a238886e023fd505625b9002dcb3782fa07bc7fe89a8fd"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/amorebieta_etxano.webp",
+      "municipio": "Amorebieta-Etxano",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "9d86ecd1306147746dc9f2f42625e9ea9c776436083777748d24fbede9ff688f"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/galdakao.webp",
+      "municipio": "Galdakao",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "c90128d6dd1d5d9c0a93b2008a11fcadb2f511344cbf92f47e295fdc6c84965c"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/mungia.webp",
+      "municipio": "Mungia",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "fae50f29dad2ed72d0dad7d02e05bf6859c84768fab06916623b6e4e302150eb"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/urduliz.webp",
+      "municipio": "Urduliz",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "eeb614239ac0fc6789b07fd526cea45c34cf3716bd506d901af890cb32dbd710"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/sopela.webp",
+      "municipio": "Sopela",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "f10176b8a2709da816068ed7ea5b93a622b90ccd9266a63344cbbfffd20da5d2"
+    },
+    {
+      "archivo": "02_municipios_pendientes_validar/zalla.webp",
+      "municipio": "Zalla",
+      "tipo": "municipio_provisional",
+      "estado": "imagen generada IA orientada a municipio; verificar antes de presentarla como representacion real",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "0385aef7213fdc775ff9dab5748c93df86070e0de17b48c593fedb6cfd6d6bb2"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_01.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 600,
+      "sha256": "f4b04917f6f21bc032525f83046a255f32892320ffee397fb6ce2b6350c378fc"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_02.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 800,
+      "sha256": "cdea0a9571f9d54290425f3731266dd6d736444790b6463a788a968395ffacfa"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_03.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "2dbca58a4120aa3713743f05e1bdf5221a61e60d7eba7ae05447d6d25b24e787"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_04.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "1f3dd5c57184c3820e6945c3b291b5df0846dc83a3dbbd929d3a883cee64fdf3"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_05.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "c78de2ed9e8f97b937fdc0441dc1e8db0d2ba349ce5027b36381070097ec036b"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_06.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 711,
+      "sha256": "a31286a7f0d24acdebca7804129ec76af80599a2ba7b49c01adbb1546c418c84"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_07.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "d455499bbd78244da1e715e581a51cf6a0271865b8cca07c395aa2d761f463c8"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_08.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "4a99f2c456ebf3da05702d343fb60259e960616c4a845c77440d0cd4a4060e79"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_09.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 800,
+      "sha256": "cda74eaf93b0964fe91d4b014ba75cd2900e9757a2c6bb03a2c4e0a495f65786"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_10.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 800,
+      "sha256": "e744ff0e41e7b7d5b9a7ee55253541a6002262268ff0dce5ff1ea31c2e82bc00"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_11.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "af8ed2f1c6bddc278ea2d4065f5e2b41d727e70d918927d9855fac0779523d71"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_12.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 711,
+      "sha256": "b15153bbae2ffe7704dca32a7038b33a8c13564b0c1b4d11fdea5492803a12f0"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_13.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "e3f4aab405b2c96b764ef39477ee89a65da380a27cbaa2bbedfa17eb5057efc7"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_14.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "9c328317439f8f7dee97d9e6090c2ec7de041c61bf09c03793e32d594328b200"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_15.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "2d15e2eca463eabdafa020bbb86656480547ba25f54ba2d16cef818286c3dff8"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_16.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "1c21520ed1238e58fe55bdd939361a9833634d6d3c3332248252160a4b166f6f"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_17.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "b01da9794aa389778fb09111ed84f91a2349fa8dc9742d662446ee7126ce2608"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_18.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "652109a353448aad08edbb96842cb1b6f60fdc3a132d1752bd85003bfce060f4"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_19.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "5a104ac40c099537c13e4a3f3ce8751b09ac1cdcd6185b8860a31f0b9363ab1b"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_20.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "e2d85584a1d6e106d268b9825444f9ba8b87ad0ecda43796062caec99ff58839"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_21.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 900,
+      "sha256": "5ebf80ea3e496eb5c6614f723585bb7f1b6d98b4959c5012cb53f478189273b0"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_22.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 800,
+      "sha256": "6c4461e8c09606a6095b17badfd5a077e78bb6daf9bd64c58d4909190ca0134c"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_23.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 640,
+      "sha256": "77736e0cf2955b717cade95c3d48ea66f92451a4e9ee605b608f2772b9a29713"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_24.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "96011e5709b689585355d73cc3d9a625348aeb966ae6f0646b84319c876acffb"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_25.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "f6fbd9e430b135aa0b2ea260eaa797a874b7fb79748f455397e088fa7da2a654"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_26.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "4bfee5a427420cf35bd506a28118757d890001153fef0a3c6bd00cac21ddb197"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_27.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "64c15c116e0518ab25d9e8d1f08101495fcfff1aa4dc52b207b21f14aab49650"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_28.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "4cc033ca78504ed1ae1d2c9d9b2eee1f68230c5b234e9e8eb4c989baa6b131d5"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_29.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 533,
+      "sha256": "e8feadeded558397e0a55d8caf72c085aa963d601118a23689c0790666cdd825"
+    },
+    {
+      "archivo": "03_fondos_genericos/generico_30.webp",
+      "municipio": "",
+      "tipo": "generico",
+      "estado": "imagen ilustrativa, no representa localidad real; asignacion libre",
+      "ancho": 1600,
+      "alto": 640,
+      "sha256": "df5866353bf1f49e4091d8bd3f4ae94c5c3c86f4e5b93443e77e319e4aefcc78"
+    }
+  ]
+}
