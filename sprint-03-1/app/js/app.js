@@ -12,7 +12,7 @@
 // vista, los cambios de dirección los resuelve la propia vista (alCambiarDireccion), con el mismo código que antes.
 import { cargarStore } from "./datos.js";
 import { redirectOf } from "../original/js/rutas.js";
-import { entrada, iniciar, lente, lentes, observarTick, transicion } from "./movimiento.js";
+import { entrada, iniciar, lente, lentes, modo, observarTick } from "./movimiento.js";
 
 iniciar(); // intensidad del movimiento (body[data-motion]); la píldora de la cabecera es la misma en las seis vistas
 lente(document.querySelector(".vistas"));
@@ -50,39 +50,36 @@ async function ir() {
   if (movida) history.replaceState(null, "", movida);
   const nombre = vistaDe(location.hash);
   if (actual?.nombre === nombre) { actual.vista.alCambiarDireccion?.(); return; }
-  if (!actual) raiz.setAttribute("aria-busy", "true"); // primera carga: esqueleto mientras llegan los datos
+  const cubrir = Boolean(actual) && modo() !== "still"; // la primera carga no tiene contenido que cubrir
+  if (!actual) raiz.setAttribute("aria-busy", "true");   // primera carga: esqueleto mientras llegan los datos
   try {
-    const store = await cargarStore();
-    await Promise.all(Object.values(HOJAS).flat().map(hojaLista));
-    // el cambio de vista es una sola transición: la cabecera se queda y el contenido se funde y sube (movimiento.js)
-    await transicion(async () => {
-      try {
-        limpieza?.(); limpieza = null;
-        actual?.vista.desmontar?.();
-        actual = null;
-        raiz.replaceChildren();
-        Object.entries(HOJAS).forEach(([k, links]) => links.forEach((link) => { link.disabled = k !== nombre; }));
-        marcarNavegacion(nombre);
-        const modulo = await import(`./${nombre}/index.js`);
-        const vista = await modulo.montar(raiz, { store });
-        actual = { nombre, vista };
-        window.__vista = nombre; // solo para las pruebas de _qa
-        window.scrollTo(0, 0);   // una vista nueva empieza arriba
-        entrada(nombre, raiz);
-        const sueltaLentes = lentes(raiz), sueltaTick = observarTick(raiz);
-        limpieza = () => { sueltaLentes(); sueltaTick(); };
-      } catch (err) {
-        console.error(err);
-        raiz.replaceChildren(Object.assign(document.createElement("p"), { className: "aviso-error", textContent: `No se han podido cargar los datos (${err.message}). Recarga la página.` }));
-      }
-    });
+    // 1) respuesta inmediata: la píldora ya viaja a la pestaña nueva y el contenido viejo se cubre con el velo (150 ms)
+    marcarNavegacion(nombre);
+    if (cubrir) document.body.classList.add("cambiando");
+    // 2) lo lento (módulos, datos, hojas de estilo) se hace MIENTRAS el velo se cierra, no después
+    const [store, modulo] = await Promise.all([cargarStore(), import(`./${nombre}/index.js`), Promise.all(Object.values(HOJAS).flat().map(hojaLista)), cubrir ? pausa(150) : null]);
+    // 3) con el velo cerrado se cambia la vista (nada de esto se ve)
+    limpieza?.(); limpieza = null;
+    actual?.vista.desmontar?.();
+    actual = null;
+    raiz.replaceChildren();
+    Object.entries(HOJAS).forEach(([k, links]) => links.forEach((link) => { link.disabled = k !== nombre; }));
+    const vista = await modulo.montar(raiz, { store });
+    actual = { nombre, vista };
+    window.__vista = nombre; // solo para las pruebas de _qa
+    window.scrollTo(0, 0);   // una vista nueva empieza arriba
+    entrada(nombre, raiz);
+    const sueltaLentes = lentes(raiz), sueltaTick = observarTick(raiz);
+    limpieza = () => { sueltaLentes(); sueltaTick(); };
   } catch (err) {
     console.error(err);
     raiz.replaceChildren(Object.assign(document.createElement("p"), { className: "aviso-error", textContent: `No se han podido cargar los datos (${err.message}). Recarga la página.` }));
   } finally {
     raiz.removeAttribute("aria-busy");
+    requestAnimationFrame(() => document.body.classList.remove("cambiando")); // 4) el velo se abre (240 ms) y deja ver la vista nueva
   }
 }
+const pausa = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Un solo montaje a la vez: si la dirección cambia mientras se monta una vista, se espera a que acabe y se relee la dirección más
 // reciente (sin esto, dos montajes se pisarían el DOM y los oyentes).
@@ -92,6 +89,11 @@ async function solicitar() {
   ocupado = true;
   try { do { pendiente = false; await ir(); } while (pendiente); } finally { ocupado = false; }
 }
+
+// Precarga: cada vista se descarga en cuanto el puntero o el teclado llegan a su pestaña y, con la página en reposo, todas; así el cambio no espera a la red.
+const precargar = (v) => import(`./${v}/index.js`).catch(() => {});
+document.querySelectorAll("a[data-vista]").forEach((a) => ["pointerenter", "focus", "touchstart"].forEach((ev) => a.addEventListener(ev, () => precargar(a.dataset.vista), { once: true, passive: true })));
+(window.requestIdleCallback ?? ((f) => setTimeout(f, 1500)))(() => Object.keys(NOMBRES).forEach(precargar));
 
 addEventListener("hashchange", solicitar);
 // el enlace «Saltar al contenido» no puede usar un hash: el router lo leería como una dirección

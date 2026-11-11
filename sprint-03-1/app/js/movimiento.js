@@ -15,21 +15,8 @@ export function iniciar() {
   document.body.dataset.motion = INTENSIDAD[new URLSearchParams(location.search).get("mov")] ?? "expressive";
 }
 
-/**
- * Continuidad entre estados: el cambio de vista dentro de una View Transition (la cabecera se queda; el contenido se funde y sube).
- * Sin soporte, con «reducir movimiento», con intensidad «still» o con la pestaña oculta, el cambio se hace directo. Si el navegador no
- * llega a llamar a la función (sin fotogramas que esperar), a los 250 ms se ejecuta igualmente. Devuelve cuando el DOM ya está cambiado.
- */
-export async function transicion(actualiza) {
-  if (!document.startViewTransition || reducido() || modo() === "still" || document.hidden) return actualiza();
-  let prom = null;
-  const run = () => (prom ??= Promise.resolve().then(actualiza));
-  const t = document.startViewTransition(run);
-  t.ready.catch(() => {}); t.finished.catch(() => {}); t.updateCallbackDone.catch(() => {});
-  setTimeout(run, 250);
-  await Promise.race([t.updateCallbackDone.catch(() => {}), new Promise((r) => setTimeout(r, 600))]);
-  return run();
-}
+// El cambio de vista NO usa View Transitions: fotografían el elemento entero y, en las vistas largas, congelaban la pantalla de 300 a 670 ms (medido).
+// En su lugar (app.js + css/movimiento.css): la píldora viaja al instante, un velo cubre el contenido viejo, se cambia detrás y el velo se abre.
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Píldora deslizante: continuidad de «qué está elegido». La píldora oscura se mueve al nuevo elegido (aria-pressed / aria-current) en vez de

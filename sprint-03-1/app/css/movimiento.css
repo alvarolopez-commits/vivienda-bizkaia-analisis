@@ -8,7 +8,8 @@
    El contenido es visible por defecto: ninguna regla de aquí oculta nada si el script falla.
    Con prefers-reduced-motion: menos y más suave, no cero: se conservan los fundidos y los cambios de estado; se quita el recorrido. */
 
-@keyframes rise { from { opacity: 0; translate: 0 var(--rise-y, 4px); } }
+@keyframes rise { from { translate: 0 var(--rise-y, 4px); } }                         /* solo desplazamiento: el fundido de la entrada lo da el velo (sin opacidad sobre bloques con vidrio) */
+@keyframes rise-fade { from { opacity: 0; translate: 0 var(--rise-y, 4px); } }          /* capas pequeñas que aparecen solas: desplegable, ficha, bandeja */
 @keyframes tick { from { opacity: .35; translate: 0 3px; } }
 @keyframes fade-in { from { opacity: 0; } }
 @keyframes fade-out { to { opacity: 0; } }
@@ -18,15 +19,14 @@
 @keyframes shimmer { to { transform: translateX(100%); } }
 @keyframes pulse { 50% { opacity: .5; } }
 
-/* ---------- Continuidad entre vistas: View Transitions (la cabecera se queda; el contenido se funde y sube) ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  #vista { view-transition-name: vista; }
-  .banda { view-transition-name: banda; }
-  ::view-transition-group(*) { animation-duration: var(--t-layout); animation-timing-function: var(--ease-out); }
-  ::view-transition-old(vista) { animation: fade-out var(--t-fast) var(--ease-inout) both; }   /* la salida es más rápida que la entrada */
-  ::view-transition-new(vista) { animation: fade-in var(--t-base) var(--ease-out) both; }
-}
-@media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } }
+/* ---------- Continuidad entre vistas: un velo, no una View Transition ----------
+   La View Transition fotografía el elemento entero antes de animar: en las vistas largas (Medidas, Método, Municipios) eso congelaba la pantalla
+   entre 300 y 670 ms (medido). El velo es un solo rectángulo que cambia de opacidad: la salida (150 ms) lo cierra sobre el contenido viejo, se
+   cambia la vista detrás y la entrada (240 ms) lo abre. Nunca se anima la opacidad de un ancestro de elementos con vidrio (backdrop-filter),
+   que los rompería, y la página sigue respondiendo todo el tiempo. */
+#velo { position: fixed; z-index: 30; inset: var(--banda) 0 0 0; background: var(--bg); opacity: 0; pointer-events: none; transition: opacity var(--t-base) var(--ease-out); }
+body.cambiando #velo { opacity: 1; transition: opacity var(--t-fast) var(--ease-inout); }   /* la salida es más rápida que la entrada */
+body[data-motion="still"] #velo { display: none; }
 
 /* ---------- Entrada de la vista (jerarquía: primero la cabecera, luego lo que se consulta) ---------- */
 body[data-motion="restrained"] .rise, body[data-motion="expressive"] .rise { animation: rise var(--t-base) var(--ease-out) both; }
@@ -48,9 +48,9 @@ body[data-motion="still"] .lente.moving { scale: 1; }
 body[data-motion="restrained"] .tick, body[data-motion="expressive"] .tick { animation: tick var(--t-base) var(--ease-out); }
 
 /* ---------- Capas que aparecen: desplegables, ficha, bandeja, tooltip ---------- */
-body:not([data-motion="still"]) .m-pop:not([hidden]) { --rise-y: 6px; animation: rise var(--t-fast) var(--ease-out) both; }
-body:not([data-motion="still"]) .panel-medida:not([hidden]) { animation: rise var(--t-base) var(--ease-out) both; }
-body:not([data-motion="still"]) #bandeja:not([hidden]) { --rise-y: 12px; animation: rise var(--t-base) var(--ease-out) both; }
+body:not([data-motion="still"]) .m-pop:not([hidden]) { --rise-y: 6px; animation: rise-fade var(--t-fast) var(--ease-out) both; }
+body:not([data-motion="still"]) .panel-medida:not([hidden]) { animation: rise-fade var(--t-base) var(--ease-out) both; }
+body:not([data-motion="still"]) #bandeja:not([hidden]) { --rise-y: 12px; animation: rise-fade var(--t-base) var(--ease-out) both; }
 body:not([data-motion="still"]) .tip:not([hidden]) { animation: fade-in 120ms var(--ease-out); }
 
 /* ---------- Un dato que se dibuja: las barras de Acceso crecen desde el origen ---------- */

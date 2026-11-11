@@ -77,7 +77,7 @@
   --vidrio-borde: rgba(255, 255, 255, .75);              /* borde óptico claro, hacia dentro */
   --vidrio-contorno: rgba(34, 30, 65, .10);               /* contorno fino exterior para separarlo del fondo */
   --vidrio-sombra: inset 0 1px 0 rgba(255, 255, 255, .9), inset 0 -1px 0 rgba(34, 30, 65, .05), 0 0 0 1px var(--vidrio-contorno), var(--elev-1);
-  --vidrio-filtro: blur(20px) saturate(170%);
+  --vidrio-filtro: blur(14px) saturate(150%);   /* más ligero que 20 px / 170 %: el vidrio es el coste de pintado más alto de la interfaz */
 
   /* barra global (cabecera): más translúcida y sin sombra propia, solo línea inferior */
   --vidrio-barra-fondo: rgba(247, 248, 251, .66);

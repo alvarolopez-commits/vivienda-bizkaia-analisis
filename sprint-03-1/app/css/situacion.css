@@ -2,7 +2,7 @@
    Materiales (tokens.css): L1 vidrio = selector de problemas, controles del mapa y panel contextual; L0 opaco = mapa, leyenda,
    cifras y ranking. Los colores de datos no se tocan. */
 /* fondo ambiental discreto: da al vidrio algo que refractar; solo mientras esta vista está activa */
-body { background: var(--ambiente), var(--bg); background-attachment: fixed; }
+body { background: var(--ambiente), var(--bg); }   /* sin background-attachment: fixed: repinta toda la ventana en cada fotograma de scroll */
 .atlas { max-width: 1520px; margin-inline: auto; padding-inline: max(var(--margen), env(safe-area-inset-left, 0px)) max(var(--margen), env(safe-area-inset-right, 0px)); }
 .atlas-cab { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s5) var(--s6); padding-block: var(--s7) var(--s5); }
 .atlas-titulo { display: grid; gap: var(--s2); min-width: 0; }

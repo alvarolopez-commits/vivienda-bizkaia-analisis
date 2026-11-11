@@ -38,17 +38,29 @@ export async function run() {
   prob[0].click(); await sleep(400);
 
   // ---------- transición entre vistas ----------
-  let llamadas = 0; const orig = document.startViewTransition.bind(document); document.startViewTransition = (f) => { llamadas++; return orig(f); };
+  let llamadas = 0; const orig = document.startViewTransition?.bind(document); if (orig) document.startViewTransition = (f) => { llamadas++; return orig(f); };
+  const pildora = $(".vistas > .lente"), x0n = pildora.style.transform;
   const t0 = performance.now(); const gaps = []; let ult = performance.now(), vivo = true; const bucle = () => { const n = performance.now(); gaps.push(n - ult); ult = n; if (vivo) requestAnimationFrame(bucle); }; requestAnimationFrame(bucle);
   $('.vistas a[data-vista="municipios"]').click();
+  let tPildora = null; for (let i = 0; i < 100; i++) { await sleep(10); if (pildora.style.transform !== x0n) { tPildora = performance.now() - t0; break; } }
+  const veloCerrado = document.body.classList.contains("cambiando") && getComputedStyle($("#velo")).transitionDuration === "0.15s";
   let rise = [], focal = [];
   for (let i = 0; i < 60; i++) { await sleep(25); rise = $$(".v-municipios .rise"); focal = $$(".v-municipios .focal"); if (rise.length >= 3) break; }   // se leen en cuanto la vista se ha montado (duran 420–700 ms)
   await esperar("municipios", ".v-municipios .fila-ind");
-  vivo = false; document.startViewTransition = orig;
-  ok("Cambiar de vista usa UNA View Transition (la cabecera persiste con su propio nombre; el contenido se funde)", llamadas === 1 && getComputedStyle($(".banda")).viewTransitionName === "banda" && getComputedStyle($("#vista")).viewTransitionName === "vista", `llamadas ${llamadas}`);
-  ok("La salida es más rápida que la entrada (150 ms frente a 240 ms) y los grupos de la transición duran 420 ms", /::view-transition-old\(vista\)\s*\{\s*animation:\s*fade-out var\(--t-fast\)/.test(css) && /::view-transition-new\(vista\)\s*\{\s*animation:\s*fade-in var\(--t-base\)/.test(css) && /::view-transition-group\(\*\)\s*\{\s*animation-duration:\s*var\(--t-layout\)/.test(css));
+  vivo = false; if (orig) document.startViewTransition = orig;
+  ok("Cambiar de vista NO usa View Transitions (fotografían la vista entera y congelaban 300–670 ms); hay un velo y ninguna regla ::view-transition", llamadas === 0 && !!$("#velo") && !/view-transition/.test(css) && !/startViewTransition/.test(js), `llamadas ${llamadas}`);
+  ok(`La píldora de la cabecera reacciona al instante (${Math.round(tPildora)} ms < 100 ms) y el velo se cierra en 150 ms`, tPildora !== null && tPildora < 100 && veloCerrado);
+  ok("La salida es más rápida que la entrada: el velo se cierra en 150 ms y se abre en 240 ms", getComputedStyle($("#velo")).transitionDuration === "0.24s" && /body\.cambiando #velo \{ opacity: 1; transition: opacity var\(--t-fast\)/.test(css) && /#velo \{[^}]*transition: opacity var\(--t-base\)/.test(css));
   ok("Una vista nueva empieza arriba (scroll a 0)", scrollY === 0);
-  ok(`Rendimiento durante la transición: sin fotogramas de más de 400 ms (mayor: ${Math.round(Math.max(...gaps))} ms; el perfil real se mide aparte)`, Math.max(...gaps) < 400, `${gaps.length} fotogramas en ${Math.round(performance.now() - t0)} ms`);
+  ok("La entrada no anima la opacidad de bloques con vidrio (el fundido lo da el velo); solo las capas pequeñas (desplegable, ficha, bandeja) llevan rise-fade", /@keyframes rise \{ from \{ translate:[^}]*\} \}/.test(css) && /@keyframes rise-fade \{ from \{ opacity: 0;/.test(css) && /\.m-pop:not\(\[hidden\]\)[^}]*rise-fade/.test(css));
+  // rendimiento real: ningún hueco entre fotogramas de más de 100 ms (con View Transition eran 316–667 ms) al recorrer las seis vistas
+  const huecos = [];
+  for (const [h, v] of [["#acceso", "acceso"], ["#normas", "normas"], ["#metodo", "metodo"], ["#medidas", "medidas"], ["#situacion/alquiler/48020", "situacion"], ["#municipios/48020", "municipios"]]) {
+    const g = []; let ult2 = performance.now(), vivo2 = true; const bucle2 = () => { const n = performance.now(); g.push(n - ult2); ult2 = n; if (vivo2) requestAnimationFrame(bucle2); }; requestAnimationFrame(bucle2);
+    location.hash = h; await esperar(v, v === "situacion" ? "#mapa svg path" : v === "medidas" ? ".m-stage" : ".lec-contenido > *"); vivo2 = false; huecos.push(`${v} ${Math.round(Math.max(...g))}`);
+  }
+  ok(`Rendimiento al cambiar de vista: ningún hueco entre fotogramas de más de 100 ms en las seis vistas (peor de cada una, ms: ${huecos.join(", ")})`, huecos.every((x) => Number(x.split(" ")[1]) < 100), huecos.join(" | "));
+  await ir("#municipios/48020", "municipios", ".v-municipios .fila-ind");
 
   // ---------- entrada escalonada y momento firma ----------
   const pasos = rise.map((n) => Number(n.style.getPropertyValue("--i"))); const maxPaso = Math.max(...pasos);
@@ -91,7 +103,7 @@ export async function run() {
 
   // ---------- movimiento reducido y carga ----------
   const reduce = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce) {\n  .rise"));
-  ok("Movimiento reducido: se quita el recorrido (--rise-y 0), la píldora no se aplasta, no ruedan las cifras ni se dibujan líneas, y se conservan los fundidos", /--rise-y: 0px !important/.test(reduce) && /animation-duration: var\(--t-base\) !important/.test(reduce) && /\.lente, \.lente\.moving \{ scale: 1;/.test(reduce) && /\.roll__strip \{ animation: none/.test(reduce) && /\.v-normas \.hilo-linea, \.v-normas \.hito \{ animation: none/.test(reduce) && /::view-transition-old\(\*\)[^}]*animation: none/.test(css));
+  ok("Movimiento reducido: se quita el recorrido (--rise-y 0), la píldora no se aplasta, no ruedan las cifras ni se dibujan líneas, y se conservan los fundidos", /--rise-y: 0px !important/.test(reduce) && /animation-duration: var\(--t-base\) !important/.test(reduce) && /\.lente, \.lente\.moving \{ scale: 1;/.test(reduce) && /\.roll__strip \{ animation: none/.test(reduce) && /\.v-normas \.hilo-linea, \.v-normas \.hito \{ animation: none/.test(reduce));
   ok("Carga: hay un esqueleto (aria-busy) mientras llegan los datos, con pulso en lugar de barrido si se reduce el movimiento", /#vista\[aria-busy="true"\]:empty/.test(css) && /#vista\[aria-busy="true"\]:empty::after \{ animation: pulse/.test(css));
 
   // ---------- reglas de rendimiento ----------
@@ -99,7 +111,7 @@ export async function run() {
   const sinLente = css.replace(/\.lente[^{]*\{[^}]*\}/g, ""); // la píldora es la excepción documentada: es un elemento absoluto que no empuja a nadie
   ok("Solo se animan transform, opacity, translate, scale y color: ni width, height, top, left ni márgenes (salvo la píldora, excepción documentada)", !/\b(?:transition|animation)[^;{}]*\b(width|height|top|left|margin|padding)\b/.test(sinLente) && !/@keyframes[^{]*\{[^}]*\b(width|height|top|left|margin)\b/.test(css), propsAnimadas.slice(0, 60));
   ok("Sin listeners de scroll ni will-change permanente", !/addEventListener\(\s*["']scroll/.test(js) && !/will-change/.test(css) && !/will-change/.test(js));
-  ok("El contenido es visible por defecto: ninguna regla oculta nada sin una clase que añade el script (rise / focal / roll.is-in)", !/(^|\n)\s*(?!body\[|@|#vista|\.lente)[^{\n]*\{\s*(?:[^}]*;)?\s*(?:opacity: 0|visibility: hidden)/.test(css.replace(/@keyframes[^{]*\{(?:[^{}]*\{[^}]*\})*[^}]*\}/g, "")));
+  ok("El contenido es visible por defecto: ninguna regla oculta nada sin una clase que añade el script (rise / focal / roll.is-in)", !/(^|\n)\s*(?!body[\[.]|@|#vista|#velo|\.lente)[^{\n]*\{\s*(?:[^}]*;)?\s*(?:opacity: 0|visibility: hidden)/.test(css.replace(/@keyframes[^{]*\{(?:[^{}]*\{[^}]*\})*[^}]*\}/g, "")));
 
   const fail = out.filter((t) => !t.pass);
   return { total: out.length, pass: out.length - fail.length, fail: fail.length, fallos: fail.map((f) => `${f.name} (${f.detail})`), todo: out.map((t) => `${t.pass ? "PASS" : "FAIL"} · ${t.name}${t.detail ? ` (${t.detail})` : ""}`) };
