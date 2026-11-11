@@ -14,12 +14,12 @@
 /* ---------- Tarjeta del hero ---------- */
 .hero-card { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: stretch; height: clamp(520px, calc(100dvh - 148px), 860px); padding: clamp(28px, 4vw, 64px); border-radius: var(--r-panel); background: var(--noche); color: #fff; box-shadow: 0 1px 2px rgba(26, 36, 70, .12), 0 28px 60px -28px rgba(26, 36, 70, .55); }
 .hero-fondo { position: absolute; inset: 0; z-index: -3; overflow: hidden; background: var(--noche); }
-.hero-fondo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.15) contrast(1.05); }   /* el filtro es del fondo atmosférico, no del contenido */
-/* azul noche sobre la imagen: multiplica (conserva los reflejos del vidrio) y un velo a la izquierda para el texto */
-.hero-card::before { content: ""; position: absolute; inset: 0; z-index: -2; background: #5d5b9c; mix-blend-mode: multiply; }
+.hero-fondo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* un toque de azul noche sobre la imagen (multiplica, conserva las luces) y un velo a la izquierda para el texto */
+.hero-card::before { content: ""; position: absolute; inset: 0; z-index: -2; background: #c9c9ee; mix-blend-mode: multiply; }
 .hero-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
-  linear-gradient(100deg, rgba(20, 24, 58, .88) 0%, rgba(20, 24, 58, .62) 36%, rgba(20, 24, 58, .1) 70%, rgba(20, 24, 58, 0) 100%),
-  linear-gradient(0deg, rgba(20, 24, 58, .45) 0%, rgba(20, 24, 58, 0) 38%); }
+  linear-gradient(100deg, rgba(8, 12, 40, .82) 0%, rgba(8, 12, 40, .6) 36%, rgba(8, 12, 40, .12) 68%, rgba(8, 12, 40, 0) 100%),
+  linear-gradient(0deg, rgba(8, 12, 40, .5) 0%, rgba(8, 12, 40, 0) 38%); }
 
 .hero-texto { align-self: stretch; display: grid; grid-template-rows: 1fr auto auto; gap: var(--s4); max-width: 46rem; min-width: 0; }
 .hero-t { align-self: center; margin: 0; font: 600 clamp(2.25rem, 1rem + 3.5vw, 4.5rem)/1.04 var(--f-display); letter-spacing: -.03em; text-wrap: balance; text-shadow: 0 2px 30px rgba(10, 14, 40, .35); }

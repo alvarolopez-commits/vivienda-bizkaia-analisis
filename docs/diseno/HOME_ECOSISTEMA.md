@@ -3,7 +3,7 @@
 Rama local `ux/home-ecosistema`, sin publicar. Sustituye a la portada anterior (`INICIO.md`), que no cumplía el encargo (rueda secuestrada, cifras de adorno).
 
 ## Tiempo 1 · Hero (composición A, elegida)
-Marco azul noche con una imagen «flow» como fondo atmosférico (nunca como dato): la imagen aportada, convertida a WebP (`app/img/flow/flow-a.webp`, 204 KB). Un multiplicado azul noche conserva los reflejos del vidrio y un velo a la izquierda da el contraste del texto. De las dos composiciones propuestas (A editorial inmersiva y B atlas primero) se eligió la A; la B (y el selector `?hero=`) se retiró.
+Marco azul noche con una imagen «flow» como fondo atmosférico (nunca como dato). Hay tres imágenes azules aportadas, convertidas a WebP (`app/img/flow/flow-1.webp`, `flow-2.webp` y `flow-3.webp`, 205, 137 y 217 KB); la que se muestra es la **3** (la de más luz, con los arcos a la derecha). `?fondo=1|2|3` solo sirve para compararlas (`capturas/home/1440-hero-fondo1..3.png`). Un toque de azul noche y un velo a la izquierda dan el contraste del texto. De las dos composiciones propuestas (A editorial inmersiva y B atlas primero) se eligió la A; la B (y el selector `?hero=`) se retiró.
 
 Contenido (sin textos nuevos del autor): titular «El acceso a la vivienda en los **113** municipios de Bizkaia» (el 113 sale de los datos) · «Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.» (descripción de la web publicada) · botón principal **«Explorar el análisis ↓»** (lleva a Situación) · botón secundario **«Ver el resumen ↗»** (URL exacta, 200 comprobado). Sin píldora superior. Marca: la de la cabecera (texto limpio); el logotipo está pendiente de aprobación.
 

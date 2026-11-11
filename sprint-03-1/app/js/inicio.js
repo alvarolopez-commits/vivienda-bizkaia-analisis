@@ -10,6 +10,8 @@ import { cifrasPlanas } from "./lectura.js";
 import { modo, reducido } from "./movimiento.js";
 
 const ES_INICIO = /^#?(inicio)?$/;
+// Fondo del hero: tres imágenes «flow» azules (img/flow/flow-1..3.webp). ?fondo=1|2|3 solo para compararlas; por defecto la 3.
+const FONDO = ["1", "2", "3"].includes(new URLSearchParams(location.search).get("fondo")) ? new URLSearchParams(location.search).get("fondo") : "3";
 
 const sec = document.getElementById("inicio");
 const vista = document.getElementById("vista");
@@ -44,7 +46,7 @@ function limpiarEntrada() { sec.querySelectorAll(".rise").forEach((n) => n.class
 
 async function construir() {
   const img = sec.querySelector(".hero-fondo img");
-  img.src = new URL("../img/flow/flow-a.webp", import.meta.url).href;
+  img.src = new URL(`../img/flow/flow-${FONDO}.webp`, import.meta.url).href;
   const store = await cargarStore();
   const n = es(store.codes.length);
   sec.querySelectorAll(".n-munis").forEach((s) => { s.textContent = n; });
