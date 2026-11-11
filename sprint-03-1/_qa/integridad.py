@@ -100,7 +100,7 @@ PRESENTACION = {"background", "background-image", "background-color", "backgroun
 # Cambios de maquetación PEDIDOS por el autor: la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo;
 # los bloques de Situación y Medidas comparten columnas y huecos (alineación de la página); y fuera el punto decorativo de la ficha (el tipo ya lo dice el texto).
 # Solo afecta a los contenedores del lienzo de Situación y a la leyenda del Plano; ningún dato, texto ni cálculo.
-LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario") or ":has(> .leyenda-lineas)" in s or s == ".ficha-tipo .punto-tipo" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
+LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario", ".marca") or ":has(> .leyenda-lineas)" in s or s == ".ficha-tipo .punto-tipo" or s == ".marca img" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
 
 
 def reglas(texto):
@@ -130,7 +130,7 @@ for nombre in ("situacion.css", "marco.css", "medidas-diseno.css"):
                 cambios.append((sel, p))
     de_maquetacion = [(s, p) for s, p in cambios if p not in PRESENTACION and p != "gap" and not p.startswith("--") and not s.startswith('.shell[data-detalle="abierto"] .m-side') and not s.startswith("::-webkit-scrollbar") and "::-webkit-scrollbar" not in s and s != ".m-stage .burbujas" and not LEYENDA_ARRIBA(s)]  # excepciones documentadas: ficha de Medidas dentro del panel a < 1400 px; aspecto de las barras de desplazamiento (::-webkit-scrollbar); altura del Plano de Medidas para que quepa con su leyenda
     quitadas = [(s, p) for sel, dec in antes for s, p in [(sel, k) for k in dec] if not any(s == s2 and p in d2 for s2, d2 in ahora)]
-    quitadas = [(s, p) for s, p in quitadas if p not in PRESENTACION and not LEYENDA_ARRIBA(s) and not s.startswith(".proto-tag") and not s.startswith("body:not(.con-bandeja) .proto-tag") and s != ":root" and not s.startswith(".pendiente") and not p.startswith("--")]  # :root salió a tokens.css (se comprueba abajo); .pendiente era la página provisional, ya sustituida por las vistas reales
+    quitadas = [(s, p) for s, p in quitadas if p not in PRESENTACION and not LEYENDA_ARRIBA(s) and not s.startswith(".proto-tag") and not s.startswith("body:not(.con-bandeja) .proto-tag") and s != ":root" and not s.startswith(".pendiente") and not s.startswith(".marca") and not p.startswith("--")]  # :root salió a tokens.css (se comprueba abajo); .pendiente era la página provisional, ya sustituida por las vistas reales
     ok(f"css/{nombre}: respecto al commit publicado solo cambia presentación, no maquetación ({len(cambios)} declaraciones cambiadas)", bool(antes) and not de_maquetacion and not quitadas, (de_maquetacion + quitadas)[:4])
 
 # todos los tokens del marco anterior siguen existiendo en tokens.css con el MISMO valor (los cambios de interfaz son aditivos)

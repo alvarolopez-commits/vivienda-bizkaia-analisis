@@ -37,7 +37,9 @@ main:focus { outline: none; }
 /* ---------- Banda (igual que Sprint 01) ---------- */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
 .banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s5); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: var(--vidrio-barra-fondo); -webkit-backdrop-filter: var(--vidrio-filtro); backdrop-filter: var(--vidrio-filtro); border-bottom: 1px solid var(--vidrio-barra-linea); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset; }
-.marca { font: 600 1rem/1 var(--f-ui); letter-spacing: -.01em; text-decoration: none; white-space: nowrap; padding: var(--s3) 0; }
+.marca { display: inline-flex; align-items: center; justify-self: start; text-decoration: none; white-space: nowrap; padding: var(--s2) 0; }
+/* logotipo aprobado: sin efectos, sin deformar (la altura fija el tamaño y el ancho sale de su proporción) y nítido sobre el vidrio de la cabecera */
+.marca img { display: block; height: 40px; width: auto; max-width: none; }
 /* navegación global: cápsula de vidrio L1; la sección abierta es una píldora oscura (estado inequívoco, también por peso y aria-current) */
 .vistas { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
 .vistas a { position: relative; padding: 7px 16px; border-radius: var(--r-pildora); font-size: .9375rem; font-weight: 500; color: var(--ink-2); text-decoration: none; transition: color var(--dur-control) var(--ease), background-color var(--dur-control) var(--ease), box-shadow var(--dur-control) var(--ease); }

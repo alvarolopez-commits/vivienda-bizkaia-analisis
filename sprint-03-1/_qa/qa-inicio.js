@@ -90,7 +90,7 @@ export async function run() {
 
   // ---------- imagen ----------
   const img = $(".hero-fondo img");
-  ok("El fondo «flow» carga y es WebP optimizado (< 300 KB)", img.complete && img.naturalWidth >= 1900 && /\/img\/flow\/flow-[123]\.webp$/.test(img.src) && (await fetch(img.src, { method: "HEAD" }).then((x) => +x.headers.get("content-length") < 300000)), img.src);
+  ok("El fondo «flow» carga y es WebP optimizado (< 300 KB)", img.complete && img.naturalWidth >= 1900 && /\/img\/flow\/flow-3\.webp$/.test(img.src) && (await fetch(img.src, { method: "HEAD" }).then((x) => +x.headers.get("content-length") < 300000)), img.src);
 
   // ---------- la cabecera de las seis vistas es la del ANÁLISIS ----------
   const cab = () => { const b = $(".banda"); return { vis: getComputedStyle(b).visibility, top: Math.round(b.getBoundingClientRect().top) }; };
