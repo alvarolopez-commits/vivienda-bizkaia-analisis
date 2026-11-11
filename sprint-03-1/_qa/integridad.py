@@ -97,9 +97,10 @@ PRESENTACION = {"background", "background-image", "background-color", "backgroun
                 "border-top", "scrollbar-width", "scrollbar-color", "min-width", "min-height", "box-shadow", "backdrop-filter", "-webkit-backdrop-filter", "color", "font", "transition", "padding", "margin", "opacity"}
 
 
-# Cambio de maquetación PEDIDO por el autor: la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo.
+# Cambios de maquetación PEDIDOS por el autor: la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo;
+# y los bloques de Situación y Medidas comparten columnas y huecos (alineación de la página).
 # Solo afecta a los contenedores del lienzo de Situación y a la leyenda del Plano; ningún dato, texto ni cálculo.
-LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque") or ":has(> .leyenda-lineas)" in s
+LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario") or ":has(> .leyenda-lineas)" in s or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
 
 
 def reglas(texto):

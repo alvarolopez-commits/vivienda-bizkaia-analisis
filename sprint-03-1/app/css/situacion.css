@@ -22,7 +22,7 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 .problema:focus-visible { outline-offset: 2px; }
 
 /* Escenario: mapa (protagonista) + panel persistente con ficha y lista */
-.escenario { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); gap: var(--s4); height: clamp(600px, calc(100dvh - var(--banda) - 32px), 900px); }
+.escenario { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); gap: var(--s5); height: clamp(600px, calc(100dvh - var(--banda) - 32px), 900px); }
 
 .lienzo { position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden; border-radius: 28px; border: 1px solid var(--line);
   background:
@@ -123,7 +123,7 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 .filas { padding: var(--s1) var(--s3) var(--s2); }
 .fila { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; grid-template-areas: "pos nom v" ". barra barra"; align-items: center; column-gap: 10px; row-gap: 6px; width: 100%; min-height: 44px; padding: 9px 12px 10px; border: 0; border-radius: 12px; background: transparent; text-align: left; cursor: pointer; transition: background-color .16s; }
 .fila:hover { background: var(--bg); }
-.fila[aria-pressed="true"] { background: var(--accent-soft); box-shadow: 3px 0 0 var(--accent) inset; }
+.fila[aria-pressed="true"] { background: var(--accent-soft); }   /* sin franja de color en el borde */
 .fila[aria-pressed="true"] .n { font-weight: 600; }
 .fila .pos { grid-area: pos; font: 400 .75rem/1 var(--f-data); color: var(--muted); }
 .fila .nom { grid-area: nom; display: flex; align-items: center; gap: 8px; min-width: 0; }

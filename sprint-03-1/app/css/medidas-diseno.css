@@ -90,7 +90,7 @@
 .m-lista li.elegida { background: var(--accent-soft); }
 .m-fila { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "id nombre" "id v"; column-gap: 10px; align-items: center; min-height: 52px; padding: 8px 10px; border: 0; border-radius: 12px; background: transparent; text-align: left; cursor: pointer; transition: background-color .16s; }
 .m-fila:hover { background: var(--bg); }
-.m-fila[aria-pressed="true"] { background: var(--accent-soft); box-shadow: 3px 0 0 var(--accent) inset; }
+.m-fila[aria-pressed="true"] { background: var(--accent-soft); }   /* sin franja de color en el borde */
 .m-fila-id { grid-area: id; min-width: 3.25rem; }
 .m-fila-n { grid-area: nombre; font-size: .8125rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .m-fila-v { grid-area: v; font-size: .75rem; color: var(--muted); }
@@ -149,3 +149,9 @@ body.con-bandeja .medidas { padding-bottom: 96px; }
 /* Leyenda del Plano ARRIBA del gráfico (como en el mapa de Situación): el contenedor pasa a columna y la leyenda va primero. */
 .m-stage :has(> .leyenda-lineas) { display: flex; flex-direction: column; }
 .m-stage :has(> .leyenda-lineas) > .leyenda-lineas { order: -1; margin: 0 auto var(--s3); }
+
+/* Alineación con las columnas del escenario: la barra de líneas y los botones de criterios usan LAS MISMAS dos columnas que el Plano y el panel
+   (misma proporción, mismo hueco de 24 px), de modo que el borde derecho de la cinta coincide con el del Plano y los botones con el panel. */
+.medidas .shell[data-modo="explorar"] { gap: var(--s5); }
+.m-barra:has(+ .shell[data-modo="explorar"]) { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); gap: var(--s3) var(--s5); }
+.m-barra:has(+ .shell[data-modo="explorar"]) .m-ctrl { flex-wrap: wrap; justify-content: flex-start; min-width: 0; }

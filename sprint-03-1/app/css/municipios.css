@@ -22,8 +22,6 @@
 .v-municipios .muni-datos { margin-top: var(--s3); color: var(--muted); font-size: 1rem; }
 .v-municipios .muni-datos b, .v-municipios .muni-datos [data-roll] { color: var(--ink); font-weight: 600; }
 .v-municipios .punto-tipo { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 50%; vertical-align: baseline; }
-.v-municipios .cabeceras.n2 .muni-cab:first-child { box-shadow: inset 4px 0 0 var(--dato-a), var(--elev-1); }
-.v-municipios .cabeceras.n2 .muni-cab:last-child { box-shadow: inset 4px 0 0 var(--dato-b), var(--elev-1); }
 
 /* ---------- Banner territorial (cabecera del municipio primario) ----------
    Imagen ilustrativa detrás del mismo texto de siempre (HTML real). Degradado azul marino a la izquierda para el nombre; la imagen no lleva
@@ -36,9 +34,8 @@
 .v-municipios .muni-banner .muni-datos { align-self: flex-start; max-width: min(100%, 46rem); margin-top: var(--s3); padding: 7px 14px; border: 1px solid rgba(255, 255, 255, .22); border-radius: 16px; background: rgba(20, 24, 58, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: rgba(255, 255, 255, .92); font-size: .9375rem; line-height: 1.45; }
 .v-municipios .muni-banner .muni-datos b, .v-municipios .muni-banner .muni-datos [data-roll] { color: #fff; }
 .v-municipios .muni-banner .punto-tipo { box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); }
-/* con comparación: la identificación del primero (franja izquierda) pasa por encima de la imagen; sin dos banners gigantes */
+/* con comparación: sin dos banners gigantes (el comparado conserva su tarjeta) */
 .v-municipios .cabeceras.n2 .muni-banner { min-height: 168px; }
-.v-municipios .cabeceras.n2 .muni-banner::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--dato-a); }
 @media (prefers-reduced-transparency: reduce) { .v-municipios .muni-banner .muni-datos { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); } }
 @media (prefers-contrast: more) { .v-municipios .muni-velo { background: rgba(20, 24, 58, .82); } }
 body[data-motion="still"] .v-municipios .muni-foto { transition: none; }

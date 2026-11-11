@@ -2,7 +2,7 @@
    con ancho de lectura controlado y un rótulo que distingue glosario, método, límites, historial y fuentes. */
 
 .v-metodo .method-wrap { display: grid; gap: var(--s5); }
-.v-metodo .lec-contenido { max-width: 960px; }
+.v-metodo .lec-contenido { max-width: none; }   /* los bloques llegan al mismo borde derecho que el buscador y la cabecera; el texto sigue limitado por línea (72ch) */
 .v-metodo .method-block { padding: var(--s6) var(--s7); }
 /* cada tipo de bloque lleva su marca de color en el rótulo (el rótulo también lo dice con texto) */
 .v-metodo .method-block { --tipo: var(--line-2); }
