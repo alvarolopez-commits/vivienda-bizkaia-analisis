@@ -41,6 +41,12 @@ Las **seis vistas** son ahora vistas reales de la misma aplicación: ya no hay p
 
 Un defecto que ya existía se corrigió al probar a 1280: la ficha de Medidas se salía del panel por la izquierda por una regla antigua de `medidas.css` (panel superpuesto a menos de 1400 px).
 
+### Ajustes tras la primera revisión local
+1. **Barras de desplazamiento.** En Windows, Chrome y Edge pintaban la barra clásica (con flechas, pegada al borde y encima de las cifras del ranking). Ahora hay una barra del sistema, fina, redondeada y sin flechas, en todos los contenedores con scroll propio (ranking, listas, matrices, fichas, índices). Firefox mantiene la barra fina estándar.
+2. **Pie de página.** Se elimina el texto «Prototipo integrado, no publicado…» y, con él, el pie.
+3. **Fuentes de Situación.** El texto «Fuentes: Gobierno Vasco, estadística del alquiler… · Eustat… · Etxebide…» sale del panel y pasa al pie de la página, justo encima de «Datos descargados el…». Es el mismo elemento del original (mismos enlaces); ahora se ve siempre, con o sin municipio elegido, y cambia con el problema.
+4. **Índice de Método** compactado para que quepa entero en una ventana de 900 px de alto sin barra propia.
+
 ## 3. Decisiones que he tomado y quiero que revises
 1. **Cifras que ruedan → texto fijo.** La web publicada anima las cifras (dígitos que giran, con su CSS). Aquí se devuelven a texto plano en Geist tabular, para que ningún efecto visual altere una cifra. Se pierde esa animación de entrada.
 2. **Efectos de movimiento del original** (títulos que se enfocan, frase que se llena de tinta, línea de tiempo que se dibuja al bajar, capítulo en la banda) **no se han portado**: no aportan al uso y chocan con «sin efectos que resten control».

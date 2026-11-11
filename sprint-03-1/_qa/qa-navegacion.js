@@ -23,7 +23,7 @@ export async function run() {
   const montadas = () => ({ atlas: !!$("#atlas"), medidas: !!$("#medidas") });
 
   // --- el marco: un solo header, un solo menú, un solo main ---
-  ok("Un único marco: 1 cabecera, 1 menú, 1 <main>, 1 pie", $$("header.banda").length === 1 && $$("dialog#menu").length === 1 && $$("main").length === 1 && $$("footer.pie").length === 1);
+  ok("Un único marco: 1 cabecera, 1 menú, 1 <main> y ningún pie con texto de prototipo", $$("header.banda").length === 1 && $$("dialog#menu").length === 1 && $$("main").length === 1 && $$("footer").length === 0);
   const enlaces = Object.fromEntries($$(".vistas a").map((a) => [a.textContent.replace("↗", "").trim(), a]));
   ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", enlaces["Situación"].getAttribute("href") === "#situacion" && enlaces["Medidas"].getAttribute("href") === "#medidas" && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
   ok("La marca de la cabecera vuelve a Situación local", $(".marca").getAttribute("href") === "#situacion");

@@ -128,7 +128,6 @@ export async function montar(raiz, { store }) {
         el("h2", { class: "ficha-problema", text: p.titulo }),
         el("p", { class: "ficha-cifra", text: p.cifra }),
         el("p", { class: "ficha-unidad", text: p.unidad }),
-        sourceLine(p.fuentes, store.fuentes),
         prop(el("p", { class: "ficha-pista", text: "Toca un municipio en el mapa o elígelo en la lista." })),
       ];
       f.dataset.modo = "bizkaia";
@@ -168,6 +167,8 @@ export async function montar(raiz, { store }) {
       f.dataset.modo = "municipio";
     }
     f.replaceChildren(...nodes.filter(Boolean));
+    // «Fuentes: …» del problema: el mismo elemento de siempre (sourceLine del original), ahora al pie de la página y siempre visible
+    $("#fuentes-pie").replaceChildren(...[sourceLine(store.resumen.problemas.find((r) => r.id === x.problema).fuentes, store.fuentes)].filter(Boolean));
     // cerrar devuelve el foco al municipio en el mapa, para seguir con las flechas
     f.querySelector(".ficha-cerrar")?.addEventListener("click", () => { const c = S.code; set({ code: null }, { anuncio: true }); mapa.focusCode(c); });
     f.querySelectorAll(".perfil-b").forEach((b) => b.addEventListener("click", () => set({ i: Number(b.dataset.i) }, { anuncio: true })));

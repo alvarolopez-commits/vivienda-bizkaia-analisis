@@ -50,3 +50,10 @@
   .v-metodo dl.glossary dt { padding-bottom: 2px; border-bottom: 0; }
   .v-metodo .method-item { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* índice lateral compacto: con 15 bloques y 5 grupos tiene que caber entero en una ventana de escritorio sin barra propia */
+.v-metodo .lec-indice.lateral { gap: 0; padding: var(--s2); }
+.v-metodo .lec-indice .lec-ir { padding: 4px 10px; font: 500 .8125rem/1.25 var(--f-ui); }
+.v-metodo .lec-indice .lec-ir[aria-current="true"] { font-weight: 600; }
+.v-metodo .lec-indice .lec-grupo { padding: var(--s2) 10px 2px; }
+.v-metodo .lec-indice .lec-indice-t { padding: 4px 10px 0; }

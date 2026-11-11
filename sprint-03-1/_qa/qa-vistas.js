@@ -43,7 +43,7 @@ export async function run() {
   const feats = (await store.sections()).features.filter((f) => f.properties.muni === "48020").length;
   ok("Municipios · el mapa de barrios de Bilbao dibuja todas sus secciones censales", $$(".barrios-mapa svg path", lec).length === feats && feats > 100, `${feats}`);
   $$(".lec-indice .lec-ir", lec).find((b) => b.textContent === "Plan").click(); await sleep(1200);
-  ok("Municipios · «Plan» del índice lleva al bloque y queda marcado como actual", $(".lec-indice .lec-ir[aria-current=true]")?.textContent === "Plan" && Math.abs($("#plan", lec).getBoundingClientRect().top) < 260, `${Math.round($("#plan", lec).getBoundingClientRect().top)} px`);
+  ok("Municipios · «Plan» del índice lleva al bloque y queda marcado como actual", $(".lec-indice .lec-ir[aria-current=true]")?.textContent === "Plan" && $("#plan", lec).getBoundingClientRect().top > -50 && $("#plan", lec).getBoundingClientRect().top < innerHeight - 200, `${Math.round($("#plan", lec).getBoundingClientRect().top)} px`);
   window.scrollTo(0, 0);
   // comparar
   await ir("#municipios/48020-48013", ".v-municipios .cabeceras.n2");

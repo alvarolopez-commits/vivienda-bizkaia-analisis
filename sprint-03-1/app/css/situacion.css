@@ -144,6 +144,9 @@ body { background: var(--ambiente), var(--bg); background-attachment: fixed; }
 .sin-b[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .lista-pie .nota { margin: 0; }
 
+/* «Fuentes» del problema abierto, al pie de la página */
+.fuentes-pie { padding: var(--s5) 18% 0 0; }
+.fuentes-pie .source-line { margin: 0; font: 400 .8125rem/1.55 var(--f-ui); }
 .fecha { padding-block: var(--s5) var(--s7); font-size: .8125rem; color: var(--muted); }
 
 /* ---------- Pie y etiqueta de prototipo ---------- */
