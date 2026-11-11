@@ -15,6 +15,12 @@ html { scroll-padding-top: calc(var(--banda) + var(--s4)); scrollbar-color: var(
   ::-webkit-scrollbar-thumb { min-height: 36px; min-width: 36px; border: 4px solid transparent; border-radius: 999px; background-color: rgba(34, 30, 65, .28); background-clip: content-box; }
   ::-webkit-scrollbar-thumb:hover { background-color: rgba(34, 30, 65, .5); }
   ::-webkit-scrollbar-thumb:active { background-color: var(--ink); }
+  /* Cajas redondeadas con desplazamiento propio (ranking, listas, fichas, matrices, índices): la barra va DENTRO de la caja, con aire respecto al
+     borde (pulgar de 6 px a 8 px del borde) y alejada de las esquinas redondeadas, para que no parezca que se sale ni que pisa el contorno. */
+  :is(.lista-scroll, .m-lista, .ficha, .panel-medida, .table-wrap, .lec-indice, .sin-dato ul, .m-stage > div:last-child)::-webkit-scrollbar { width: 22px; height: 22px; }
+  :is(.lista-scroll, .m-lista, .ficha, .panel-medida, .table-wrap, .lec-indice, .sin-dato ul, .m-stage > div:last-child)::-webkit-scrollbar-thumb { border-width: 8px; }
+  :is(.lista-scroll, .m-lista, .ficha, .panel-medida, .table-wrap, .lec-indice, .sin-dato ul, .m-stage > div:last-child)::-webkit-scrollbar-track:vertical { margin-block: 22px; }
+  :is(.lista-scroll, .m-lista, .ficha, .panel-medida, .table-wrap, .lec-indice, .sin-dato ul, .m-stage > div:last-child)::-webkit-scrollbar-track:horizontal { margin-inline: 22px; }
 }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.55 var(--f-ui); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 ::selection { background: var(--ice); color: var(--ink); }
