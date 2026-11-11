@@ -76,14 +76,14 @@
 .v-acceso .alcance-controles { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s4); padding: var(--s3); border-radius: var(--r-tarjeta); }
 .v-acceso .alcance-controles .x-botones { padding: 3px; background: rgba(255, 255, 255, .55); }
 .v-acceso .alcance-cuerpo { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s6); align-items: start; }
-.v-acceso .mapa-lienzo { padding: 3%; border-radius: var(--r-tarjeta); background: var(--bg); }
-.v-acceso .mapa-lienzo svg { display: block; width: 100%; height: auto; max-height: 68vh; }
+.v-acceso .mapa-lienzo { display: grid; gap: var(--s4); align-content: start; }   /* lienzo de mapa común: lectura.css */
+.v-acceso .mapa-lienzo svg { display: block; width: 100%; height: auto; max-height: 58vh; }
 .v-acceso .alcance-lado { display: grid; gap: var(--s4); }
 .v-acceso .alcance-total { font-size: 1.0625rem; line-height: 1.45; color: var(--ink-2); }
 .v-acceso .alcance-total b { display: block; font-size: 2.25rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
-.v-acceso .alcance-clave { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: .875rem; }
-.v-acceso .alcance-clave li { display: flex; align-items: center; gap: 10px; }
-.v-acceso .alcance-clave i { width: 22px; height: 14px; border-radius: 4px; box-shadow: 0 0 0 1px rgba(34, 30, 65, .18) inset; }
+.v-acceso .alcance-clave { display: flex; flex-wrap: wrap; gap: 8px var(--s4); margin: 0; list-style: none; font-size: .8125rem; color: var(--ink-2); }   /* la leyenda va ARRIBA del mapa, como en Situación (barra opaca: lectura.css) */
+.v-acceso .alcance-clave li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.v-acceso .alcance-clave i { width: 18px; height: 14px; border-radius: 4px; box-shadow: 0 0 0 1px rgba(34, 30, 65, .18) inset; }
 
 @media (max-width: 1279px) {
   .v-acceso .explorador { grid-template-columns: minmax(0, 1fr); }

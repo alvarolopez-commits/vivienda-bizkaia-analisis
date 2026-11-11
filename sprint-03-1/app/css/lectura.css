@@ -77,3 +77,10 @@
   .lec-cuerpo.con-lateral { grid-template-columns: minmax(0, 1fr); }
   .lec-indice.lateral { position: static; max-height: none; }
 }
+
+/* ---------- Lienzo de mapa común (Situación, Acceso, barrios de Municipios) ----------
+   Mismo fondo punteado y mismo marco que el mapa de Situación, relieve suave del territorio y, si lleva leyenda, una barra opaca ARRIBA. */
+.mapa-lienzo, .barrios-mapa { position: relative; padding: var(--s5); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 1px 0 #fff inset;
+  background: radial-gradient(rgba(34, 30, 65, .07) 1px, transparent 1.3px) 0 0 / 22px 22px, radial-gradient(120% 95% at 50% 38%, #f8fafd 0%, #edf2f7 58%, #e2e9f1 100%); }
+.mapa-lienzo svg, .barrios-mapa svg { filter: drop-shadow(0 8px 10px rgba(23, 38, 74, .2)); }
+.mapa-lienzo .alcance-clave { padding: 12px 18px; border: 1px solid var(--opaco-borde); border-radius: var(--r-tarjeta); background: var(--opaco-fondo); box-shadow: var(--elev-1); }

@@ -93,7 +93,7 @@ body[data-motion="still"] .v-municipios .muni-foto { transition: none; }
 .v-municipios .serie-cifras { color: var(--muted); font-size: .8125rem; }
 
 .v-municipios .barrios { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--s6); align-items: start; }
-.v-municipios .barrios-mapa { padding: 4%; border-radius: var(--r-tarjeta); background: var(--bg); }
+/* lienzo de mapa común (lectura.css) */
 .v-municipios .barrios-mapa svg { display: block; width: 100%; height: auto; max-height: 70vh; }
 .v-municipios .barrios-lista { display: grid; gap: 10px; }
 .v-municipios .barrios-lista b { font-size: 1.375rem; font-weight: 600; }

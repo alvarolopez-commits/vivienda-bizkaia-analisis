@@ -65,8 +65,11 @@ export async function run() {
   lec = $(".v-acceso");
   {
     const scratch = document.createElement("div"); renderAcceso(scratch, store); cifrasPlanas(scratch, true);
-    const ref = plano(scratch.textContent), live = texto(lec);
-    ok("Acceso · el texto y las cifras son idénticos a los del renderizador original (alquiler, escalera, explorador y alcance)", ref === live, ref === live ? `${live.length} caracteres` : `${ref.length} vs ${live.length}`);
+    // la leyenda del mapa de alcance (.alcance-clave) se coloca encima del mapa en vez de en la columna lateral: mismo texto, otro orden. Se compara
+    // el resto del texto y, aparte, la leyenda.
+    const claveRef = plano($(".alcance-clave", scratch)?.textContent ?? ""), claveLive = plano($(".alcance-clave", lec)?.textContent ?? "");
+    const ref = plano(scratch.textContent).replace(claveRef, ""), live = texto(lec).replace(claveLive, "");
+    ok("Acceso · el texto y las cifras son idénticos a los del renderizador original (alquiler, escalera, explorador y alcance), con la leyenda del mapa encima del mapa", ref === live && claveRef === claveLive && claveRef.length > 20 && !!$(".mapa-lienzo > .alcance-clave", lec), ref === live ? `${live.length} caracteres + leyenda ${claveLive.length}` : `${ref.length} vs ${live.length}`);
   }
   ok("Acceso · cuatro bloques originales como pestañas internas", $$(".lec-indice .lec-ir", lec).map((b) => b.textContent).join() === "Alquilar,La escalera,Tus supuestos,Hasta dónde llega");
   const s = store.acceso.supuestos;

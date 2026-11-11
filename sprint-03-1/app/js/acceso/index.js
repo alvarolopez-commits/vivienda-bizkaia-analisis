@@ -13,6 +13,10 @@ export function montar(raiz, { store }) {
   // controles de parámetros: material de vidrio (L1); resultados y rejilla siguen siendo sólidos
   raiz.querySelectorAll(".x-controles, .alcance-controles").forEach((n) => n.classList.add("vidrio"));
 
+  // la leyenda del mapa «¿Hasta dónde llega mi hogar?» va encima del mapa, como la de Situación (el nodo no se vuelve a dibujar: solo cambia de sitio)
+  const clave = raiz.querySelector(".alcance-clave"), lienzo = raiz.querySelector(".mapa-lienzo");
+  if (clave && lienzo) lienzo.prepend(clave);
+
   // «Lo que eliges» / «Lo que no cambia»: el explorador deja elegir dónde, hogar, ahorro, entrada, interés, plazo y «TU CASA»; el resto son supuestos
   // del modelo (acceso.json). El umbral de 10 años es el del código original (LONG); aquí solo se muestra, con texto además del color.
   const controles = raiz.querySelector(".x-controles");
