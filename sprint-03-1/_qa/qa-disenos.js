@@ -1,7 +1,7 @@
-// Sprint 03.1 · pruebas de las dos propuestas de composición de Medidas (A · Escenario y B · Mesa). En el navegador, con la app abierta en
-//   http://localhost:4179/?diseno=a#medidas   o   ?diseno=b#medidas
+// Sprint 03.1 · pruebas de la composición única de Medidas (escenario + panel lateral con la lista). En el navegador, con la app abierta en
+//   http://localhost:4179/#medidas
 //   window.__qaRes = null; import('/_qa/qa-disenos.js').then(m => m.run()).then(r => window.__qaRes = r)
-// Comprueba la cinta de criterios (con cuentas y desplegables), el escenario, la ficha (panel y lista en A; franja y cajón en B), la
+// Comprueba la cinta de criterios (con cuentas y desplegables), el escenario, la ficha (panel y lista), la
 // bandeja flotante y que ninguna pieza nueva cambie datos, textos ni selección. La lógica de fondo la cubren qa-equivalencia y qa-flujos.
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const $ = (s, r = document) => r.querySelector(s);
@@ -10,13 +10,11 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 export async function run() {
   const out = [];
   const ok = (name, pass, detail = "") => out.push({ name, pass: !!pass, detail: String(detail) });
-  const diseno = $("#medidas").dataset.diseno;
   const { S, store, app, render, openPanel, closePanel, toggle } = window.__medidas;
   const M = store.medidas, total = M.medidas.length;
   const go = async (h, ms = 450) => { location.hash = h; await sleep(ms); };
   const reset = async () => { S.sel = []; S.focus = null; S.f = { linea: "", mecanismo: "", decide: "", papel: "", ya: false }; S.w = { evidencia: 0, viabilidad: 0, plazo: 0, coste: 0, alcance: 0 }; S.rep = "plano"; await go("#medidas?x=" + Math.random().toString(36).slice(2, 5)); await go("#medidas"); };
   await reset();
-  ok(`Propuesta activa: ${diseno.toUpperCase()}`, diseno === "a" || diseno === "b", diseno);
 
   // ---------- cinta de criterios ----------
   const lineas = $$("#filtros .m-lineas [data-linea]");
@@ -57,60 +55,31 @@ export async function run() {
   // ---------- escenario ----------
   const st = $(".m-stage").getBoundingClientRect();
   ok("El escenario ocupa el ancho disponible y tiene el fondo de superficie del Atlas", st.width > 880 && getComputedStyle($(".m-stage")).borderRadius === "28px" && /radial-gradient/.test(getComputedStyle($(".m-stage")).backgroundImage));
-  // A: el escenario cabe entero en 1440 × 900. B: el Plano ocupa todo el ancho y es más alto que la ventana (la franja inferior es fija y la
-  // página se desplaza); basta con que el escenario empiece a la vista, con sitio para su contenido sobre la franja.
-  ok(diseno === "a" ? `A · el escenario cabe en la ventana (${Math.round(st.bottom)} ≤ ${innerHeight})` : `B · el escenario empieza a la vista (${Math.round(st.top)} < ${innerHeight - 450})`, diseno === "a" ? st.bottom <= innerHeight + 2 : st.top < innerHeight - 450, `${Math.round(st.top)}–${Math.round(st.bottom)}`);
+  ok(`El escenario cabe en la ventana (${Math.round(st.bottom)} ≤ ${innerHeight})`, st.bottom <= innerHeight + 2, `${Math.round(st.top)}–${Math.round(st.bottom)}`);
   const pl = $(".burbujas").getBoundingClientRect();
   ok("El Plano se ve entero dentro del escenario (34 burbujas, sin recortes)", $$("a.burbuja").length === 34 && pl.bottom <= st.bottom + 1 && pl.right <= st.right + 1 && pl.left >= st.left - 1);
   ok("Leyenda de líneas de cristal bajo el Plano", /blur/.test(getComputedStyle($(".leyenda-lineas")).backdropFilter) && $$(".leyenda-lineas li").length === 6);
 
-  // ---------- ficha: A (panel + lista) y B (franja + cajón) ----------
-  if (diseno === "a") {
-    const side = $(".m-side");
-    ok("A · panel lateral persistente a la derecha, de la altura del escenario", !!side && !side.hidden && Math.abs(side.getBoundingClientRect().height - st.height) < 3 && side.getBoundingClientRect().left > st.right, `${Math.round(side.getBoundingClientRect().height)} vs ${Math.round(st.height)}`);
-    ok("A · sin medida elegida muestra «El conjunto a la vista» con cifras calculadas", !$(".m-resumen").hidden && $(".m-resumen-cifra").textContent === "34 de 34 medidas" && $(".m-resumen-sub").textContent === "30 se pueden aplicar ya");
+  // ---------- ficha: panel lateral y lista ----------
+  const side = $(".m-side");
+    ok("panel lateral persistente a la derecha, de la altura del escenario", !!side && !side.hidden && Math.abs(side.getBoundingClientRect().height - st.height) < 3 && side.getBoundingClientRect().left > st.right, `${Math.round(side.getBoundingClientRect().height)} vs ${Math.round(st.height)}`);
+    ok("sin medida elegida muestra «El conjunto a la vista» con cifras calculadas", !$(".m-resumen").hidden && $(".m-resumen-cifra").textContent === "34 de 34 medidas" && $(".m-resumen-sub").textContent === "30 se pueden aplicar ya");
     const filas = $$(".m-lista .m-fila");
-    ok("A · la lista tiene las 34 medidas, por línea e ID como la Matriz sin pesos", filas.length === 34 && filas.map((f) => f.dataset.id).join() === [...M.medidas].sort((a, b) => Object.keys(M.lineas).indexOf(a.linea) - Object.keys(M.lineas).indexOf(b.linea) || a.id.localeCompare(b.id)).map((m) => m.id).join());
+    ok("la lista tiene las 34 medidas, por línea e ID como la Matriz sin pesos", filas.length === 34 && filas.map((f) => f.dataset.id).join() === [...M.medidas].sort((a, b) => Object.keys(M.lineas).indexOf(a.linea) - Object.keys(M.lineas).indexOf(b.linea) || a.id.localeCompare(b.id)).map((m) => m.id).join());
     filas[5].click(); await sleep(150);
-    ok("A · elegir una fila abre su ficha en el panel y la marca en el Plano", S.focus === filas[5].dataset.id && !$(".panel-medida").hidden && $(".m-resumen").hidden && $(`a.burbuja[data-id="${S.focus}"]`).classList.contains("abierta") && $$(".m-fila[aria-pressed=true]").length === 1);
-    ok("A · la ficha y la lista conviven (el panel no desplaza la lista fuera de la vista)", $(".m-lista").getBoundingClientRect().height > 120, `${Math.round($(".m-lista").getBoundingClientRect().height)} px`);
+    ok("elegir una fila abre su ficha en el panel y la marca en el Plano", S.focus === filas[5].dataset.id && !$(".panel-medida").hidden && $(".m-resumen").hidden && $(`a.burbuja[data-id="${S.focus}"]`).classList.contains("abierta") && $$(".m-fila[aria-pressed=true]").length === 1);
+    ok("la ficha y la lista conviven (el panel no desplaza la lista fuera de la vista)", $(".m-lista").getBoundingClientRect().height > 120, `${Math.round($(".m-lista").getBoundingClientRect().height)} px`);
     const mas1 = $$(".m-lista li")[2].querySelector(".m-fila-add"); const idMas = $$(".m-lista .m-fila")[2].dataset.id;
     mas1.click(); await sleep(100);
-    ok("A · el «+» de la lista añade a la comparación (mismo estado que la bandeja)", S.sel.includes(idMas) && $(`#bandeja .chip-medida .medida-id`)?.textContent === idMas);
+    ok("el «+» de la lista añade a la comparación (mismo estado que la bandeja)", S.sel.includes(idMas) && $(`#bandeja .chip-medida .medida-id`)?.textContent === idMas);
     S.sel = ["M01", "M02", "M03"]; render();
-    ok("A · con 3 elegidas los «+» restantes se deshabilitan", $$(".m-fila-add").filter((b) => b.getAttribute("aria-pressed") === "false").every((b) => b.disabled));
+    ok("con 3 elegidas los «+» restantes se deshabilitan", $$(".m-fila-add").filter((b) => b.getAttribute("aria-pressed") === "false").every((b) => b.disabled));
     S.sel = []; S.f.linea = "turistica"; render();
-    ok("A · la lista sigue los criterios (3 medidas turísticas)", $$(".m-lista .m-fila").length === 3);
+    ok("la lista sigue los criterios (3 medidas turísticas)", $$(".m-lista .m-fila").length === 3);
     S.f.linea = ""; S.rep = "matriz"; S.w = { ...S.w, evidencia: 3 }; render();
     const ordenLista = $$(".m-lista .m-fila").map((f) => f.dataset.id).join(), ordenTabla = $$("#v-explorar tbody tr").map((t) => t.dataset.id).join();
-    ok("A · con pesos, la lista sigue el mismo orden que la Matriz y enseña la nota", ordenLista === ordenTabla && /nota/.test($(".m-fila-v").textContent), ordenLista.slice(0, 24));
+    ok("con pesos, la lista sigue el mismo orden que la Matriz y enseña la nota", ordenLista === ordenTabla && /nota/.test($(".m-fila-v").textContent), ordenLista.slice(0, 24));
     S.w = { evidencia: 0, viabilidad: 0, plazo: 0, coste: 0, alcance: 0 }; S.rep = "plano"; closePanel(); await sleep(100);
-  } else {
-    const dock = $(".m-dock");
-    ok("B · franja inferior fija (sticky) a todo el ancho del escenario", !!dock && !dock.hidden && getComputedStyle(dock).position === "sticky" && Math.abs(dock.getBoundingClientRect().width - st.width) < 4);
-    ok("B · sin medida elegida, la franja lo dice", !!$(".m-inspector-vacio"));
-    ok("B · no hay panel lateral (el escenario usa todo el ancho)", $(".m-side") === null && st.width > 1300);
-    openPanel("M10"); await sleep(150);
-    const filas = $$(".m-inspector-criterios dd").map((d) => d.textContent);
-    const { criteria } = await import("/original/js/medidas/ficha.js");
-    ok("B · la franja enseña M10 con sus 6 primeros criterios, los de criteria() original", $(".m-inspector .medida-nombre").textContent === store.measures.M10.nombre && filas.join("|") === criteria(store, store.measures.M10).slice(0, 6).map(([, v]) => v).join("|"));
-    ok("B · elegir una medida NO abre el cajón (no tapa el escenario)", $(".panel-medida").hidden && S.focus === "M10");
-    const { first } = await import("/js/medidas/calculo.js");
-    ok("B · el extracto de «Qué hace» es first() del texto literal", $(".m-inspector-extracto").textContent === `Qué hace ${first(store.measures.M10.que_hace)}`);
-    $$(".m-inspector-acciones button")[1].click(); await sleep(150);
-    const panel = $(".panel-medida");
-    ok("B · «Ver la ficha» abre el cajón (fijo a la derecha, no modal) con la ficha completa", !panel.hidden && getComputedStyle(panel).position === "fixed" && panel.getBoundingClientRect().right <= innerWidth && !panel.hasAttribute("aria-modal") && panel.textContent.includes(store.measures.M10.riesgos));
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true })); await sleep(120);
-    ok("B · el primer Escape cierra el cajón y conserva la medida elegida", panel.hidden && S.focus === "M10");
-    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true })); await sleep(120);
-    ok("B · el segundo Escape quita la elección", S.focus === null && !!$(".m-inspector-vacio"));
-    openPanel("M10"); await sleep(100);
-    $$(".m-inspector-acciones button")[0].click(); await sleep(150);
-    ok("B · «Añadir a la comparación» de la franja usa la misma selección", S.sel.join() === "M10" && $(".m-inspector-acciones button").getAttribute("aria-pressed") === "true");
-    const tr = $("#bandeja").getBoundingClientRect(), dr = $(".m-dock").getBoundingClientRect();
-    ok("B · la bandeja flota por encima de la franja sin taparla", !$("#bandeja").hidden && tr.bottom <= dr.top + 2, `${Math.round(tr.bottom)} ≤ ${Math.round(dr.top)}`);
-    S.sel = []; closePanel(); closePanel(); await sleep(100);
-  }
 
   // ---------- bandeja flotante ----------
   toggle("M06"); toggle("M01"); await sleep(150);
@@ -135,5 +104,5 @@ export async function run() {
   await go("#medidas");
 
   const fail = out.filter((t) => !t.pass);
-  return { diseno, total: out.length, pass: out.length - fail.length, fail: fail.length, fallos: fail, todo: out.map((t) => `${t.pass ? "PASS" : "FAIL"} · ${t.name}${t.detail ? ` (${t.detail})` : ""}`) };
+  return { total: out.length, pass: out.length - fail.length, fail: fail.length, fallos: fail, todo: out.map((t) => `${t.pass ? "PASS" : "FAIL"} · ${t.name}${t.detail ? ` (${t.detail})` : ""}`) };
 }

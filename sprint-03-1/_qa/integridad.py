@@ -48,10 +48,10 @@ def lineas_cambiadas(o, n):
 
 for o, n, esperado in ((R / "sprint-02/atlas/js/main.js", APP / "js/situacion/index.js", 40), (R / "sprint-03/medidas/js/main.js", APP / "js/medidas/index.js", 160)):
     c = lineas_cambiadas(o, n)
-    ok(f"{n.relative_to(APP).as_posix()}: solo {c} líneas distintas del main.js original (montaje, oyentes y, en Medidas, la recomposición A/B; el cálculo vive en módulos idénticos)", c <= esperado, c)
+    ok(f"{n.relative_to(APP).as_posix()}: solo {c} líneas distintas del main.js original (montaje, oyentes y, en Medidas, la recomposición; el cálculo vive en módulos idénticos)", c <= esperado, c)
 
-# los dos componentes nuevos de las propuestas A y B no calculan: solo pintan lo que reciben y reutilizan funciones originales
-for f in ("lista.js", "inspector.js"):
+# el componente nuevo de la lista no calcula: solo pintan lo que reciben y reutilizan funciones originales
+for f in ("lista.js",):
     src = "\n".join(l for l in (APP / "js/medidas" / f).read_text(encoding="utf-8").splitlines() if not l.strip().startswith("//"))  # sin comentarios
     ok(f"js/medidas/{f}: sin cálculo propio (no usa NORM, scorer, reach, ordered ni redondea)", not any(k in src for k in ("NORM", "scorer", "reach(", "ordered(", "Math.round", "Math.floor")) and "calculo.js" in src)
 # estilos: lo que cambia respecto al sprint son solo líneas de familia/cifras

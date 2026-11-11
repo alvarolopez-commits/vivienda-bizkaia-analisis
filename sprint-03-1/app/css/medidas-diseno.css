@@ -1,9 +1,8 @@
-/* Medidas · composición de las dos propuestas (A · Escenario, B · Mesa). Se carga después de medidas.css y solo cambia la
+/* Medidas · composición única: escenario + panel lateral con la lista. Se carga después de medidas.css y solo cambia la
    colocación y el aspecto de las piezas; la lógica, los datos y los textos son los del Sprint 03. Mismas superficies, radios,
    cristal, estados y botones que Living Atlas (css/situacion.css); la tipografía viene de typography.css. */
 
 .medidas { --stage-h: clamp(540px, calc(100dvh - 340px), 760px); max-width: 1520px; position: relative; }
-.medidas[data-diseno="b"] { --stage-h: clamp(520px, calc(100dvh - 340px), 640px); }
 
 /* ---------- Cabecera: título a la izquierda, modos a la derecha (como los cinco problemas del Atlas) ---------- */
 .m-cab { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s4) var(--s6); padding-block: var(--s7) var(--s4); }
@@ -12,9 +11,6 @@
 .cabecera-modos { position: static; margin: 0; padding: 0; border: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .modos { flex: none; display: grid; grid-template-columns: repeat(4, auto); gap: 4px; padding: 4px; background: var(--panel); border-radius: 18px; }
 .modo { min-height: 52px; padding: 0 var(--s4); border-radius: 14px; }
-.m-disenos { position: absolute; top: var(--s2); right: max(var(--margen), env(safe-area-inset-right, 0px)); z-index: 5; display: inline-flex; align-items: center; gap: 4px; padding: 3px 3px 3px 12px; background: rgba(255, 255, 255, .78); border: 1px solid var(--line); border-radius: 999px; font-size: .75rem; color: var(--muted); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-.m-disenos button { min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-size: .75rem; font-weight: 600; cursor: pointer; }
-.m-disenos button[aria-pressed="true"] { background: var(--ink); color: #fff; }
 
 /* ---------- Cinta de criterios con revelado progresivo ---------- */
 .m-barra { display: flex; flex-wrap: nowrap; align-items: stretch; gap: var(--s3) var(--s4); padding-bottom: var(--s4); }
@@ -78,9 +74,9 @@
 .matrix-table tr.elegida > * { background: var(--accent-soft); }
 .m-stage .matriz-notas { margin-top: var(--s4); }
 
-/* ---------- Propuesta A · Escenario: panel lateral persistente con ficha y lista (espejo del Atlas) ---------- */
-.medidas[data-diseno="a"] .shell[data-modo="explorar"] { grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); grid-template-rows: var(--stage-h); }
-.medidas[data-diseno="a"] .m-stage { height: var(--stage-h); }
+/* ---------- Panel lateral persistente con ficha y lista (espejo del Atlas) ---------- */
+.medidas .shell[data-modo="explorar"] { grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); grid-template-rows: var(--stage-h); }
+.medidas .m-stage { height: var(--stage-h); }
 .m-side { display: flex; flex-direction: column; min-height: 0; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; }
 .m-resumen { display: grid; gap: 6px; padding: var(--s5); border-bottom: 1px solid var(--line); }
 .m-resumen-cifra { font: 600 clamp(2rem, 1.6rem + 1vw, 2.5rem)/1.05 var(--f-ui); letter-spacing: -.025em; color: var(--accent); }
@@ -103,28 +99,9 @@
 .m-fila-add[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
 .m-fila-add:disabled { opacity: .4; cursor: not-allowed; }
 
-/* ---------- Propuesta B · Mesa: escenario a todo el ancho y franja inferior con la ficha rápida ---------- */
-.medidas[data-diseno="b"] .m-stage { min-height: var(--stage-h); }
-.medidas[data-diseno="b"] .m-stage .burbujas { max-height: max(380px, calc(100dvh - 500px)); width: min(100%, 980px); }
-.medidas[data-diseno="b"] .m-stage > div:last-child { overflow: visible; }
-.medidas[data-diseno="b"] .m-stage .table-wrap { max-height: calc(100dvh - 420px); min-height: 360px; }
-.m-dock { position: sticky; bottom: 0; z-index: 35; margin-top: var(--s2); padding: var(--s3) var(--s5) var(--s4); background: rgba(255, 255, 255, .92); border: 1px solid var(--line-2); border-bottom: 0; border-radius: 24px 24px 0 0; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -16px 36px -22px rgba(34, 30, 65, .4); }
-.m-inspector { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "cab acc" "crit crit" "ext ext"; gap: 8px var(--s5); align-items: center; }
-.m-inspector-vacio { grid-column: 1 / -1; font-size: .875rem; color: var(--muted); }
-.m-inspector-cab { grid-area: cab; display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--s3); min-width: 0; }
-.m-inspector-cab .medida-nombre { font-size: 1.125rem; outline: none; }
-.m-inspector-cab .pill, .m-inspector-cab .fuera-nota { margin: 0; padding: 2px 10px; }
-.m-inspector-criterios { grid-area: crit; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s3); margin: 0; }
-.m-inspector-criterios dt { font-size: .6875rem; color: var(--muted); }
-.m-inspector-criterios dd { margin: 0; font-size: .8125rem; font-weight: 600; line-height: 1.3; }
-.m-inspector-extracto { grid-area: ext; margin: 0; font-size: .8125rem; line-height: 1.5; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.m-inspector-acciones { grid-area: acc; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
-.medidas[data-diseno="b"] > .panel-medida { position: fixed; z-index: 60; right: var(--s4); top: calc(var(--banda) + var(--s4)); bottom: var(--s4); width: 420px; max-height: none; }
 
-/* ---------- Bandeja: flotante de cristal, igual en las dos propuestas ---------- */
+/* ---------- Bandeja: flotante de cristal, siempre visible ---------- */
 .bandeja { left: 50%; right: auto; bottom: 20px; width: min(1120px, calc(100vw - 32px)); gap: var(--s4); transform: translateX(-50%); padding: 10px 14px 10px 22px; border: 1px solid var(--line-2); border-radius: 22px; background: rgba(255, 255, 255, .86); box-shadow: 0 20px 44px -18px rgba(26, 36, 70, .45); }
-.medidas[data-diseno="b"]:has(.m-dock:not([hidden])) ~ .bandeja { bottom: 168px; }
-.medidas[data-diseno="b"]:has(.m-inspector-vacio) ~ .bandeja { bottom: 92px; }
 .bandeja-lista { flex-wrap: nowrap; }
 .bandeja-lista li { flex: 0 1 auto; min-width: 0; max-width: 15rem; }
 .bandeja-nota { white-space: normal; max-width: 16ch; line-height: 1.3; }

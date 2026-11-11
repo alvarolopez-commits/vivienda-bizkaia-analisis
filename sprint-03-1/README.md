@@ -17,7 +17,7 @@ Después abrir http://localhost:4179/ (o doble clic en `Abrir Sprint 03.1.bat`).
 | `#medidas?rep=matriz&w=3,2,0,0,1` | Matriz con sus pesos |
 | `#medidas/M01-M06` | Comparar dos medidas |
 
-`?limpio` oculta la etiqueta de prototipo; `?abrir=M10` (y `&cajon` en B) abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos.
+`?limpio` oculta la etiqueta de prototipo; `?abrir=M10` abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos.
 
 ## Cómo está hecha
 
@@ -35,6 +35,8 @@ python -I sprint-03-1/_qa/integridad.py
 ```
 Las de navegador (`_qa/qa-navegacion.js`, `qa-situacion.js`, `qa-equivalencia.js`, `qa-flujos.js`, `qa-tipografia.js`) se ejecutan desde la consola con la app abierta; el servidor local las sirve en `/_qa/`. Detalle y resultados en `docs/continuidad/TIPOGRAFIA_APLICADA.md`.
 
-## Medidas: dos composiciones (para revisar)
+## Medidas: una sola composición
 
-`?diseno=a` (Escenario, por defecto) y `?diseno=b` (Mesa); el selector «Composición» de la vista cambia entre ellas. Descripción, comparación, pruebas y decisiones pendientes en `docs/continuidad/PROPUESTAS_MEDIDAS_A_B.md`. Paso 4 (elegir una y quitar la otra) y Paso 5 (regresión completa) del documento `SPRINT_03_1_REPARACION_CONTINUIDAD_VISUAL.md`: **pendientes de vuestra elección**.
+Escenario (Plano o Matriz) + panel lateral persistente con la ficha y la lista de las medidas a la vista, filtros en una cinta superior y bandeja de comparación flotante. Ya no hay variantes `?diseno=`. Descripción, pruebas y decisiones en `docs/continuidad/PROPUESTAS_MEDIDAS_A_B.md` (histórico) y `docs/continuidad/COMPOSICION_UNICA.md`.
+
+Los enlaces a Municipios, Acceso, Normas, Método, Resumen y Radar abren la **versión actual publicada en una pestaña nueva** (marca ↗): así esta pestaña conserva siempre el prototipo.

@@ -15,7 +15,6 @@ import { MAX_SEL, createApp, emptyFilters } from "./estado-app.js";
 import { crearMatriz } from "./matriz-vista.js";
 import { crearPlano } from "./plano.js";
 import { crearLista } from "./lista.js";
-import { crearInspector } from "./inspector.js";
 
 const $ = (s) => document.querySelector(s);
 const NO_FILTER_LABEL = { mecanismo: "Cómo actúa", decide: "Quién decide", papel: "Papel de BM30" };
@@ -40,10 +39,6 @@ export async function montar(raiz, { store }) {
   const { S, M } = app;
   const total = M.medidas.length;
   const score = scorer(store, { get weights() { return S.w; } });
-  // las dos propuestas de composición: ?diseno=a (Escenario) o ?diseno=b (Mesa); el estado y la lógica son los mismos
-  const diseno = new URLSearchParams(location.search).get("diseno") === "b" ? "b" : "a";
-  $("#medidas").dataset.diseno = diseno;
-  let cajon = false; // propuesta B: el cajón con la ficha completa
 
   // ---------- cabecera de la vista (literales de js/medidas/index.js) ----------
   const ya = M.medidas.filter((m) => m.viabilidad === "instrumento_existente").length;
@@ -99,11 +94,10 @@ export async function montar(raiz, { store }) {
     origin = from ?? origin;
     S.focus = id;
     render();
-    (diseno === "b" ? inspector.node : panel.node).querySelector("h2")?.focus();
+    panel.node.querySelector("h2")?.focus();
     announce(`Ficha de ${id} abierta`);
   };
   const closePanel = () => {
-    if (diseno === "b" && cajon) { cajon = false; render(); return; } // en B, el primer Esc o × cierra el cajón y conserva la medida
     S.focus = null;
     render();
     (origin?.isConnected ? origin : null)?.focus();
@@ -340,20 +334,16 @@ export async function montar(raiz, { store }) {
       const { weighted, list } = ordered(M, vis, score);
       matriz.update({ list, weighted, sel, focus: S.focus });
       pesosNota.textContent = `${vis.length} de ${total} medidas. ${weighted ? "Ordenadas según los pesos que has elegido." : "Agrupadas por línea de actuación: da peso a algún criterio para ordenarlas."}`;
-      // ficha: A, panel lateral con la lista; B, franja inferior y cajón con la ficha completa
-      panel.node.hidden = !(diseno === "b" ? S.focus && cajon : S.focus);
+      // ficha: panel lateral persistente con la lista de las medidas a la vista
+      panel.node.hidden = !S.focus;
       if (S.focus) panel.render(S.focus);
-      side.hidden = diseno !== "a"; dock.hidden = diseno !== "b";
-      if (diseno === "a") {
-        resumen.hidden = Boolean(S.focus);
-        resumenCuenta.textContent = `${es(vis.length)} de ${es(total)} medidas`;
-        resumenYa.textContent = `${es(vis.filter((m) => m.viabilidad === "instrumento_existente").length)} se pueden aplicar ya`;
-        lista.update({ list, weighted, sel, focus: S.focus });
-      } else {
-        inspector.render(S.focus);
-      }
+      side.hidden = false;
+      resumen.hidden = Boolean(S.focus);
+      resumenCuenta.textContent = `${es(vis.length)} de ${es(total)} medidas`;
+      resumenYa.textContent = `${es(vis.filter((m) => m.viabilidad === "instrumento_existente").length)} se pueden aplicar ya`;
+      lista.update({ list, weighted, sel, focus: S.focus });
     } else {
-      panel.node.hidden = true; side.hidden = true; dock.hidden = true;
+      panel.node.hidden = true; side.hidden = true;
     }
     if (S.mode === "entender") entender.render(S.focus);
     if (S.mode === "comparar") renderComparar();
@@ -365,19 +355,13 @@ export async function montar(raiz, { store }) {
     else if (keepFocus && S.focus) panel.node.querySelector("button[aria-pressed]")?.focus();
   }
 
-  // ---------- composición de las dos propuestas ----------
+  // ---------- composición: escenario + panel lateral con la lista ----------
   const lista = crearLista({ onOpen: openPanel, onToggle: toggle, isFull });
   const resumenCuenta = el("p", { class: "m-resumen-cifra" }), resumenYa = el("p", { class: "m-resumen-sub" });
   const resumen = el("div", { class: "m-resumen" }, [el("p", { class: "ficha-rotulo", "data-propuesta": "", text: "El conjunto a la vista" }), resumenCuenta, resumenYa,
     el("p", { class: "m-resumen-pista", "data-propuesta": "", text: "Elige una medida en el Plano, en la tabla o en la lista para ver su ficha." })]);
   const side = el("aside", { class: "m-side", "aria-label": "Medida elegida y lista de medidas" }, [resumen, panel.node, lista.node]);
-  const inspector = crearInspector(store, { onToggle: toggle, onFicha: () => { cajon = true; render(); panel.node.querySelector("h2")?.focus(); }, hrefFicha: (id) => `#medidas/${id}`, isFull, isSel: (id) => S.sel.includes(id), outside: (id) => !app.passes(store.measures[id]) });
-  const dock = el("div", { class: "m-dock", hidden: true }, [inspector.node]);
-  if (diseno === "a") $(".shell").append(side);
-  else { $("#medidas").append(panel.node, dock); } // el panel es el cajón (a la derecha, no modal)
-  const disenos = el("div", { class: "m-disenos", role: "group", "aria-label": "Propuesta de composición", "data-propuesta": "" }, [el("span", { text: "Composición" }),
-    ...["a", "b"].map((k) => { const b = el("button", { type: "button", "aria-pressed": String(diseno === k), text: k === "a" ? "A · Escenario" : "B · Mesa" }); b.addEventListener("click", () => { const u = new URL(location.href); u.searchParams.set("diseno", k); location.assign(u); }); return b; })]);
-  $("#medidas").append(disenos);
+  $(".shell").append(side);
 
   // ---------- arranque y cambios de dirección ----------
   const onHash = () => {
@@ -388,7 +372,7 @@ export async function montar(raiz, { store }) {
   onHash(); // los cambios de dirección los avisa el router de la aplicación (alCambiarDireccion)
   // ayuda para capturas y revisión: ?abrir=M10 abre el panel contextual de esa medida al cargar (no forma parte de la URL de la web)
   const abrir = new URLSearchParams(location.search).get("abrir");
-  if (abrir && Object.hasOwn(store.measures, abrir) && S.mode === "explorar") { openPanel(abrir); if (diseno === "b" && new URLSearchParams(location.search).has("cajon")) { cajon = true; render(); } }
+  if (abrir && Object.hasOwn(store.measures, abrir) && S.mode === "explorar") { openPanel(abrir); }
   $("#medidas").setAttribute("aria-busy", "false");
   window.__medidas = { app, store, S, render, goto, openPanel, closePanel, toggle, plano, matriz, score, ordered }; // solo para las pruebas de _qa
   return { alCambiarDireccion: onHash, desmontar: () => { baja.forEach((f) => f()); document.body.classList.remove("con-bandeja"); delete window.__medidas; } };

@@ -141,7 +141,7 @@ export async function montar(raiz, { store }) {
         ]),
         el("div", { class: "ficha-nombre" }, [
           el("h2", { class: "ficha-muni", text: m.nombre }),
-          el("a", { class: "btn primary ir", href: `${WEB}#municipios/${S.code}` }, [el("span", { text: "Ver su ficha" }), el("span", { "aria-hidden": "true", text: "→" })]),
+          el("a", { class: "btn primary ir", href: `${WEB}#municipios/${S.code}`, target: "_blank", rel: "noopener", title: "Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva." }, [el("span", { text: "Ver su ficha" }), el("span", { "aria-hidden": "true", text: "→" })]),
         ]),
         prop(el("p", { class: "ficha-meta", text: `${m.comarca} · ${es(m.poblacion)} habitantes` })),
         el("div", { class: "ficha-dato" }, [
