@@ -39,12 +39,14 @@ Las de navegador (`_qa/qa-navegacion.js`, `qa-situacion.js`, `qa-equivalencia.js
 
 Escenario (Plano o Matriz) + panel lateral fijo con la ficha y la lista de las medidas a la vista, filtros en una cinta superior y bandeja de comparación flotante. Documentación completa, pruebas y diferencias deliberadas en `docs/continuidad/COMPOSICION_UNICA.md`.
 
+Design System (materiales L0/L1/L2, componentes, degradación): `docs/diseno/DESIGN_SYSTEM.md`.
+
 ## Estructura
 
 ```text
 sprint-03-1/
   app/index.html          marco único (cabecera, menú, pie)
-  app/css/                typography.css (familias) · marco.css · situacion.css · medidas.css · medidas-diseno.css
+  app/css/                typography.css (familias) · tokens.css (tokens y materiales Liquid Glass) · marco.css · situacion.css · medidas.css · medidas-diseno.css
   app/js/app.js           router (una vista montada a la vez)
   app/js/situacion/       Living Atlas (Sprint 02)
   app/js/medidas/         Explorador (Sprint 03) + lista.js

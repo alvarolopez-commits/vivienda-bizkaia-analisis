@@ -1,24 +1,4 @@
-:root {
-  color-scheme: light;
-  --bg: #f7f8fb;
-  --surface: #ffffff;
-  --panel: #edf1f6;
-  --ink: #221e41;
-  --ink-2: #3c4660;
-  --muted: #5b6b80;
-  --line: rgba(34, 30, 65, .11);
-  --line-2: rgba(34, 30, 65, .22);
-  --accent: #1a4d7a;
-  --accent-soft: #e6eef7;
-  --ice: #8bcdff;
-  --noche: #221e41;
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
-  --margen: clamp(16px, 4vw, 56px);
-  --banda: 64px;
-  --ease: cubic-bezier(.16, 1, .3, 1);
-  --sombra-flotante: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 10px 30px -12px rgba(26, 36, 70, .28);
-}
-
+/* Tokens, radios, elevaciones y materiales: ver tokens.css (única fuente). */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { scroll-padding-top: calc(var(--banda) + var(--s4)); scrollbar-color: var(--line-2) transparent; }
@@ -36,13 +16,13 @@ main:focus { outline: none; }
 
 /* ---------- Banda (igual que Sprint 01) ---------- */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-.banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s5); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: saturate(140%) blur(12px); -webkit-backdrop-filter: saturate(140%) blur(12px); border-bottom: 1px solid var(--line); }
+.banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s5); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: var(--vidrio-barra-fondo); -webkit-backdrop-filter: var(--vidrio-filtro); backdrop-filter: var(--vidrio-filtro); border-bottom: 1px solid var(--vidrio-barra-linea); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset; }
 .marca { font: 600 1rem/1 var(--f-ui); letter-spacing: -.01em; text-decoration: none; white-space: nowrap; padding: var(--s3) 0; }
-.vistas { display: flex; align-items: center; gap: clamp(2px, .5vw, 8px); }
-.vistas a { position: relative; padding: 8px 16px; border-radius: 999px; font-size: .9375rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .18s, background-color .18s; }
-.vistas a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
-/* sección abierta: píldora oscura, como las pestañas de los problemas del Atlas */
-.vistas a[aria-current="page"] { background: var(--ink); color: #fff; font-weight: 600; }
+/* navegación global: cápsula de vidrio L1; la sección abierta es una píldora oscura (estado inequívoco, también por peso y aria-current) */
+.vistas { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
+.vistas a { position: relative; padding: 7px 16px; border-radius: var(--r-pildora); font-size: .9375rem; font-weight: 500; color: var(--ink-2); text-decoration: none; transition: color var(--dur-control) var(--ease), background-color var(--dur-control) var(--ease), box-shadow var(--dur-control) var(--ease); }
+.vistas a:hover { color: var(--ink); background: rgba(255, 255, 255, .7); }
+.vistas a[aria-current="page"] { background: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); }
 .vista-activa { display: none; font-weight: 600; font-size: .9375rem; }
 .banda-dcha { justify-self: end; display: flex; align-items: center; gap: var(--s4); }
 .otros-productos { display: flex; align-items: center; gap: var(--s4); }
@@ -51,8 +31,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .menu-boton { display: none; min-height: 40px; padding: 8px 4px; background: none; border: 0; font-weight: 600; cursor: pointer; }
 
 /* ---------- Botones ---------- */
-.btn { display: inline-flex; align-items: center; gap: var(--s2); min-height: 40px; padding: 0 var(--s4); border: 1px solid var(--line-2); border-radius: 999px; background: transparent; font-size: .875rem; font-weight: 600; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color .18s, border-color .18s, transform .14s var(--ease); }
+.btn { display: inline-flex; align-items: center; gap: var(--s2); min-height: 40px; padding: 0 var(--s4); border: 1px solid var(--line-2); border-radius: var(--r-pildora); background: transparent; font-size: .875rem; font-weight: 600; text-decoration: none; cursor: pointer; white-space: nowrap; transition: background-color var(--dur-control), border-color var(--dur-control), transform .14s var(--ease); }
 .btn:hover { background: var(--surface); border-color: var(--ink); }
+.btn.vidrio { border: 1px solid var(--vidrio-borde); }
+.btn.vidrio:hover { background: var(--surface); border-color: var(--ink); }
 .btn:active { transform: translateY(1px); }
 .btn.primary { min-height: 48px; padding: 0 var(--s5); background: var(--ink); border-color: var(--ink); color: #fff; font-size: .9375rem; }
 .btn.primary:hover { background: var(--accent); border-color: var(--accent); }

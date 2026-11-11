@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
-  <!-- sistema tipográfico único (fuente de verdad de las familias), marco compartido (tokens, cabecera, menú, botones)
+  <!-- sistema tipográfico único (typography.css), tokens y materiales del Design System (tokens.css), marco compartido (cabecera, menú, botones)
        y una hoja por vista: solo está activa la de la vista abierta -->
   <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/marco.css">
   <link rel="stylesheet" href="css/situacion.css" id="css-situacion">
   <link rel="stylesheet" href="css/medidas.css" id="css-medidas">
@@ -26,7 +27,7 @@
        nuevas; Municipios, Acceso, Normas y Método muestran una página «aún no rediseñada» con un enlace (pestaña nueva) a la versión actual. -->
   <header class="banda">
     <a class="marca" href="#situacion">Vivienda en Bizkaia</a>
-    <nav class="vistas" aria-label="Pestañas">
+    <nav class="vistas vidrio" aria-label="Pestañas">
       <a href="#situacion" data-vista="situacion">Situación</a>
       <a class="por-hacer" href="#municipios" data-vista="municipios" title="Aún no rediseñada">Municipios</a>
       <a class="por-hacer" href="#acceso" data-vista="acceso" title="Aún no rediseñada">Acceso</a>
@@ -38,7 +39,7 @@
     <div class="banda-dcha">
       <ul class="otros-productos" aria-label="Otros productos">
         <li class="otro-resumen"><a class="enlace-ext" href="https://vizcaya-vivienda-resumen.vercel.app/" target="_blank" rel="noopener">Resumen <span aria-hidden="true">↗</span></a></li>
-        <li><a class="btn" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
+        <li><a class="btn vidrio" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a></li>
       </ul>
       <button type="button" class="menu-boton" id="menu-abrir" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false">Menú</button>
     </div>
