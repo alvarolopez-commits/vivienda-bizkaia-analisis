@@ -3,6 +3,7 @@
 // monta ese contenido dentro de una composición propia (cabecera, barra de herramientas, índice interno) y se le da el sistema de diseño.
 // Nada de lo que se muestra (textos, cifras, cálculos) se escribe ni se recalcula en este archivo, salvo los rótulos marcados data-propuesta.
 import { el } from "../original/js/ui.js";
+import { modo } from "./movimiento.js";
 
 export const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
@@ -15,8 +16,10 @@ export function lupa() {
   return svg;
 }
 
-/** Las cifras «que ruedan» del original (movimiento.js) se dibujan con CSS que aquí no existe: se devuelven a texto plano (Geist, tabular). */
-export function cifrasPlanas(raiz) {
+/** Las cifras «que ruedan» del original (movimiento.js) se animan con css/movimiento.css solo con la intensidad «expressive» (una vez, al entrar en
+ *  pantalla); con las demás se devuelven a texto plano (Geist, tabular). `forzar` las aplana siempre (las pruebas comparan el texto). */
+export function cifrasPlanas(raiz, forzar = false) {
+  if (!forzar && modo() === "expressive") return;
   raiz.querySelectorAll(".roll").forEach((n) => {
     const dicho = n.querySelector(".sr-only")?.textContent;
     if (dicho !== undefined) { n.replaceChildren(document.createTextNode(dicho)); n.classList.remove("roll", "is-in"); }

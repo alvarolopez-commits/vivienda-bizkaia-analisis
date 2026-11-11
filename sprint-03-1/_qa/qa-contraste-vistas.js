@@ -35,6 +35,8 @@ export async function run() {
   const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   const PEOR = comp(hex("#8bcdff"), 0.34, hex(bg));
   const efectivo = (el) => {
+    const act = el.closest('[aria-pressed="true"], [aria-current="page"], [aria-current="true"]'); // el elegido va sobre la píldora oscura (.lente)
+    if (act && act.parentElement?.classList.contains("con-lente")) return hex(getComputedStyle(document.documentElement).getPropertyValue("--ink").trim());
     const cadena = []; for (let n = el; n && n.nodeType === 1; n = n.parentElement) cadena.unshift(n);
     let fondo = PEOR;
     for (const n of cadena) { const m = getComputedStyle(n).backgroundColor; if (!m || m === "transparent") continue; const v = num(m); const a = v.length > 3 ? v[3] : 1; if (a > 0) fondo = comp(v.slice(0, 3), a, fondo); }

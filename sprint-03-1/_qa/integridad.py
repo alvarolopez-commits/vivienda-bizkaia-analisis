@@ -122,7 +122,7 @@ for nombre in ("situacion.css", "marco.css", "medidas-diseno.css"):
         for p, v in dec.items():
             if prev.get(p) != v:
                 cambios.append((sel, p))
-    de_maquetacion = [(s, p) for s, p in cambios if p not in PRESENTACION and p != "gap" and not p.startswith("--") and not s.startswith('.shell[data-detalle="abierto"] .m-side') and not s.startswith("::-webkit-scrollbar")]  # excepciones documentadas: ficha de Medidas dentro del panel a < 1400 px; aspecto de las barras de desplazamiento (::-webkit-scrollbar)
+    de_maquetacion = [(s, p) for s, p in cambios if p not in PRESENTACION and p != "gap" and not p.startswith("--") and not s.startswith('.shell[data-detalle="abierto"] .m-side') and not s.startswith("::-webkit-scrollbar") and s != ".m-stage .burbujas"]  # excepciones documentadas: ficha de Medidas dentro del panel a < 1400 px; aspecto de las barras de desplazamiento (::-webkit-scrollbar); altura del Plano de Medidas para que quepa con su leyenda
     quitadas = [(s, p) for sel, dec in antes for s, p in [(sel, k) for k in dec] if not any(s == s2 and p in d2 for s2, d2 in ahora)]
     quitadas = [(s, p) for s, p in quitadas if p not in PRESENTACION and s != ":root" and not s.startswith(".pendiente") and not p.startswith("--")]  # :root salió a tokens.css (se comprueba abajo); .pendiente era la página provisional, ya sustituida por las vistas reales
     ok(f"css/{nombre}: respecto al commit publicado solo cambia presentación, no maquetación ({len(cambios)} declaraciones cambiadas)", bool(antes) and not de_maquetacion and not quitadas, (de_maquetacion + quitadas)[:4])

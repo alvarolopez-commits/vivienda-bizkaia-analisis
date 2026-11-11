@@ -23,7 +23,7 @@ Después abrir http://localhost:4179/ (o doble clic en `Abrir Sprint 03.1.bat`).
 
 Las direcciones de antes de la web publicada (`#compra`, `#diagnostico`, `#comparar/A-B`, `#ideas`…) se traducen con el mismo `rutas.js` original.
 
-`?limpio` oculta la etiqueta de prototipo; `?abrir=M10` abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos que aún no ha aprobado el autor.
+`?mov=quieto | sobrio | expresivo` cambia la intensidad del movimiento (por defecto, expresivo; ver `docs/diseno/MOVIMIENTO.md`); `?limpio` oculta la etiqueta de prototipo; `?abrir=M10` abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos que aún no ha aprobado el autor.
 
 ## Cómo está hecha
 

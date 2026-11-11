@@ -12,6 +12,10 @@
 // vista, los cambios de dirección los resuelve la propia vista (alCambiarDireccion), con el mismo código que antes.
 import { cargarStore } from "./datos.js";
 import { redirectOf } from "../original/js/rutas.js";
+import { entrada, iniciar, lente, lentes, observarTick, transicion } from "./movimiento.js";
+
+iniciar(); // intensidad del movimiento (body[data-motion]); la píldora de la cabecera es la misma en las seis vistas
+lente(document.querySelector(".vistas"));
 
 const raiz = document.getElementById("vista");
 // cada vista tiene una o más hojas; solo están activas las de la vista abierta
@@ -20,6 +24,7 @@ const HOJAS = { situacion: [hoja("css-situacion")], medidas: [hoja("css-medidas"
 const NOMBRES = { situacion: "Situación", municipios: "Municipios", acceso: "Acceso", medidas: "Medidas", normas: "Normas", metodo: "Método" };
 const TITULOS = Object.fromEntries(Object.entries(NOMBRES).map(([k, v]) => [k, k === "situacion" ? "Vivienda en Bizkaia · Análisis (prototipo integrado)" : `${v} · Vivienda en Bizkaia (prototipo integrado)`]));
 let actual = null; // { nombre, vista: { alCambiarDireccion, desmontar } }
+let limpieza = null; // suelta los observadores de movimiento de la vista que se va
 
 /** Qué vista pide la dirección. Cualquier otra cosa (vacía, desconocida) abre Situación. */
 export const vistaDe = (hash) => (hash.match(/^#(medidas|municipios|acceso|normas|metodo)([/?]|$)/) || [])[1] || "situacion";
@@ -45,21 +50,37 @@ async function ir() {
   if (movida) history.replaceState(null, "", movida);
   const nombre = vistaDe(location.hash);
   if (actual?.nombre === nombre) { actual.vista.alCambiarDireccion?.(); return; }
+  if (!actual) raiz.setAttribute("aria-busy", "true"); // primera carga: esqueleto mientras llegan los datos
   try {
     const store = await cargarStore();
     await Promise.all(Object.values(HOJAS).flat().map(hojaLista));
-    actual?.vista.desmontar?.();
-    actual = null;
-    raiz.replaceChildren();
-    Object.entries(HOJAS).forEach(([k, links]) => links.forEach((link) => { link.disabled = k !== nombre; }));
-    marcarNavegacion(nombre);
-    const modulo = await import(`./${nombre}/index.js`);
-    const vista = await modulo.montar(raiz, { store });
-    actual = { nombre, vista };
-    window.__vista = nombre; // solo para las pruebas de _qa
+    // el cambio de vista es una sola transición: la cabecera se queda y el contenido se funde y sube (movimiento.js)
+    await transicion(async () => {
+      try {
+        limpieza?.(); limpieza = null;
+        actual?.vista.desmontar?.();
+        actual = null;
+        raiz.replaceChildren();
+        Object.entries(HOJAS).forEach(([k, links]) => links.forEach((link) => { link.disabled = k !== nombre; }));
+        marcarNavegacion(nombre);
+        const modulo = await import(`./${nombre}/index.js`);
+        const vista = await modulo.montar(raiz, { store });
+        actual = { nombre, vista };
+        window.__vista = nombre; // solo para las pruebas de _qa
+        window.scrollTo(0, 0);   // una vista nueva empieza arriba
+        entrada(nombre, raiz);
+        const sueltaLentes = lentes(raiz), sueltaTick = observarTick(raiz);
+        limpieza = () => { sueltaLentes(); sueltaTick(); };
+      } catch (err) {
+        console.error(err);
+        raiz.replaceChildren(Object.assign(document.createElement("p"), { className: "aviso-error", textContent: `No se han podido cargar los datos (${err.message}). Recarga la página.` }));
+      }
+    });
   } catch (err) {
     console.error(err);
     raiz.replaceChildren(Object.assign(document.createElement("p"), { className: "aviso-error", textContent: `No se han podido cargar los datos (${err.message}). Recarga la página.` }));
+  } finally {
+    raiz.removeAttribute("aria-busy");
   }
 }
 

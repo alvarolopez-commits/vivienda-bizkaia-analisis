@@ -11,6 +11,7 @@ Se implementa en CSS y JavaScript sin frameworks, sobre la aplicación integrada
 | `app/css/typography.css` | Familias: Montserrat (titulares), Geist (texto, UI y **todas las cifras**), Geist Mono (solo código) |
 | `app/css/tokens.css` | **Única fuente** de color de interfaz y de datos de las vistas de consulta, espaciado, radios, movimiento, elevaciones y los tres materiales, con su degradación |
 | `app/css/marco.css` | Marco global: cabecera, navegación, menú, botones, pie |
+| `app/css/movimiento.css` + `app/js/movimiento.js` | Movimiento: tokens de tiempo y curvas, transición de vistas, píldora deslizante, entrada, `tick`, cifras que ruedan, línea de tiempo, movimiento reducido |
 | `app/css/lectura.css` + `app/js/lectura.js` | Composición compartida de las vistas de consulta: cabecera, barra de herramientas, índice interno, bloques de contenido |
 | `app/css/situacion.css`, `medidas.css`, `medidas-diseno.css`, `municipios.css`, `acceso.css`, `normas.css`, `metodo.css` | Una hoja por vista; solo está activa la de la vista abierta |
 | `app/original/` | Módulos y datos de la web publicada, copiados **byte a byte** (no se editan) |
@@ -26,6 +27,9 @@ Las **rampas semánticas de datos** (indicadores, líneas de medidas, «sin dato
 | **L2 · Vidrio de foco** | Popover o panel temporal activo; máximo uno | `.vidrio-foco` / `--vidrio-foco-*` | Desplegables «Más criterios» y «Prioridades» |
 
 Fondo ambiental (`--ambiente`): dos halos fríos tras la cabecera, solo en Situación. Da al vidrio algo que refractar.
+
+## Movimiento
+Sistema de movimiento tomado del sistema de marca de Astara (tiempos 150/240/420/700 ms, píldora deslizante, transición de vistas, `tick`, intensidades `still/restrained/expressive`, movimiento reducido): ver `MOVIMIENTO.md`. Archivos: `css/movimiento.css`, `js/movimiento.js`.
 
 ## Degradación (todo a superficie sólida)
 Sin `backdrop-filter` (`@supports not`), con `prefers-reduced-transparency: reduce` y con `prefers-contrast: more` (además sube bordes y líneas). `prefers-reduced-motion` ya reduce transiciones. Si el contraste falla, se sube la opacidad antes que el desenfoque.

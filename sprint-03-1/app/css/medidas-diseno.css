@@ -141,3 +141,7 @@ body.con-bandeja .medidas { padding-bottom: 96px; }
 /* A menos de 1400 px, medidas.css superponía la ficha (position: fixed) para el diseño de tres columnas. Aquí el panel lateral ya es fijo
    y persistente, así que la ficha se queda dentro de él a cualquier anchura de escritorio (a 1280 se salía por la izquierda). */
 .shell[data-detalle="abierto"] .m-side .panel-medida { position: static; width: auto; z-index: auto; max-height: 52%; }
+
+/* Con la barra de desplazamiento de la página (ventana de 1425 px útiles) la leyenda del Plano ocupa dos líneas: el Plano se queda 50 px más bajo
+   para que escenario, Plano y leyenda quepan sin barra propia. */
+.m-stage .burbujas { max-height: calc(var(--stage-h) - 270px); }

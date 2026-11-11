@@ -23,7 +23,7 @@ export async function run() {
   const store = await cargarStore();
   const listo = async (sel, ms = 8000) => { for (let i = 0; i < ms / 100; i++) { if ($(sel)) break; await sleep(100); } await sleep(350); };
   const ir = async (hash, sel) => { location.hash = hash; await listo(sel); };
-  const limpio = (el) => { const c = el.cloneNode(true); c.querySelectorAll(".lec-kicker, .glos-cuenta, .glos-vacio, .x-fijos, .x-lado-t, [data-barrios]").forEach((n) => n.remove()); return c; };
+  const limpio = (el) => { const c = el.cloneNode(true); c.querySelectorAll(".lec-kicker, .glos-cuenta, .glos-vacio, .x-fijos, .x-lado-t, [data-barrios]").forEach((n) => n.remove()); cifrasPlanas(c, true); return c; };   // las cifras que ruedan se aplanan en la copia: se compara el texto
   const texto = (lec) => plano(limpio($(".lec-titulo", lec)).textContent + " " + limpio($(".lec-contenido", lec)).textContent);
   const sinFeos = (lec) => !/\b(null|undefined|NaN)\b/.test(lec.textContent);
 
@@ -32,9 +32,9 @@ export async function run() {
   let lec = $(".v-municipios");
   {
     const scratch = document.createElement("div");
-    const v = renderMunicipios(scratch, store); v.show("48020"); cifrasPlanas(scratch);
+    const v = renderMunicipios(scratch, store); v.show("48020"); cifrasPlanas(scratch, true);
     const ref = plano([...scratch.querySelectorAll("header.vista-cab, .ficha")].map((n) => { const c = n.cloneNode(true); c.querySelectorAll("[data-barrios]").forEach((x) => x.remove()); return c.textContent; }).join(" "));
-    const live = plano($(".lec-titulo", lec).textContent + " " + (() => { const c = $(".ficha", lec).cloneNode(true); c.querySelectorAll("[data-barrios]").forEach((x) => x.remove()); return c.textContent; })());
+    const live = plano($(".lec-titulo", lec).textContent + " " + (() => { const c = $(".ficha", lec).cloneNode(true); c.querySelectorAll("[data-barrios]").forEach((x) => x.remove()); cifrasPlanas(c, true); return c.textContent; })());
     ok("Municipios · Bilbao: el texto y las cifras son idénticos a los del renderizador original", ref === live, ref === live ? `${live.length} caracteres` : `${ref.length} vs ${live.length}`);
   }
   ok("Municipios · perfil, 13 indicadores, problemas, hogares, evolución, barrios y plan", $(".muni-nombre", lec).textContent === "Bilbao" && $$(".fila-ind", lec).length === 13 && $$("section.ficha-sec", lec).map((s) => s.id).join() === "indicadores,problemas,hogares,evolucion,barrios,plan");
@@ -58,13 +58,13 @@ export async function run() {
   await ir("#municipios/00000", ".v-municipios .fila-ind");
   ok("Municipios · un código desconocido abre Bilbao, como la web publicada", /#municipios\/48020/.test(location.hash) && $(".muni-nombre")?.textContent === "Bilbao", location.hash);
   ok("Municipios · sin «null», «undefined» ni «NaN» en pantalla", sinFeos($(".v-municipios")));
-  ok("Municipios · cifras en Geist tabular, no hay cifras «que ruedan» sin su CSS", $$(".roll").length === 0 && getComputedStyle($(".muni-datos b, .muni-datos")).fontVariantNumeric.includes("tabular-nums"));
+  ok("Municipios · cifras en Geist tabular; las que ruedan solo existen con la intensidad «expressive» (con su CSS) y se aplanan en las demás", (document.body.dataset.motion === "expressive" || $$(".roll").length === 0) && getComputedStyle($(".muni-datos b, .muni-datos")).fontVariantNumeric.includes("tabular-nums"));
 
   // ---------------- Acceso ----------------
   await ir("#acceso", ".v-acceso .rejilla .rj-casilla");
   lec = $(".v-acceso");
   {
-    const scratch = document.createElement("div"); renderAcceso(scratch, store); cifrasPlanas(scratch);
+    const scratch = document.createElement("div"); renderAcceso(scratch, store); cifrasPlanas(scratch, true);
     const ref = plano(scratch.textContent), live = texto(lec);
     ok("Acceso · el texto y las cifras son idénticos a los del renderizador original (alquiler, escalera, explorador y alcance)", ref === live, ref === live ? `${live.length} caracteres` : `${ref.length} vs ${live.length}`);
   }
@@ -90,7 +90,7 @@ export async function run() {
   await ir("#normas", ".v-normas .comp-fila");
   lec = $(".v-normas"); const N = store.normas;
   {
-    const scratch = document.createElement("div"); renderNormas(scratch, store); cifrasPlanas(scratch);
+    const scratch = document.createElement("div"); renderNormas(scratch, store); cifrasPlanas(scratch, true);
     const ref = plano(scratch.textContent), live = plano($(".lec-titulo", lec).textContent.replace(/Estado normativo a .*$/, "") + " " + $(".lec-contenido", lec).textContent);
     ok("Normas · el texto, las fechas y las cifras son idénticos a los del renderizador original", ref === live, ref === live ? `${live.length} caracteres` : `${ref.length} vs ${live.length}`);
   }
@@ -114,7 +114,7 @@ export async function run() {
   await ir("#metodo", ".v-metodo dl.glossary dt");
   lec = $(".v-metodo");
   {
-    const scratch = document.createElement("div"); renderMetodo(scratch, store); cifrasPlanas(scratch);
+    const scratch = document.createElement("div"); renderMetodo(scratch, store); cifrasPlanas(scratch, true);
     const ref = plano(scratch.textContent), live = texto(lec).replace(/\d+ términos/, "");
     const ref2 = ref; // el original no lleva el contador de términos
     ok("Método · todo el texto de los bloques es idéntico al del renderizador original (glosario, método, límites, revisión, historial y fuentes)", ref2 === plano(live), ref2 === plano(live) ? `${ref2.length} caracteres` : `${ref2.length} vs ${plano(live).length}`);

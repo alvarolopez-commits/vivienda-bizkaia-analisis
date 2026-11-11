@@ -1,0 +1,87 @@
+/* Movimiento · sistema Astara DCI (§9) aplicado a esta aplicación.
+   Prueba de movimiento motivado: cada animación comunica ESTADO, FEEDBACK, CONTINUIDAD o JERARQUÍA; si quitarla no pierde significado, sobra.
+   Intensidad en <body data-motion="still | restrained | expressive">:
+     still       solo feedback de estado (hover, foco, carga). Sin entradas de vista ni momento firma.
+     restrained  + entrada de la vista al cambiar de pestaña: fundido de 240 ms con 4 px, sin escalonado.
+     expressive  + escalonado de la entrada (tope: 4 pasos = 200 ms) y UN momento firma por vista (700 ms). Valor por defecto.
+   Solo transform y opacity (y las propiedades independientes translate y scale, para no pisar los transform de cada pieza).
+   El contenido es visible por defecto: ninguna regla de aquí oculta nada si el script falla.
+   Con prefers-reduced-motion: menos y más suave, no cero: se conservan los fundidos y los cambios de estado; se quita el recorrido. */
+
+@keyframes rise { from { opacity: 0; translate: 0 var(--rise-y, 4px); } }
+@keyframes tick { from { opacity: .35; translate: 0 3px; } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes fill-x { from { scale: 0 1; } }
+@keyframes linea-crece { from { scale: 1 0; } }
+@keyframes rodar { from { transform: translateY(0); } }   /* el valor final es el estado base: sin script o sin animación se ve la cifra correcta */
+@keyframes shimmer { to { transform: translateX(100%); } }
+@keyframes pulse { 50% { opacity: .5; } }
+
+/* ---------- Continuidad entre vistas: View Transitions (la cabecera se queda; el contenido se funde y sube) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  #vista { view-transition-name: vista; }
+  .banda { view-transition-name: banda; }
+  ::view-transition-group(*) { animation-duration: var(--t-layout); animation-timing-function: var(--ease-out); }
+  ::view-transition-old(vista) { animation: fade-out var(--t-fast) var(--ease-inout) both; }   /* la salida es más rápida que la entrada */
+  ::view-transition-new(vista) { animation: fade-in var(--t-base) var(--ease-out) both; }
+}
+@media (prefers-reduced-motion: reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } }
+
+/* ---------- Entrada de la vista (jerarquía: primero la cabecera, luego lo que se consulta) ---------- */
+body[data-motion="restrained"] .rise, body[data-motion="expressive"] .rise { animation: rise var(--t-base) var(--ease-out) both; }
+body[data-motion="expressive"] .rise { --rise-y: 8px; animation-duration: .42s; animation-delay: calc(min(var(--i, 0), 4) * 50ms); }   /* tope: 4 pasos = 200 ms */
+body[data-motion="expressive"] .focal { --rise-y: 16px; animation: rise var(--t-focal) var(--ease-out) both; }
+body[data-motion="expressive"] .lienzo.entrada .mapa svg { animation-duration: var(--t-focal); }                                      /* momento firma de Situación: el mapa */
+
+/* ---------- Selección: la píldora deslizante (continuidad de «qué está elegido») ---------- */
+.con-lente > :not(.lente) { position: relative; z-index: 1; }
+.con-lente [aria-pressed="true"], .con-lente [aria-current="page"], .con-lente [aria-current="true"] { background: transparent !important; box-shadow: none !important; }
+.lente { position: absolute; z-index: 0; left: 0; top: 0; pointer-events: none; background: var(--ink); box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); scale: 1;
+  transition: transform .32s var(--ease-out), width .32s var(--ease-out), height .32s var(--ease-out), opacity var(--t-fast), scale .3s var(--ease-out); }
+.lente.moving { scale: 1.06 .86; transition: transform .34s var(--ease-out), width .34s var(--ease-out), height .34s var(--ease-out), scale .12s var(--ease-out); }   /* la gota se aplasta al salir y se recupera al llegar */
+body[data-motion="still"] .lente { transition: opacity var(--t-fast); }
+body[data-motion="still"] .lente.moving { scale: 1; }
+.con-lente > :not(.lente) { transition-property: color, background-color, border-color; transition-duration: var(--t-base); transition-timing-function: var(--ease-out); }
+
+/* ---------- Un valor que cambió tras elegir otra cosa (feedback; la cifra no se interpola, solo se refresca) ---------- */
+body[data-motion="restrained"] .tick, body[data-motion="expressive"] .tick { animation: tick var(--t-base) var(--ease-out); }
+
+/* ---------- Capas que aparecen: desplegables, ficha, bandeja, tooltip ---------- */
+body:not([data-motion="still"]) .m-pop:not([hidden]) { --rise-y: 6px; animation: rise var(--t-fast) var(--ease-out) both; }
+body:not([data-motion="still"]) .panel-medida:not([hidden]) { animation: rise var(--t-base) var(--ease-out) both; }
+body:not([data-motion="still"]) #bandeja:not([hidden]) { --rise-y: 12px; animation: rise var(--t-base) var(--ease-out) both; }
+body:not([data-motion="still"]) .tip:not([hidden]) { animation: fade-in 120ms var(--ease-out); }
+
+/* ---------- Un dato que se dibuja: las barras de Acceso crecen desde el origen ---------- */
+body[data-motion="restrained"] .v-acceso .pesa-pista .barra, body[data-motion="expressive"] .v-acceso .pesa-pista .barra { transform-origin: left; animation: fill-x .5s var(--ease-out) both; }
+
+/* ---------- Cifras que ruedan (el momento firma original de la web publicada; solo con «expressive»; una vez, al entrar en pantalla) ---------- */
+body[data-motion="expressive"] .roll { white-space: nowrap; }
+body[data-motion="expressive"] .roll__digits { display: inline; }
+body[data-motion="expressive"] .roll__col { display: inline-block; height: 1.2em; line-height: 1.2; overflow: hidden; vertical-align: -.2em; }   /* la línea base de un inline-block con overflow es su borde inferior: se compensa el descenso */
+body[data-motion="expressive"] .roll__strip { display: block; line-height: inherit; transform: translateY(calc(var(--d) * -1.2em)); }
+body[data-motion="expressive"] .roll__strip::before { content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9"; display: block; white-space: pre; }
+body[data-motion="expressive"] .roll.is-in .roll__strip { animation: rodar 700ms var(--ease-out) calc(var(--i) * 70ms) both; }
+
+/* ---------- Normas: la línea de tiempo se dibuja con la lectura (scroll-driven; sin soporte, queda dibujada) ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:not([data-motion="still"]) .v-normas .hilo-linea { transform-origin: top; animation: linea-crece linear both; animation-duration: auto; animation-timeline: view(); animation-range: cover 5% cover 80%; }
+    body:not([data-motion="still"]) .v-normas .hito { animation: rise linear both; animation-duration: auto; animation-timeline: view(); animation-range: entry 0% entry 60%; --rise-y: 10px; }
+  }
+}
+
+/* ---------- Carga: esqueleto mientras llegan los datos (estado, no decoración) ---------- */
+#vista[aria-busy="true"]:empty { position: relative; overflow: hidden; width: calc(100% - 2 * var(--margen)); max-width: 1520px; height: min(58vh, 520px); margin: 96px auto 0; border-radius: var(--r-panel); background: var(--panel); }
+#vista[aria-busy="true"]:empty::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .7), transparent); animation: shimmer 1.4s var(--ease-inout) infinite; }
+
+/* ---------- Movimiento reducido: menos y más suave, no cero ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .rise, .focal, .tick, .m-pop, .panel-medida, #bandeja, .tip { --rise-y: 0px !important; animation-delay: 0s !important; animation-duration: var(--t-base) !important; }   /* solo fundido */
+  .lente, .lente.moving { scale: 1; transition: opacity var(--t-fast), transform 0s; }
+  .roll__strip { animation: none !important; }
+  .v-acceso .pesa-pista .barra { animation: none !important; }
+  .v-normas .hilo-linea, .v-normas .hito { animation: none !important; }
+  #vista[aria-busy="true"]:empty::after { animation: pulse 1.4s var(--ease-inout) infinite; transform: none; background: rgba(255, 255, 255, .5); }
+}

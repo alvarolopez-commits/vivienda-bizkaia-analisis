@@ -18,6 +18,8 @@ export async function run() {
   const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   const PEOR = comp(hex("#8bcdff"), 0.34, hex(bg)); // el máximo de azul del fondo ambiental, bajo el vidrio
   const efectivo = (el) => {
+    const act = el.closest('[aria-pressed="true"], [aria-current="page"], [aria-current="true"]'); // el elegido va sobre la píldora oscura (.lente)
+    if (act && act.parentElement?.classList.contains("con-lente")) return hex(raiz.getPropertyValue("--ink").trim());
     const cadena = []; for (let n = el; n && n.nodeType === 1; n = n.parentElement) cadena.unshift(n);
     let fondo = PEOR;
     for (const n of cadena) {
