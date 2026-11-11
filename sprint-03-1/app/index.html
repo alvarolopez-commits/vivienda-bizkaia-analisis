@@ -22,17 +22,17 @@
 <body>
   <a class="salto" href="#vista" id="salto">Saltar al contenido</a>
 
-  <!-- Marco único: Situación y Medidas son las versiones nuevas y se abren aquí, nunca en la web publicada.
-       Las vistas aún no rediseñadas (Municipios, Acceso, Normas, Método) abren la «versión actual» publicada y se marcan con ↗. -->
+  <!-- Marco único: todas las pestañas se abren aquí, con el mismo marco y la misma tipografía. Situación y Medidas son las versiones
+       nuevas; Municipios, Acceso, Normas y Método muestran una página «aún no rediseñada» con un enlace (pestaña nueva) a la versión actual. -->
   <header class="banda">
     <a class="marca" href="#situacion">Vivienda en Bizkaia</a>
     <nav class="vistas" aria-label="Pestañas">
       <a href="#situacion" data-vista="situacion">Situación</a>
-      <a class="actual" href="https://vizcaya-vivienda-analisis.vercel.app/#municipios" target="_blank" rel="noopener" title="Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva.">Municipios <span aria-hidden="true">↗</span></a>
-      <a class="actual" href="https://vizcaya-vivienda-analisis.vercel.app/#acceso" target="_blank" rel="noopener" title="Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva.">Acceso <span aria-hidden="true">↗</span></a>
+      <a class="por-hacer" href="#municipios" data-vista="municipios" title="Aún no rediseñada">Municipios</a>
+      <a class="por-hacer" href="#acceso" data-vista="acceso" title="Aún no rediseñada">Acceso</a>
       <a href="#medidas" data-vista="medidas">Medidas</a>
-      <a class="actual" href="https://vizcaya-vivienda-analisis.vercel.app/#normas" target="_blank" rel="noopener" title="Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva.">Normas <span aria-hidden="true">↗</span></a>
-      <a class="actual" href="https://vizcaya-vivienda-analisis.vercel.app/#metodo" target="_blank" rel="noopener" title="Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva.">Método <span aria-hidden="true">↗</span></a>
+      <a class="por-hacer" href="#normas" data-vista="normas" title="Aún no rediseñada">Normas</a>
+      <a class="por-hacer" href="#metodo" data-vista="metodo" title="Aún no rediseñada">Método</a>
     </nav>
     <p class="vista-activa" id="vista-activa">Situación</p>
     <div class="banda-dcha">
@@ -47,11 +47,11 @@
   <dialog id="menu" class="menu" aria-label="Pestañas">
     <nav class="menu-lista" aria-label="Vistas">
       <a href="#situacion" data-vista="situacion">Situación</a>
-      <a href="https://vizcaya-vivienda-analisis.vercel.app/#municipios" target="_blank" rel="noopener">Municipios ↗</a>
-      <a href="https://vizcaya-vivienda-analisis.vercel.app/#acceso" target="_blank" rel="noopener">Acceso ↗</a>
+      <a href="#municipios" data-vista="municipios">Municipios</a>
+      <a href="#acceso" data-vista="acceso">Acceso</a>
       <a href="#medidas" data-vista="medidas">Medidas</a>
-      <a href="https://vizcaya-vivienda-analisis.vercel.app/#normas" target="_blank" rel="noopener">Normas ↗</a>
-      <a href="https://vizcaya-vivienda-analisis.vercel.app/#metodo" target="_blank" rel="noopener">Método ↗</a>
+      <a href="#normas" data-vista="normas">Normas</a>
+      <a href="#metodo" data-vista="metodo">Método</a>
     </nav>
     <section class="menu-otros" aria-labelledby="menu-otros-t">
       <h2 id="menu-otros-t">Otros productos</h2>
@@ -67,7 +67,7 @@
   <main id="vista" tabindex="-1"></main>
 
   <footer class="pie">
-    <p>Prototipo integrado (Situación del Sprint 02 y Medidas del Sprint 03), no publicado. Los vínculos con ↗ abren la versión actual publicada de vistas aún no rediseñadas.</p>
+    <p>Prototipo integrado (Situación del Sprint 02 y Medidas del Sprint 03), no publicado. Las pestañas con punto aún no están rediseñadas; desde ellas se puede abrir la versión actual publicada en una pestaña nueva.</p>
   </footer>
 
   <p class="proto-tag">Prototipo integrado · Sprint 03.1</p>

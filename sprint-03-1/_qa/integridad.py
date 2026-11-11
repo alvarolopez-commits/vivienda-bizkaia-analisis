@@ -71,7 +71,7 @@ marco_sp2 = (R / "sprint-02/atlas/css/atlas.css").read_text(encoding="utf-8").re
 union = ((APP / "css/marco.css").read_text(encoding="utf-8") + (APP / "css/situacion.css").read_text(encoding="utf-8")).replace("\r\n", "\n")
 perdidas = [l for l in marco_sp2.split("\n")[5:] if l.strip() and l not in union]
 ok("marco.css + situacion.css conservan TODAS las reglas de atlas.css salvo las tipográficas cambiadas", all(any(k in l for k in ("font", "--f-")) for l in perdidas), [l[:60] for l in perdidas if not any(k in l for k in ("font", "--f-"))][:3])
-ok("Una sola definición de las familias: typography.css (ninguna otra hoja define --font-heading ni los alias)", all("--font-heading" not in (APP / "css" / f).read_text(encoding="utf-8") for f in ("marco.css", "situacion.css", "medidas.css")))
+ok("Una sola definición de las familias: typography.css (ninguna otra hoja define --font-heading; solo la usan)", all("--font-heading:" not in (APP / "css" / f).read_text(encoding="utf-8") for f in ("marco.css", "situacion.css", "medidas.css")))
 ok("typography.css: las tres familias y una sola hoja", (APP / "css/typography.css").read_text(encoding="utf-8").count("--font-heading:") == 1)
 
 fallos = [r for r in res if not r[0]]

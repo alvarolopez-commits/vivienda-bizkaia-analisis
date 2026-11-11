@@ -1,6 +1,6 @@
 # Sprint 03.1 · Aplicación integrada (Situación + Medidas) · PROTOTIPO de escritorio
 
-Una sola aplicación local donde **Situación** (Living Atlas, Sprint 02) y **Medidas** (Explorador, Sprint 03) comparten marco, datos y sistema tipográfico. Situación y Medidas se abren siempre aquí, nunca en la web antigua; Municipios, Acceso, Normas y Método abren la «versión actual» publicada y se marcan con ↗. No publicado. **Móvil: no se ha trabajado.**
+Una sola aplicación local donde **Situación** (Living Atlas, Sprint 02) y **Medidas** (Explorador, Sprint 03) comparten marco, datos y sistema tipográfico. Todas las pestañas se abren aquí, con el mismo marco y la misma tipografía; Municipios, Acceso, Normas y Método son páginas «aún no rediseñadas» con enlace a la versión actual en pestaña nueva. Subido a la rama `ux/sprint-03-1-continuidad`. **Móvil: no se ha trabajado.**
 
 ## Abrirla
 
@@ -37,6 +37,19 @@ Las de navegador (`_qa/qa-navegacion.js`, `qa-situacion.js`, `qa-equivalencia.js
 
 ## Medidas: una sola composición
 
-Escenario (Plano o Matriz) + panel lateral persistente con la ficha y la lista de las medidas a la vista, filtros en una cinta superior y bandeja de comparación flotante. Ya no hay variantes `?diseno=`. Descripción, pruebas y decisiones en `docs/continuidad/PROPUESTAS_MEDIDAS_A_B.md` (histórico) y `docs/continuidad/COMPOSICION_UNICA.md`.
+Escenario (Plano o Matriz) + panel lateral fijo con la ficha y la lista de las medidas a la vista, filtros en una cinta superior y bandeja de comparación flotante. Documentación completa, pruebas y diferencias deliberadas en `docs/continuidad/COMPOSICION_UNICA.md`.
 
-Los enlaces a Municipios, Acceso, Normas, Método, Resumen y Radar abren la **versión actual publicada en una pestaña nueva** (marca ↗): así esta pestaña conserva siempre el prototipo.
+## Estructura
+
+```text
+sprint-03-1/
+  app/index.html          marco único (cabecera, menú, pie)
+  app/css/                typography.css (familias) · marco.css · situacion.css · medidas.css · medidas-diseno.css
+  app/js/app.js           router (una vista montada a la vez)
+  app/js/situacion/       Living Atlas (Sprint 02)
+  app/js/medidas/         Explorador (Sprint 03) + lista.js
+  app/js/pendiente/       página «aún no rediseñada»
+  app/original/           módulos y datos de la web servida (sin tocar)
+  _qa/                    pruebas (navegador y integridad.py)
+  tools/                  scripts de conversión usados (históricos)
+```

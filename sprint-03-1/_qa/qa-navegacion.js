@@ -12,8 +12,9 @@ export async function run() {
   const origen = location.origin;
   // espera a que la vista pedida esté montada (la primera vez se carga su módulo), no un tiempo fijo
   const listo = async () => {
-    const quiere = /^#medidas([/?]|$)/.test(location.hash) ? "medidas" : "situacion";
-    for (let i = 0; i < 60; i++) { if (window.__vista === quiere && (quiere === "medidas" ? window.__medidas : window.__atlas) && !$("[aria-busy=true]")) break; await sleep(100); }
+    const seccion = (location.hash.match(/^#(municipios|acceso|normas|metodo)([/?]|$)/) || [])[1];
+    const quiere = seccion || (/^#medidas([/?]|$)/.test(location.hash) ? "medidas" : "situacion");
+    for (let i = 0; i < 60; i++) { if (window.__vista === quiere && (seccion ? $(".pendiente") : quiere === "medidas" ? window.__medidas : window.__atlas) && !$("[aria-busy=true]")) break; await sleep(100); }
     await sleep(350); // deja terminar los pintados y transiciones de la vista
   };
   const ir = async (h) => { location.hash = h; await listo(); };
@@ -27,8 +28,8 @@ export async function run() {
   ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", enlaces["Situación"].getAttribute("href") === "#situacion" && enlaces["Medidas"].getAttribute("href") === "#medidas" && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
   ok("La marca de la cabecera vuelve a Situación local", $(".marca").getAttribute("href") === "#situacion");
   const antiguas = ["Municipios", "Acceso", "Normas", "Método"];
-  ok("Las vistas no rediseñadas se identifican como «versión actual» (↗ y título) y abren la web publicada", antiguas.every((n) => /vercel\.app/.test(enlaces[n].href) && enlaces[n].textContent.includes("↗") && /Versión actual/.test(enlaces[n].title)));
-  ok("En el menú, Situación y Medidas son locales y las demás llevan ↗", $$("#menu .menu-lista a").filter((a) => a.dataset.vista).every((a) => a.getAttribute("href").startsWith("#")) && $$("#menu .menu-lista a:not([data-vista])").every((a) => a.textContent.includes("↗")));
+  ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app) y se marcan con un punto", antiguas.every((n) => enlaces[n].getAttribute("href") === `#${n.toLowerCase().replace("é", "e")}` && enlaces[n].classList.contains("por-hacer") && !enlaces[n].hasAttribute("target")));
+  ok("En el menú, las seis vistas son locales (ningún salto a otra web)", $$("#menu .menu-lista a").length === 6 && $$("#menu .menu-lista a").every((a) => a.getAttribute("href").startsWith("#")));
 
   // --- Situación → Medidas → Situación con clics reales ---
   await ir("#situacion/turisticas/48044");
@@ -75,10 +76,31 @@ export async function run() {
   ok("Seis viajes de ida y vuelta: sigue habiendo UNA vista, un solo mapa y un solo marco", montadas().atlas && !montadas().medidas && $$("#mapa svg").length === 1 && $$("main").length === 1 && $$("#atlas").length === 1);
   ok("Sin errores en consola durante la navegación", errores.length === 0, errores.slice(0, 2).join(" | "));
   console.error = oe;
-  // enlaces a la web publicada DENTRO de cada vista (no en el marco): solo «Ver su ficha» de Municipios, vista aún no rediseñada
+  // vistas aún no rediseñadas: se abren en el mismo marco, sin salir de la app ni cambiar de tipografía
+  await ir("#situacion/alquiler/48020");
+  await clic('.vistas a[data-vista="municipios"]');
+  ok("Clic en «Municipios»: se queda en la misma app y pestaña (mismo origen, sin recarga, sin abrir otra web)", location.origin === origen && location.hash === "#municipios" && vista() === "municipios" && $$("main").length === 1 && $$("header.banda").length === 1, location.href);
+  ok("Municipios muestra «Aún no rediseñada» con su título y deja el Atlas desmontado", $(".pendiente h1")?.textContent === "Municipios" && /Aún no rediseñada/.test($(".pendiente-rotulo").textContent) && !montadas().atlas && !montadas().medidas);
+  const ver = $(".pendiente-acciones a.primary");
+  ok("«Ver la versión actual» abre la web publicada en pestaña nueva (no en esta)", ver.target === "_blank" && /vizcaya-vivienda-analisis\.vercel\.app\/#municipios$/.test(ver.href) && ver.rel.includes("noopener"));
+  ok("La pestaña activa del marco es Municipios (y solo ella)", $$('.vistas a[aria-current="page"]').length === 1 && $('.vistas a[data-vista="municipios"]').getAttribute("aria-current") === "page" && $("#vista-activa").textContent === "Municipios" && /^Municipios/.test(document.title));
+  const fuentes = new Set([...$$(".pendiente h1, .pendiente p, .pendiente a")].map((e) => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, "")));
+  ok("Tipografía de la página pendiente: solo Montserrat (titular) y Geist", [...fuentes].every((f) => ["Montserrat", "Geist"].includes(f)), [...fuentes].join(","));
+  await clic('.vistas a[data-vista="acceso"]');
+  ok("De Municipios a Acceso: cambia la página y la marca de navegación, sin duplicar nada", $(".pendiente h1")?.textContent === "Acceso" && $$(".pendiente").length === 1 && $('.vistas a[data-vista="acceso"]').getAttribute("aria-current") === "page" && $$('.vistas a[aria-current="page"]').length === 1);
+  await clic('.pendiente-acciones a:not(.primary)');
+  ok("«Volver a Situación» regresa al Atlas nuevo (un solo mapa)", vista() === "situacion" && montadas().atlas && $$("#mapa svg").length === 1 && !$(".pendiente"));
+  await clic('.vistas a[data-vista="medidas"]');
+  await clic('.vistas a[data-vista="normas"]');
+  await clic('.vistas a[data-vista="metodo"]');
+  ok("Medidas → Normas → Método: siempre una sola vista y el mismo marco", vista() === "metodo" && !montadas().medidas && $$("main").length === 1);
+  await clic('.vistas a[data-vista="situacion"]');
+  ok("Y se vuelve a Situación sin diferencias (Atlas montado)", vista() === "situacion" && montadas().atlas && $$("#mapa svg").length === 1);
+  // enlaces a la web publicada DENTRO de cada vista (no en el marco): solo «Ver su ficha» de Situación (en pestaña nueva)
   const publicados = () => $$("#vista a[href*='vizcaya-vivienda']").map((a) => a.getAttribute("href").split("vercel.app/")[1]);
   await ir("#situacion/alquiler/48020");
   const enSit = publicados();
+  ok("«Ver su ficha» de Situación abre la web publicada en pestaña nueva", $$("#vista a[href*='vizcaya-vivienda']")[0]?.target === "_blank");
   await ir("#medidas");
   window.__medidas.openPanel("M10"); await sleep(200);
   const enMed = publicados();

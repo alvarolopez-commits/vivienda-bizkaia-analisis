@@ -2,6 +2,7 @@
 //
 //   #situacion[/indicador[/INE]]   → Living Atlas (Sprint 02)
 //   #medidas[...]                  → Explorador de Medidas (Sprint 03), con todas sus rutas y su contexto en la query
+//   #municipios | #acceso | #normas | #metodo → página «aún no rediseñada» dentro del mismo marco (enlace a la versión actual en pestaña nueva)
 //
 // Solo hay una vista montada a la vez. Al cambiar de vista se desmonta la anterior (se quitan sus oyentes globales y su DOM) y se
 // activa solo la hoja de estilos de la nueva: no hay dos aplicaciones superpuestas ni estados que se pisen. Dentro de una misma
@@ -11,12 +12,15 @@ import { cargarStore } from "./datos.js";
 const raiz = document.getElementById("vista");
 // cada vista tiene una o más hojas; solo están activas las de la vista abierta
 const HOJAS = { situacion: [document.getElementById("css-situacion")], medidas: [document.getElementById("css-medidas"), document.getElementById("css-medidas-diseno")] };
-const NOMBRES = { situacion: "Situación", medidas: "Medidas" };
-const TITULOS = { situacion: "Vivienda en Bizkaia · Análisis (prototipo integrado)", medidas: "Medidas · Vivienda en Bizkaia (prototipo integrado)" };
-let actual = null; // { nombre, vista: { alCambiarDireccion, desmontar } }
+const SECCIONES = { municipios: "Municipios", acceso: "Acceso", normas: "Normas", metodo: "Método" };
+const NOMBRES = { situacion: "Situación", medidas: "Medidas", ...SECCIONES };
+const TITULOS = { situacion: "Vivienda en Bizkaia · Análisis (prototipo integrado)", medidas: "Medidas · Vivienda en Bizkaia (prototipo integrado)", ...Object.fromEntries(Object.entries(SECCIONES).map(([k, v]) => [k, `${v} · Vivienda en Bizkaia (prototipo integrado)`])) };
+let actual = null; // { nombre, clave, vista: { alCambiarDireccion, desmontar } }
 
 /** Qué vista pide la dirección. Cualquier otra cosa (vacía, desconocida) abre Situación. */
 export const vistaDe = (hash) => (/^#medidas([/?]|$)/.test(hash) ? "medidas" : "situacion");
+/** Sección pendiente que pide la dirección (municipios, acceso, normas, metodo) o null. */
+export const seccionDe = (hash) => (hash.match(/^#(municipios|acceso|normas|metodo)([/?]|$)/) || [])[1] || null;
 
 async function hojaLista(link) {
   // una hoja desactivada ya se cargó la primera vez (solo se desactiva después): no tiene .sheet y su evento load no volverá
@@ -32,8 +36,10 @@ function marcarNavegacion(nombre) {
 }
 
 async function ir() {
-  const nombre = vistaDe(location.hash);
-  if (actual?.nombre === nombre) { actual.vista.alCambiarDireccion?.(); return; }
+  const seccion = seccionDe(location.hash);
+  const nombre = seccion ? "pendiente" : vistaDe(location.hash);
+  const clave = seccion || nombre; // la marca de navegación y el título siguen a la sección, no al módulo
+  if (actual?.clave === clave) { actual.vista.alCambiarDireccion?.(); return; }
   try {
     const store = await cargarStore();
     await Promise.all(Object.values(HOJAS).flat().map(hojaLista));
@@ -41,11 +47,11 @@ async function ir() {
     actual = null;
     raiz.replaceChildren();
     Object.entries(HOJAS).forEach(([k, links]) => links.forEach((link) => { link.disabled = k !== nombre; }));
-    marcarNavegacion(nombre);
+    marcarNavegacion(clave);
     const modulo = await import(`./${nombre}/index.js`);
-    const vista = await modulo.montar(raiz, { store });
-    actual = { nombre, vista };
-    window.__vista = nombre; // solo para las pruebas de _qa
+    const vista = await modulo.montar(raiz, { store, seccion });
+    actual = { nombre, clave, vista };
+    window.__vista = clave; // solo para las pruebas de _qa
   } catch (err) {
     console.error(err);
     raiz.replaceChildren(Object.assign(document.createElement("p"), { className: "aviso-error", textContent: `No se han podido cargar los datos (${err.message}). Recarga la página.` }));
