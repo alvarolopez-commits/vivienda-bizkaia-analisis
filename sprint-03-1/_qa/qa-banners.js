@@ -124,13 +124,13 @@ export async function run() {
   const bs = $$(".v-municipios .muni-banner");
   const cabs = $$(".v-municipios .cabeceras .muni-cab");
   ok("Bilbao–Barakaldo: el banner principal sigue a Bilbao", archivo() === "identificados/bilbao.webp" && /^Bilbao/.test(bs[0]?.querySelector(".muni-nombre").textContent), archivo());
-  ok("Bilbao–Barakaldo: un solo banner; el comparado conserva su tarjeta y sus datos", bs.length === 1 && cabs.length === 2 && !cabs[1].querySelector("img") && /^Barakaldo/.test(cabs[1].textContent) && /habitantes/.test(cabs[1].textContent));
+  ok("Bilbao–Barakaldo: cada encabezado lleva su banner (Bilbao y Barakaldo) y sus datos (el comparador muestra los dos)", bs.length === 2 && cabs.length === 2 && cabs[1].querySelector("img")?.src.endsWith("barakaldo.webp") && /Barakaldo/.test(cabs[1].textContent) && /habitantes/.test(cabs[1].textContent));
   ok("Bilbao–Barakaldo: los selectores y la ruta no cambian", $("#muni-a").value === "48020" && $("#muni-b").value === "48013" && location.hash === "#municipios/48020-48013");
   const cmpTexto = plano(cabs[1].textContent);
   const sombra2 = document.createElement("div"); document.body.append(sombra2);
   renderMunicipios(sombra2, store).show("48020-48013"); cifrasPlanas(sombra2);
   const orig2 = $$(".muni-cab", sombra2).map((n) => plano(n.textContent)); sombra2.remove();
-  ok("Bilbao–Barakaldo: el texto de las dos cabeceras coincide con el original", plano(cabs[0].textContent) === orig2[0] && cmpTexto === orig2[1]);
+  ok("Bilbao–Barakaldo: el texto de las dos cabeceras coincide con el original", plano(cabs[0].textContent).replace(/^A/, "") === orig2[0] && plano(cmpTexto).replace(/^B/, "") === orig2[1]);   // sin las letras A y B del comparador
   // 8. cambio rápido
   await ir("#municipios/48020");
   location.hash = "#municipios/48044"; await sleep(15); location.hash = "#municipios/48013"; await sleep(15); location.hash = "#municipios/48078";

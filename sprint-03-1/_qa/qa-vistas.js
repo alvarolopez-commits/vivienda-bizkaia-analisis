@@ -48,7 +48,7 @@ export async function run() {
   // comparar
   await ir("#municipios/48020-48013", ".v-municipios .cabeceras.n2");
   lec = $(".v-municipios");
-  ok("Municipios · #municipios/48020-48013 compara dos municipios en dos columnas y quita Evolución, Barrios y Plan", $$(".muni-cab", lec).length === 2 && !!$(".columnas.n2", lec) && !$("#evolucion", lec) && !$("#barrios", lec) && !$("#plan", lec) && $$(".k-punto", lec).length === 2);
+  ok("Municipios · #municipios/48020-48013 compara dos municipios (comparador: indicadores enfrentados, problemas en dos columnas y, además, Evolución, Barrios y Plan lado a lado)", $$(".muni-cab", lec).length === 2 && !!$(".columnas.n2", lec) && !!$("#evolucion", lec) && !!$("#barrios", lec) && !!$("#plan", lec) && $$(".k-punto", lec).length === 2);
   ok("Municipios · el indicador comparado enseña los dos municipios con su puesto entre los 113", $$(".fila-ind", lec)[0].querySelectorAll(".punto").length === 2 && /puesto \d+ de \d+/.test($(".cifras-ind", lec).textContent));
   // buscador y selectores
   const campo = $("#muni-buscar"); campo.value = "Getxo"; campo.dispatchEvent(new Event("change", { bubbles: true })); await sleep(800);

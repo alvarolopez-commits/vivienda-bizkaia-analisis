@@ -8,6 +8,7 @@ import { el } from "../../original/js/ui.js";
 import { cifrasPlanas, envolver, lupa, norm } from "../lectura.js";
 import { bannerDe } from "./imagenes.js";
 import { fijar, filaContexto } from "../contexto.js";
+import { componerComparacion } from "./comparador.js";
 
 export function montar(raiz, { store }) {
   const lec = envolver(raiz, { clase: "v-municipios", indice: "lateral", dibujar: (c) => renderMunicipios(c, store), herramientas: (c) => c.querySelector(".eligen") });
@@ -29,29 +30,33 @@ export function montar(raiz, { store }) {
   campo.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); ir(); } });
   lec.nodos.herr.prepend(el("div", { class: "elige-muni" }, [el("label", { for: "muni-buscar", text: "Buscar municipio" }), el("span", { class: "buscar-lec" }, [lupa(), campo, lista])]));
 
-  // Banner de la cabecera del municipio PRIMARIO (el del selector «Municipio»). El texto sigue siendo el del renderizador original, que no se
-  // toca: aquí solo se le añade la imagen detrás. El municipio comparado conserva su tarjeta. La imagen se crea de cero en cada ficha (las
-  // cabeceras se redibujan), así que un cambio rápido de municipio nunca deja una imagen de otro.
+  // Banner de la cabecera de cada municipio (el primario y, si hay comparación, también el comparado). El texto sigue siendo el del renderizador
+  // original, que no se toca: aquí solo se le añade la imagen detrás. La imagen se crea de cero en cada ficha (las cabeceras se redibujan), así que un
+  // cambio rápido de municipio nunca deja una imagen de otro.
   const banner = () => {
-    const cab = lec.nodos.contenido.querySelector(".cabeceras .muni-cab");
-    const code = raiz.querySelector("#muni-a")?.value;   // el selector vive en la barra (.lec-herr), no en el contenido
-    if (!cab || !code || cab.classList.contains("muni-banner")) return;
-    const b = bannerDe(code);
-    cab.classList.add("muni-banner");
-    cab.dataset.banner = b.tipo;
-    const foto = el("img", { class: "muni-foto", src: b.src, alt: "", decoding: "async", fetchpriority: "high", "aria-hidden": "true" });
-    foto.style.objectPosition = b.foco;
-    foto.addEventListener("load", () => foto.classList.add("lista"), { once: true });
-    foto.addEventListener("error", () => { console.warn(`Banner no disponible (${b.archivo}); se muestra el fondo del sistema.`); foto.remove(); cab.dataset.banner = "sin-imagen"; }, { once: true });
-    cab.prepend(foto, el("span", { class: "muni-velo", "aria-hidden": "true" }));
+    const codes = [raiz.querySelector("#muni-a")?.value, raiz.querySelector("#muni-b")?.value].filter(Boolean);
+    lec.nodos.contenido.querySelectorAll(".cabeceras .muni-cab").forEach((cab, i) => {
+      const code = codes[i];
+      if (!cab || !code || cab.classList.contains("muni-banner")) return;
+      const b = bannerDe(code);
+      cab.classList.add("muni-banner");
+      cab.dataset.banner = b.tipo;
+      const foto = el("img", { class: "muni-foto", src: b.src, alt: "", decoding: "async", fetchpriority: "high", "aria-hidden": "true" });
+      foto.style.objectPosition = b.foco;
+      foto.addEventListener("load", () => foto.classList.add("lista"), { once: true });
+      foto.addEventListener("error", () => { console.warn(`Banner no disponible (${b.archivo}); se muestra el fondo del sistema.`); foto.remove(); cab.dataset.banner = "sin-imagen"; }, { once: true });
+      cab.prepend(foto, el("span", { class: "muni-velo", "aria-hidden": "true" }));
+    });
   };
 
   const mostrar = (primera) => {
     lec.vista.show?.(parseHash(location.hash).sub);
+    raiz.querySelector(".ficha")?.classList.remove("cmp");   // el mismo contenedor sirve a la ficha individual y a la comparación
     banner();
+    { const A = raiz.querySelector("#muni-a")?.value, B = raiz.querySelector("#muni-b")?.value; if (A && B) componerComparacion({ raiz, store, A, B }); }   // comparación: composición analítica (js/municipios/comparador.js)
     // contexto de investigación: el municipio principal y el comparado; y los saltos a Situación, Acceso y Medidas con este municipio
     fijar({ muni: raiz.querySelector("#muni-a")?.value || null, muniB: raiz.querySelector("#muni-b")?.value || null });
-    lec.nodos.contenido.querySelector(".cabeceras")?.after(filaContexto("municipios", { clase: "en-municipios" }));
+    (lec.nodos.contenido.querySelector(".cmp-acciones") ?? lec.nodos.contenido.querySelector(".cabeceras"))?.after(filaContexto("municipios", { clase: "en-municipios" }));
     cifrasPlanas(lec.nodos.contenido);
     // el nombre de cada municipio es el titular de su perfil (el original lo dibuja con un <p>): se anuncia como encabezado
     lec.nodos.contenido.querySelectorAll(".muni-nombre").forEach((n) => { n.setAttribute("role", "heading"); n.setAttribute("aria-level", "2"); });

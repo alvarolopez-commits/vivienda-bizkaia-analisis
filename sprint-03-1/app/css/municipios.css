@@ -105,3 +105,51 @@ body[data-motion="still"] .v-municipios .muni-foto { transition: none; }
   .v-municipios .columnas.n2, .v-municipios .cabeceras.n2 { grid-template-columns: 1fr; }
   .v-municipios .barrios { grid-template-columns: 1fr; }
 }
+
+/* ---------- Comparador (js/municipios/comparador.js): solo con dos municipios ----------
+   Encabezados A y B con su banner; indicadores enfrentados (A · pista · B · diferencia); una sola tabla de alquilar y comprar; cada municipio en su columna
+   para Evolución, Barrios y Plan. Sin colores de «mejor» o «peor»: A y B usan los colores del gráfico (tinta y rosa) y nada más. */
+.v-municipios .cmp-chip { position: absolute; top: var(--s4); right: var(--s4); z-index: 2; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: #fff; font: 600 .9375rem/1 var(--f-ui); box-shadow: 0 0 0 2px rgba(255, 255, 255, .88); }
+.v-municipios .cmp-chip.d0 { background: var(--ink); }
+.v-municipios .cmp-chip.d1 { background: var(--dato-b); }
+.v-municipios .cmp-acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+.v-municipios .cmp-acciones .btn { min-height: 40px; }
+
+.v-municipios .cmp .fila-ind { grid-template-columns: minmax(0, 13rem) minmax(0, 10rem) minmax(0, 1fr) minmax(0, 10rem) minmax(0, 9rem); gap: var(--s4); }
+.v-municipios .cmp .nombre-ind { grid-column: 1; grid-row: 1; }
+.v-municipios .cmp .cifras-ind { display: contents; }
+.v-municipios .cmp .cifra-dot.d0 { grid-column: 2; grid-row: 1; text-align: right; }
+.v-municipios .cmp .pista-marco { grid-column: 3; grid-row: 1; }
+.v-municipios .cmp .cifra-dot.d1 { grid-column: 4; grid-row: 1; text-align: left; }
+.v-municipios .cmp .cifra-dot .puesto { display: block; margin-top: 2px; font-size: .75rem; }
+.v-municipios .cmp .cmp-dif { grid-column: 5; grid-row: 1; text-align: right; font-size: .8125rem; color: var(--ink-2); }
+.v-municipios .cmp .cmp-dif b { font-size: 1rem; font-weight: 600; color: var(--ink); }
+.v-municipios .cmp .cmp-dif.sin { color: var(--muted); }
+.v-municipios .cmp-cols { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 10rem) minmax(0, 1fr) minmax(0, 10rem) minmax(0, 9rem); gap: var(--s4); padding: 0 var(--s4) var(--s2); color: var(--muted); font-size: .75rem; font-weight: 600; }
+.v-municipios .cmp-cols > :nth-child(2) { text-align: right; }
+.v-municipios .cmp-cols > :nth-child(3) { text-align: center; }
+.v-municipios .cmp-cols > :nth-child(5) { text-align: right; }
+.v-municipios .cmp-col { display: flex; align-items: center; gap: 6px; color: var(--ink); }
+.v-municipios .cmp-col.d0 { justify-content: flex-end; }
+.v-municipios .cmp-col i { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; color: #fff; font: 600 .6875rem/1 var(--f-ui); }
+.v-municipios .cmp-col.d0 i { background: var(--ink); }
+.v-municipios .cmp-col.d1 i { background: var(--dato-b); }
+
+.v-municipios .cmp-hogares-caja { display: grid; gap: var(--s4); }
+.v-municipios .cmp-hogares { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: .9375rem; }
+.v-municipios .cmp-hogares th, .v-municipios .cmp-hogares td { padding: 10px 14px; text-align: left; vertical-align: baseline; }
+.v-municipios .cmp-hogares thead th.grupo { padding-bottom: 4px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .8125rem; font-weight: 600; }
+.v-municipios .cmp-hogares thead th.d0, .v-municipios .cmp-hogares thead th.d1 { padding-top: 6px; color: var(--ink); font-size: .8125rem; font-weight: 600; }
+.v-municipios .cmp-hogares tbody th { font-weight: 600; }
+.v-municipios .cmp-hogares tbody tr:nth-child(odd) > * { background: var(--bg); }
+.v-municipios .cmp-hogares tbody tr > :first-child { border-radius: 14px 0 0 14px; }
+.v-municipios .cmp-hogares tbody tr > :last-child { border-radius: 0 14px 14px 0; }
+.v-municipios .cmp-hogares td.d1 { font-weight: 500; }
+.v-municipios .cmp-precios { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); margin: 0; padding: 0; list-style: none; }
+.v-municipios .cmp-precio { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 14px var(--s4); border-radius: 14px; background: var(--bg); font-size: .875rem; color: var(--ink-2); }
+.v-municipios .cmp-precio b { color: var(--ink); font-weight: 600; }
+.v-municipios .cmp-etq { padding: 2px 10px; border: 1px solid var(--line-2); border-radius: var(--r-pildora); font-size: .75rem; font-weight: 600; color: var(--ink-2); }
+.v-municipios .cmp-etq.aprox { border-style: dashed; }
+.v-municipios .cmp-nota { flex: 1 1 100%; line-height: 1.45; }
+.v-municipios .columnas.n2 .barrios { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1399px) { .v-municipios .cmp .fila-ind, .v-municipios .cmp-cols { grid-template-columns: minmax(0, 11rem) minmax(0, 8.5rem) minmax(0, 1fr) minmax(0, 8.5rem) minmax(0, 7.5rem); gap: var(--s3); } }
