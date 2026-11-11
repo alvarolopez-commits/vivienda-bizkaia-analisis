@@ -53,4 +53,5 @@ Datos, textos, criterios, pesos, orden y fórmulas. Los 20 ficheros originales d
 2. El panel de Medidas es persistente y lleva la lista (equivalente al ranking del Atlas).
 3. La bandeja de comparación es flotante.
 4. Municipios, Acceso, Normas y Método son páginas pendientes dentro del marco, no la web antigua.
-5. Textos nuevos marcados con `data-propuesta`: «El conjunto a la vista», «Las medidas a la vista», «Más criterios», «Prioridades», y los de las páginas pendientes.
+5. La sección abierta de la cabecera se marca con una píldora oscura (como las pestañas de los problemas del Atlas), en lugar del subrayado.
+6. Textos nuevos marcados con `data-propuesta`: «El conjunto a la vista», «Las medidas a la vista», «Más criterios», «Prioridades», y los de las páginas pendientes.
