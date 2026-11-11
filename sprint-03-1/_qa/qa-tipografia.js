@@ -35,7 +35,7 @@ const muestra = (sel, rol) => {
 
 export async function run() {
   const res = { escaneos: [], muestras: {}, fuentes: {}, tokens: {} };
-  const ir = async (h) => { location.hash = h; for (let i = 0; i < 40; i++) { await sleep(150); const q = /^#medidas/.test(h) ? "medidas" : "situacion"; if (window.__vista === q && !document.querySelector("[aria-busy=true]")) break; } await sleep(700); };
+  const ir = async (h) => { location.hash = h; for (let i = 0; i < 40; i++) { await sleep(150); const q = (h.match(/^#(medidas|municipios|acceso|normas|metodo)/) || [])[1] || "situacion"; if (window.__vista === q && !document.querySelector("[aria-busy=true]")) break; } await sleep(700); };
 
   // ---- tokens y carga de fuentes ----
   const root = getComputedStyle(document.documentElement);
@@ -87,6 +87,11 @@ export async function run() {
   res.escaneos.push(escanear("Medidas · Entender"));
   await ir("#medidas/alternativas");
   res.escaneos.push(escanear("Medidas · Alternativas"));
+  // las cuatro vistas de consulta
+  for (const [h, n] of [["#municipios/48020", "Municipios · Bilbao"], ["#municipios/48020-48013", "Municipios · comparar"], ["#acceso", "Acceso"], ["#normas", "Normas"], ["#metodo", "Método"]]) {
+    await ir(h);
+    res.escaneos.push(escanear(n));
+  }
   await ir("#medidas");
   return res;
 }

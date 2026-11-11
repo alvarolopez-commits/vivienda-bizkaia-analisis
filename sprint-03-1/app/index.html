@@ -14,26 +14,30 @@
   <link rel="stylesheet" href="css/typography.css">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/marco.css">
+  <link rel="stylesheet" href="css/lectura.css">
   <link rel="stylesheet" href="css/situacion.css" id="css-situacion">
   <link rel="stylesheet" href="css/medidas.css" id="css-medidas">
   <link rel="stylesheet" href="css/medidas-diseno.css" id="css-medidas-diseno">
+  <link rel="stylesheet" href="css/municipios.css" id="css-municipios">
+  <link rel="stylesheet" href="css/acceso.css" id="css-acceso">
+  <link rel="stylesheet" href="css/normas.css" id="css-normas">
+  <link rel="stylesheet" href="css/metodo.css" id="css-metodo">
   <script type="module" src="js/app.js"></script>
   <script type="module" src="js/nav.js"></script>
 </head>
 <body>
   <a class="salto" href="#vista" id="salto">Saltar al contenido</a>
 
-  <!-- Marco único: todas las pestañas se abren aquí, con el mismo marco y la misma tipografía. Situación y Medidas son las versiones
-       nuevas; Municipios, Acceso, Normas y Método muestran una página «aún no rediseñada» con un enlace (pestaña nueva) a la versión actual. -->
+  <!-- Marco único: las seis pestañas (Situación, Municipios, Acceso, Medidas, Normas y Método) se abren aquí, con el mismo marco, el mismo almacén de datos y el mismo sistema de diseño. -->
   <header class="banda">
     <a class="marca" href="#situacion">Vivienda en Bizkaia</a>
     <nav class="vistas vidrio" aria-label="Pestañas">
       <a href="#situacion" data-vista="situacion">Situación</a>
-      <a class="por-hacer" href="#municipios" data-vista="municipios" title="Aún no rediseñada">Municipios</a>
-      <a class="por-hacer" href="#acceso" data-vista="acceso" title="Aún no rediseñada">Acceso</a>
+      <a href="#municipios" data-vista="municipios">Municipios</a>
+      <a href="#acceso" data-vista="acceso">Acceso</a>
       <a href="#medidas" data-vista="medidas">Medidas</a>
-      <a class="por-hacer" href="#normas" data-vista="normas" title="Aún no rediseñada">Normas</a>
-      <a class="por-hacer" href="#metodo" data-vista="metodo" title="Aún no rediseñada">Método</a>
+      <a href="#normas" data-vista="normas">Normas</a>
+      <a href="#metodo" data-vista="metodo">Método</a>
     </nav>
     <p class="vista-activa" id="vista-activa">Situación</p>
     <div class="banda-dcha">
@@ -68,7 +72,7 @@
   <main id="vista" tabindex="-1"></main>
 
   <footer class="pie">
-    <p>Prototipo integrado (Situación del Sprint 02 y Medidas del Sprint 03), no publicado. Municipios, Acceso, Normas y Método aún no están rediseñadas; desde ellas se puede abrir la versión actual publicada en una pestaña nueva.</p>
+    <p>Prototipo integrado, no publicado. Los textos, datos y cálculos son los de la web publicada; aquí solo cambia cómo se presentan.</p>
   </footer>
 
   <p class="proto-tag">Prototipo integrado · Sprint 03.1</p>

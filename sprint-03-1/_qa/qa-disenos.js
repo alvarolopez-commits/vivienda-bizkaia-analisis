@@ -54,11 +54,12 @@ export async function run() {
 
   // ---------- escenario ----------
   const st = $(".m-stage").getBoundingClientRect();
-  ok("El escenario ocupa el ancho disponible y tiene el fondo de superficie del Atlas", st.width > 880 && getComputedStyle($(".m-stage")).borderRadius === "28px" && /radial-gradient/.test(getComputedStyle($(".m-stage")).backgroundImage));
-  ok(`El escenario cabe en la ventana (${Math.round(st.bottom)} ≤ ${innerHeight})`, st.bottom <= innerHeight + 2, `${Math.round(st.top)}–${Math.round(st.bottom)}`);
+  ok("El escenario ocupa el ancho disponible y tiene el fondo de superficie del Atlas", st.width > (document.documentElement.clientWidth >= 1400 ? 880 : 740) && getComputedStyle($(".m-stage")).borderRadius === "28px" && /radial-gradient/.test(getComputedStyle($(".m-stage")).backgroundImage));
+  // el escenario tiene una altura mínima (540 px): con una ventana de 900 px de alto o más cabe entero; con menos, la página se desplaza
+  ok(innerHeight >= 900 ? `El escenario cabe en la ventana (${Math.round(st.bottom)} ≤ ${innerHeight})` : `El escenario empieza a la vista y mide su altura mínima (ventana de ${innerHeight} px)`, innerHeight >= 900 ? st.bottom <= innerHeight + 2 : st.top < innerHeight - 300 && st.height >= 539, `${Math.round(st.top)}–${Math.round(st.bottom)}`);
   const pl = $(".burbujas").getBoundingClientRect();
   ok("El Plano se ve entero dentro del escenario (34 burbujas, sin recortes)", $$("a.burbuja").length === 34 && pl.bottom <= st.bottom + 1 && pl.right <= st.right + 1 && pl.left >= st.left - 1);
-  ok("Leyenda de líneas de cristal bajo el Plano", /blur/.test(getComputedStyle($(".leyenda-lineas")).backdropFilter) && $$(".leyenda-lineas li").length === 6);
+  ok("Leyenda de líneas bajo el Plano: opaca (es contenido, sin desenfoque) y con las 6 líneas", getComputedStyle($(".leyenda-lineas")).backdropFilter === "none" && getComputedStyle($(".leyenda-lineas")).backgroundColor === "rgb(255, 255, 255)" && $$(".leyenda-lineas li").length === 6);
 
   // ---------- ficha: panel lateral y lista ----------
   const side = $(".m-side");

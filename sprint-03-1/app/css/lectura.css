@@ -1,0 +1,79 @@
+/* Vistas de consulta (Municipios, Acceso, Normas, Método): composición y componentes compartidos.
+   Cabecera con la tarea, barra de herramientas de vidrio (L1), índice interno de vidrio (L1) y bloques de contenido sólidos (L0).
+   Los materiales y los tokens vienen de tokens.css; las familias, de typography.css. Cada vista añade su hoja (municipios.css, ...). */
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- Cabecera de la vista ---------- */
+.lec { max-width: 1520px; margin-inline: auto; padding-inline: max(var(--margen), env(safe-area-inset-left, 0px)) max(var(--margen), env(safe-area-inset-right, 0px)); padding-bottom: var(--s7); }
+.lec-cab { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s5) var(--s6); padding-block: var(--s7) var(--s5); }
+.lec-titulo { display: grid; gap: var(--s2); min-width: 0; max-width: 64ch; }
+.lec-titulo h1 { font: 600 clamp(1.75rem, 1.25rem + 1.5vw, 2.625rem)/1.08 var(--f-display); letter-spacing: -.025em; text-wrap: balance; }
+.lec-titulo .sub { color: var(--muted); font-size: 1.0625rem; }
+.lec-titulo .sub b { color: var(--ink); font-weight: 600; }
+.lec-herr { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--s3); min-width: 0; }
+
+/* buscador (L1) */
+.buscar-lec { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; min-width: min(100%, 15rem); border-radius: var(--r-pildora); cursor: text; }
+.buscar-lec svg { width: 16px; height: 16px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; }
+.buscar-lec input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-size: .9375rem; outline: none; }
+.buscar-lec:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.lec-estado { display: inline-flex; align-items: baseline; gap: 6px; margin: 0; padding: 10px 18px; border-radius: var(--r-pildora); font-size: .9375rem; color: var(--ink-2); }
+.lec-estado b { color: var(--ink); font-weight: 600; }
+
+/* ---------- Cuerpo: índice interno + contenido ---------- */
+.lec-cuerpo { display: grid; gap: var(--s5); align-items: start; }
+.lec-cuerpo.con-lateral { grid-template-columns: 224px minmax(0, 1fr); }
+.lec-cuerpo.con-pestanas { grid-template-columns: minmax(0, 1fr); }
+.lec-contenido { min-width: 0; display: grid; gap: var(--s5); align-content: start; }
+
+.lec-indice { z-index: 20; }
+.lec-indice.lateral { position: sticky; top: calc(var(--banda) + var(--s4)); display: grid; gap: 2px; padding: var(--s3); border-radius: var(--r-tarjeta); max-height: calc(100dvh - var(--banda) - var(--s6)); overflow: auto; scrollbar-width: thin; }
+.lec-indice.pestanas { position: sticky; top: calc(var(--banda) + var(--s2)); display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; max-width: 100%; padding: 4px; border-radius: var(--r-pildora); }
+.lec-indice-t, .lec-grupo { margin: 0; padding: 6px 12px 4px; font-size: .6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.lec-grupo { padding-top: var(--s3); }
+.lec-cuerpo.con-pestanas .sec { scroll-margin-top: 56px; }  /* deja ver las pestañas fijas */
+.lec-ir { text-align: left; padding: 8px 12px; border: 0; border-radius: 12px; background: transparent; color: var(--ink-2); font: 500 .875rem/1.3 var(--f-ui); cursor: pointer; transition: background-color var(--dur-control) var(--ease), color var(--dur-control) var(--ease); }
+.lec-indice.pestanas .lec-ir { border-radius: var(--r-pildora); padding: 8px 16px; font-size: .9375rem; white-space: nowrap; }
+.lec-ir:hover { background: rgba(255, 255, 255, .78); color: var(--ink); }
+.lec-ir[aria-current="true"] { background: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); }
+
+/* ---------- Bloques de contenido (L0, sólidos) ---------- */
+.lec-contenido .sec, .lec-contenido .method-block { scroll-margin-top: var(--s4); padding: var(--s6); border: 1px solid var(--opaco-borde); border-radius: var(--r-panel); background: var(--opaco-fondo); box-shadow: var(--elev-1); }
+.lec .sec-cab h2, .lec .method-block > h2 { font: 600 clamp(1.25rem, 1.05rem + .7vw, 1.75rem)/1.2 var(--f-display); letter-spacing: -.02em; text-wrap: balance; }
+.lec .sec-cab .sub { margin-top: 6px; max-width: 62ch; color: var(--muted); }
+.lec .sec-cuerpo { margin-top: var(--s5); }
+.lec .fuente { margin-top: var(--s4); max-width: 80ch; font-size: .8125rem; line-height: 1.5; color: var(--muted); }
+.lec .etiqueta { font-weight: 600; color: var(--ink-2); }
+.lec .vacio { color: var(--muted); }
+.lec .aviso-error { padding: var(--s5); border-radius: var(--r-tarjeta); background: var(--dato-b-fondo); color: var(--ink); }
+.lec-contenido > .fuente, .sec-fuente { margin: 0; padding-inline: var(--s2); }
+
+/* ---------- Controles segmentados (botones de valores reales) ---------- */
+.lec .x-botones { display: flex; flex-wrap: wrap; gap: 4px; }
+.lec [data-control].x-botones, .lec .x-botones[role="group"] { padding: 4px; border-radius: var(--r-tarjeta); background: var(--panel); }
+.lec .opcion { min-height: 40px; padding: 0 16px; border: 0; border-radius: 14px; background: transparent; color: var(--ink); font: 500 .875rem/1.2 var(--f-ui); cursor: pointer; transition: background-color var(--dur-control) var(--ease), color var(--dur-control) var(--ease); }
+.lec .opcion:hover { background: rgba(255, 255, 255, .8); }
+.lec .opcion[aria-pressed="true"] { background: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); }
+
+/* selectores nativos con el aspecto de los controles */
+.lec select { height: 44px; max-width: 100%; padding: 0 36px 0 16px; border: 1px solid var(--vidrio-borde); border-radius: var(--r-pildora); background: rgba(255, 255, 255, .85) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%235b6b80' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center / 14px; box-shadow: 0 0 0 1px var(--vidrio-contorno); font-size: .9375rem; appearance: none; -webkit-appearance: none; cursor: pointer; text-overflow: ellipsis; }
+
+/* ---------- Piezas comunes que dibujan los renderizadores originales ---------- */
+.lec .clave-puntos { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-bottom: var(--s4); color: var(--muted); font-size: .8125rem; }
+.lec .clave-puntos > span { display: inline-flex; align-items: center; gap: 8px; }
+.lec .clave-puntos i { display: inline-block; flex: none; }
+.lec .table-scroll { overflow-x: auto; }
+.lec .pill { display: inline-flex; align-items: center; padding: 3px 12px; border-radius: var(--r-pildora); font-size: .8125rem; font-weight: 600; border: 1px solid var(--line-2); background: var(--panel); color: var(--ink-2); }
+.lec .pill-oficial { background: var(--dato-a-fondo); border-color: var(--dato-a); color: var(--dato-a); }
+.lec .pill-calculo { background: var(--surface); border-color: var(--ink); color: var(--ink); }
+.lec .pill-aproximacion { background: var(--surface); border: 1px dashed var(--ink-2); color: var(--ink-2); }
+.lec .pill-inline { margin-left: 6px; }
+.lec a.pildora { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: var(--r-pildora); background: var(--ink); color: #fff; font-weight: 600; text-decoration: none; transition: background-color var(--dur-control); }
+.lec a.pildora:hover { background: var(--accent); }
+
+@media (max-width: 1279px) { .lec-cuerpo.con-lateral { grid-template-columns: 200px minmax(0, 1fr); } }
+@media (max-width: 1099px) {
+  .lec-cuerpo.con-lateral { grid-template-columns: minmax(0, 1fr); }
+  .lec-indice.lateral { position: static; max-height: none; }
+}

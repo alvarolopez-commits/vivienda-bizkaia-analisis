@@ -1,0 +1,52 @@
+/* Método · biblioteca de referencia. Índice y buscador en vidrio (L1); texto largo, definiciones y cuadros en superficies sólidas (L0),
+   con ancho de lectura controlado y un rótulo que distingue glosario, método, límites, historial y fuentes. */
+
+.v-metodo .method-wrap { display: grid; gap: var(--s5); }
+.v-metodo .lec-contenido { max-width: 960px; }
+.v-metodo .method-block { padding: var(--s6) var(--s7); }
+/* cada tipo de bloque lleva su marca de color en el rótulo (el rótulo también lo dice con texto) */
+.v-metodo .method-block { --tipo: var(--line-2); }
+.v-metodo .method-block[data-grupo="glosario"] { --tipo: var(--dato-a); }
+.v-metodo .method-block[data-grupo="como-se-hizo"] { --tipo: var(--ink); }
+.v-metodo .method-block[data-grupo="limites-y-revision"] { --tipo: var(--dato-b); }
+.v-metodo .method-block[data-grupo="historial"] { --tipo: var(--ice); }
+.v-metodo .method-block[data-grupo="fuentes"] { --tipo: var(--muted); }
+.v-metodo .lec-kicker { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-size: .6875rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.v-metodo .lec-kicker::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--tipo); }
+
+/* texto de lectura: ritmo editorial, ancho de línea controlado */
+.v-metodo .method-block > p, .v-metodo .method-block li, .v-metodo .method-item p, .v-metodo .method-block dd { max-width: 72ch; font-size: 1rem; line-height: 1.65; color: var(--ink-2); }
+.v-metodo .method-block > p { margin-top: var(--s4); }
+.v-metodo .method-block > p:first-of-type { margin-top: var(--s3); }
+.v-metodo .method-block strong { color: var(--ink); font-weight: 600; }
+.v-metodo .method-block a { color: var(--accent); text-decoration-thickness: 1px; }
+.v-metodo .method-sub { margin: var(--s5) 0 var(--s2); font: 600 1.0625rem/1.3 var(--f-ui); color: var(--ink); }
+.v-metodo .limitations { display: grid; gap: var(--s3); margin: var(--s4) 0 0; padding: 0; list-style: none; }
+.v-metodo .limitations li { padding: 12px 16px; border-radius: 12px; background: var(--bg); }
+.v-metodo ol.limitations { counter-reset: rev; }
+.v-metodo ol.limitations li { counter-increment: rev; }
+.v-metodo ol.limitations li::before { content: counter(rev) ". "; font-weight: 600; color: var(--muted); }
+.v-metodo .method-list { display: grid; gap: var(--s3); margin-top: var(--s4); }
+.v-metodo .method-item { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: var(--s4); align-items: center; padding: 12px 16px; border-radius: 12px; background: var(--bg); }
+.v-metodo .method-item h3 { margin: 0; }
+
+/* glosario: término a la izquierda, definición a la derecha */
+.v-metodo .glos-cuenta { margin: var(--s3) 0 0; font-size: .875rem; font-weight: 600; color: var(--muted); }
+.v-metodo .glos-vacio { margin-top: var(--s4); color: var(--muted); }
+.v-metodo dl.glossary { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); margin: var(--s4) 0 0; border-top: 1px solid var(--line); }
+.v-metodo dl.glossary dt, .v-metodo dl.glossary dd { margin: 0; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.v-metodo dl.glossary dt { padding-right: var(--s4); font-weight: 600; color: var(--ink); line-height: 1.4; }
+.v-metodo dl.glossary dd { line-height: 1.6; }
+
+/* fuentes */
+.v-metodo .sources { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: var(--s3); margin-top: var(--s4); }
+.v-metodo .source { display: grid; gap: 4px; padding: 14px 16px; border-radius: 12px; background: var(--bg); }
+.v-metodo .source h3 { margin: 0; font: 600 .9375rem/1.35 var(--f-ui); }
+.v-metodo .note { font-size: .875rem !important; color: var(--muted) !important; }
+
+@media (max-width: 899px) {
+  .v-metodo .method-block { padding: var(--s5); }
+  .v-metodo dl.glossary { grid-template-columns: minmax(0, 1fr); }
+  .v-metodo dl.glossary dt { padding-bottom: 2px; border-bottom: 0; }
+  .v-metodo .method-item { grid-template-columns: minmax(0, 1fr); }
+}

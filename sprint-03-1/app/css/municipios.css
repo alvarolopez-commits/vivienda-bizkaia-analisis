@@ -1,0 +1,88 @@
+/* Municipios · explorador de fichas. Barra de herramientas de vidrio (L1); perfil, indicadores, problemas, hogares, series, barrios y plan en
+   superficies sólidas (L0). Estilos de las clases que dibuja el renderizador original (app/original/js/municipios). */
+
+/* ---------- Barra: selectores de municipio y de comparación ---------- */
+.v-municipios .eligen { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s3) var(--s4); padding: 10px 14px 12px; border-radius: var(--r-tarjeta); }
+.v-municipios .elige-muni { display: grid; gap: 4px; min-width: 13rem; }
+.v-municipios .elige-muni label { padding-left: 6px; font-size: .75rem; font-weight: 600; color: var(--muted); }
+.v-municipios .lec-cab { flex-direction: column; align-items: stretch; }
+.v-municipios .lec-herr { align-items: flex-end; justify-content: flex-start; }
+.v-municipios .buscar-lec { align-self: flex-end; height: 44px; }
+
+/* ---------- Perfil (una tarjeta por municipio) ---------- */
+.v-municipios .ficha { display: grid; gap: var(--s5); }
+.v-municipios .cabeceras { display: grid; gap: var(--s4); }
+.v-municipios .cabeceras.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.v-municipios .muni-cab { padding: var(--s6); border: 1px solid var(--opaco-borde); border-radius: var(--r-panel); background: var(--opaco-fondo); box-shadow: var(--elev-1); }
+.v-municipios .muni-nombre { font: 600 clamp(2rem, 1.4rem + 2.2vw, 3.5rem)/1 var(--f-display); letter-spacing: -.03em; overflow-wrap: anywhere; text-wrap: balance; }
+.v-municipios .cabeceras.n2 .muni-nombre { font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); }
+.v-municipios .muni-datos { margin-top: var(--s3); color: var(--muted); font-size: 1rem; }
+.v-municipios .muni-datos b, .v-municipios .muni-datos [data-roll] { color: var(--ink); font-weight: 600; }
+.v-municipios .punto-tipo { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 50%; vertical-align: baseline; }
+.v-municipios .cabeceras.n2 .muni-cab:first-child { box-shadow: inset 4px 0 0 var(--dato-a), var(--elev-1); }
+.v-municipios .cabeceras.n2 .muni-cab:last-child { box-shadow: inset 4px 0 0 var(--dato-b), var(--elev-1); }
+
+/* ---------- Indicadores: una pista por indicador ---------- */
+.v-municipios .filas-ind { display: grid; gap: 2px; }
+.v-municipios .fila-ind { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) minmax(0, 14rem); gap: var(--s5); align-items: center; padding: 12px var(--s4); border-radius: 14px; }
+.v-municipios .fila-ind:nth-child(odd) { background: var(--bg); }
+.v-municipios .nombre-ind { font-size: .875rem; line-height: 1.35; color: var(--ink-2); }
+.v-municipios .pista-marco { position: relative; height: 34px; }
+.v-municipios .pista-ind { position: absolute; inset: 0 8px; }
+.v-municipios .pista-ind::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: rgba(34, 30, 65, .08); }
+.v-municipios .pista-ind span { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.v-municipios .pista-ind .marca { width: 2px; height: 14px; background: rgba(34, 30, 65, .22); }
+.v-municipios .pista-ind .bizkaia { width: 3px; height: 30px; border-radius: 2px; background: var(--ice); }
+.v-municipios .pista-ind .mediana { width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--dato-a); background: var(--surface); }
+.v-municipios .pista-ind .mediana.m1 { border-color: var(--dato-b); }
+.v-municipios .pista-ind .punto { z-index: 2; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--surface); }
+.v-municipios .pista-ind .punto.d1 { background: var(--dato-b); }
+.v-municipios .cifras-ind { display: grid; gap: 2px; font-size: .8125rem; text-align: right; }
+.v-municipios .cifra-dot b { font-size: 1.125rem; font-weight: 600; }
+.v-municipios .cifra-dot.d1 b { color: var(--dato-b); }
+.v-municipios .cifra-dot .puesto { color: var(--muted); }
+.v-municipios .k-punto i { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); }
+.v-municipios .k-punto.d1 i { background: var(--dato-b); }
+.v-municipios .k-mediana i { width: 14px; height: 14px; border-radius: 50%; border: 3px solid var(--dato-a); }
+.v-municipios .k-bizkaia i { width: 3px; height: 16px; border-radius: 2px; background: var(--ice); }
+.v-municipios .k-marca i { width: 2px; height: 12px; background: rgba(34, 30, 65, .3); }
+
+/* ---------- Problemas, hogares, series, barrios y plan ---------- */
+.v-municipios .columnas { display: grid; gap: var(--s6); }
+.v-municipios .columnas.n2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.v-municipios .columnas h3 { margin-bottom: var(--s3); font: 600 1.0625rem/1.3 var(--f-ui); }
+.v-municipios .filas { display: grid; gap: 6px; }
+.v-municipios .fila-carta { display: grid; gap: 4px 20px; align-items: baseline; padding: 14px var(--s4); border-radius: 14px; background: var(--bg); color: inherit; text-decoration: none; }
+.v-municipios .fila-problema { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
+.v-municipios .columnas.n2 .fila-problema { grid-template-columns: 1fr; }
+.v-municipios .fila-carta .nombre { font-weight: 600; line-height: 1.35; }
+.v-municipios .fila-carta .dato { color: var(--ink-2); font-size: .9375rem; line-height: 1.5; }
+.v-municipios a.fila-carta { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr) auto; transition: background-color var(--dur-control); }
+.v-municipios a.fila-carta:hover { background: var(--dato-a-fondo); }
+.v-municipios .fila-carta .ir { color: var(--accent); font-weight: 600; font-size: .875rem; white-space: nowrap; }
+
+.v-municipios .tabla .fila { display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr)); align-items: center; min-height: 56px; border-radius: 14px; }
+.v-municipios .tabla .fila:nth-child(even) { background: var(--bg); }
+.v-municipios .tabla .fila > span { padding: 10px var(--s4); }
+.v-municipios .tabla .fila > span:first-child { font-weight: 600; }
+.v-municipios .tabla .cab { min-height: 48px; font-weight: 600; background: transparent !important; }
+.v-municipios .tabla .cab > span { color: var(--muted); font-size: .8125rem; line-height: 1.3; }
+
+.v-municipios .series { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--s4); }
+.v-municipios .serie { margin: 0; padding: var(--s4) var(--s5); border-radius: var(--r-tarjeta); background: var(--bg); color: var(--dato-a); }
+.v-municipios .serie figcaption { min-height: 2.6em; color: var(--ink); font-weight: 600; line-height: 1.3; }
+.v-municipios .linea-mini { display: block; width: 100%; height: auto; margin: var(--s3) 0; }
+.v-municipios .serie-cifras { color: var(--muted); font-size: .8125rem; }
+
+.v-municipios .barrios { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--s6); align-items: start; }
+.v-municipios .barrios-mapa { padding: 4%; border-radius: var(--r-tarjeta); background: var(--bg); }
+.v-municipios .barrios-mapa svg { display: block; width: 100%; height: auto; max-height: 70vh; }
+.v-municipios .barrios-lista { display: grid; gap: 10px; }
+.v-municipios .barrios-lista b { font-size: 1.375rem; font-weight: 600; }
+
+@media (max-width: 1279px) {
+  .v-municipios .fila-ind { grid-template-columns: 1fr auto; gap: 8px 16px; }
+  .v-municipios .pista-marco { grid-column: 1 / -1; grid-row: 2; }
+  .v-municipios .columnas.n2, .v-municipios .cabeceras.n2 { grid-template-columns: 1fr; }
+  .v-municipios .barrios { grid-template-columns: 1fr; }
+}

@@ -108,7 +108,7 @@ def reglas(texto):
     return out
 
 
-for nombre in ("situacion.css", "marco.css"):
+for nombre in ("situacion.css", "marco.css", "medidas-diseno.css"):
     antes, ahora = reglas(hist(f"sprint-03-1/app/css/{nombre}") or ""), reglas(leer(APP / "css" / nombre))
     idx = {}
     for sel, dec in antes:
@@ -122,9 +122,9 @@ for nombre in ("situacion.css", "marco.css"):
         for p, v in dec.items():
             if prev.get(p) != v:
                 cambios.append((sel, p))
-    de_maquetacion = [(s, p) for s, p in cambios if p not in PRESENTACION and p != "gap" and not p.startswith("--")]
+    de_maquetacion = [(s, p) for s, p in cambios if p not in PRESENTACION and p != "gap" and not p.startswith("--") and not s.startswith('.shell[data-detalle="abierto"] .m-side')]  # excepción documentada: ficha de Medidas dentro del panel a < 1400 px
     quitadas = [(s, p) for sel, dec in antes for s, p in [(sel, k) for k in dec] if not any(s == s2 and p in d2 for s2, d2 in ahora)]
-    quitadas = [(s, p) for s, p in quitadas if p not in PRESENTACION and s != ":root" and not p.startswith("--")]  # :root salió a tokens.css (se comprueba abajo)
+    quitadas = [(s, p) for s, p in quitadas if p not in PRESENTACION and s != ":root" and not s.startswith(".pendiente") and not p.startswith("--")]  # :root salió a tokens.css (se comprueba abajo); .pendiente era la página provisional, ya sustituida por las vistas reales
     ok(f"css/{nombre}: respecto al commit publicado solo cambia presentación, no maquetación ({len(cambios)} declaraciones cambiadas)", bool(antes) and not de_maquetacion and not quitadas, (de_maquetacion + quitadas)[:4])
 
 # todos los tokens del marco anterior siguen existiendo en tokens.css con el MISMO valor (los cambios de interfaz son aditivos)

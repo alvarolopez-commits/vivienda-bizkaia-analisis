@@ -1,0 +1,50 @@
+/* Normas · explorador de competencias. Matriz de 15 instrumentos × 4 niveles como pieza central; cronología como segunda zona diferenciada.
+   Selección de nivel y pestañas en vidrio (L1); matriz, fechas y explicaciones en superficies sólidas (L0). */
+
+/* dos zonas: la matriz a todo el ancho; debajo, la línea de tiempo y el margen */
+.v-normas .lec-contenido { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: start; }
+.v-normas #competencias, .v-normas .sec-fuente { grid-column: 1 / -1; }
+.v-normas #margen { position: sticky; top: calc(var(--banda) + 72px); }
+.v-normas #hilo { grid-column: 1; }
+
+/* ---------- Matriz ---------- */
+.v-normas .x-botones[data-control] { margin-bottom: var(--s4); width: fit-content; max-width: 100%; }
+.v-normas .comp-cuenta { margin-bottom: var(--s4); font-size: .9375rem; color: var(--ink-2); }
+.v-normas .comp { display: grid; gap: 2px; min-width: 640px; }
+.v-normas .comp-fila { display: grid; grid-template-columns: minmax(0, 1.7fr) repeat(4, minmax(0, 1fr)); align-items: center; gap: var(--s3); padding: 10px var(--s4); border-radius: 12px; transition: background-color var(--dur-control), opacity var(--dur-control); }
+.v-normas .comp-fila:nth-child(even) { background: var(--bg); }
+.v-normas .comp-fila.cab { background: transparent !important; border-bottom: 1px solid var(--line); border-radius: 0; font-size: .8125rem; font-weight: 600; color: var(--muted); }
+.v-normas .comp-fila.cab [data-nivel] { text-align: center; line-height: 1.25; }
+.v-normas .comp-instr { font-weight: 500; line-height: 1.35; }
+.v-normas .comp-celda { display: grid; place-items: center; min-height: 22px; }
+.v-normas .comp.filtra .comp-fila:not(.cab):not(.on) { opacity: .4; }
+.v-normas .comp.filtra .comp-fila.on { background: var(--dato-a-fondo); }
+.v-normas .col-on { color: var(--ink) !important; font-weight: 700; }
+.v-normas .comp.filtra .comp-fila.cab .col-on { box-shadow: 0 2px 0 var(--ink); }
+/* decide = punto lleno; aplica o lo pide = anillo hueco (la diferencia no depende del color) */
+.v-normas .comp-celda i, .v-normas .clave-puntos i.decide, .v-normas .clave-puntos i.aplica { display: inline-block; width: 18px; height: 18px; border-radius: 50%; }
+.v-normas i.decide { background: var(--dato-a); }
+.v-normas i.aplica { border: 3px solid var(--dato-a); background: var(--surface); }
+.v-normas .clave-puntos { margin: var(--s4) 0 0; }
+
+/* ---------- Línea de tiempo ---------- */
+.v-normas .hilo { position: relative; display: grid; gap: var(--s4); padding-left: 36px; }
+.v-normas .hilo-linea { position: absolute; left: 11px; top: 6px; bottom: 6px; width: 2px; background: var(--line-2); border-radius: 2px; }
+.v-normas .hito { position: relative; display: grid; gap: 4px; padding: 14px var(--s4); border-radius: 14px; background: var(--bg); }
+.v-normas .hito::before { content: ""; position: absolute; left: -33px; top: 20px; width: 14px; height: 14px; border-radius: 50%; background: var(--dato-a); box-shadow: 0 0 0 4px var(--opaco-fondo); }
+.v-normas .hito.pendiente::before { background: var(--surface); border: 2px dashed var(--ink-2); }
+.v-normas .hito.pendiente { background: transparent; border: 1px dashed var(--line-2); }
+.v-normas .hito-fecha { font-size: .8125rem; font-weight: 700; color: var(--accent); }
+.v-normas .hito-texto { font-size: .9375rem; line-height: 1.5; color: var(--ink); }
+.v-normas .hito-pend { display: inline-block; margin-left: 8px; padding: 1px 10px; border: 1px dashed var(--ink-2); border-radius: var(--r-pildora); font-size: .75rem; font-weight: 700; color: var(--ink-2); vertical-align: 1px; }
+
+/* ---------- El margen ---------- */
+.v-normas .margen { display: grid; gap: var(--s3); justify-items: start; }
+.v-normas .margen-cifra { font-size: 3.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+.v-normas .margen-cifra small { font-size: 1.125rem; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.v-normas .margen p { margin: 0; }
+
+@media (max-width: 1279px) {
+  .v-normas .lec-contenido { grid-template-columns: minmax(0, 1fr); }
+  .v-normas #margen { position: static; }
+}

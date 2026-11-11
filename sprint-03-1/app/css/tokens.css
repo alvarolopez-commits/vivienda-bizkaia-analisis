@@ -28,6 +28,13 @@
   --ice: #8bcdff;
   --noche: #221e41;
 
+  /* ---------- colores de datos de las vistas de consulta (semánticos; los mismos tonos que el mapa de Acceso y las fichas) ---------- */
+  --dato-a: #1a4d7a;        /* municipio A, «decide», «cabe»: azul */
+  --dato-b: #b4545b;        /* municipio B, problema, «no cabe»: rosa fuerte */
+  --dato-b-suave: #f4a6a6;  /* «solo una de las dos», fondo de rejilla «larga» */
+  --dato-b-fondo: #fbe9ea;
+  --dato-a-fondo: #e6eef7;
+
   /* ---------- espaciado, medidas de marco ---------- */
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
   --margen: clamp(16px, 4vw, 56px);

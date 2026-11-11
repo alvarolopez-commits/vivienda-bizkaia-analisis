@@ -1,6 +1,8 @@
-# Sprint 03.1 · Aplicación integrada (Situación + Medidas) · PROTOTIPO de escritorio
+# Vivienda en Bizkaia · Análisis y medidas · aplicación integrada (escritorio)
 
-Una sola aplicación local donde **Situación** (Living Atlas, Sprint 02) y **Medidas** (Explorador, Sprint 03) comparten marco, datos y sistema tipográfico. Todas las pestañas se abren aquí, con el mismo marco y la misma tipografía; Municipios, Acceso, Normas y Método son páginas «aún no rediseñadas» con enlace a la versión actual en pestaña nueva. Subido a la rama `ux/sprint-03-1-continuidad`. **Móvil: no se ha trabajado.**
+Una sola aplicación con las **seis vistas** (Situación, Municipios, Acceso, Medidas, Normas y Método) en un mismo marco, con el mismo almacén de datos y el mismo Design System (Astara Intelligence × Liquid Glass). Los textos, datos y cálculos son los de la web publicada; aquí solo cambia cómo se presentan. No sustituye a la web publicada. **Móvil: no se ha trabajado.**
+
+> El nombre de la carpeta (`sprint-03-1`) es el de la ruta ya publicada. No es un sprint nuevo ni un prototipo aparte.
 
 ## Abrirla
 
@@ -12,45 +14,47 @@ Después abrir http://localhost:4179/ (o doble clic en `Abrir Sprint 03.1.bat`).
 
 | Dirección | Qué abre |
 |---|---|
-| `#situacion/alquiler/48020` | Living Atlas, Alquiler, Bilbao |
-| `#medidas` | Explorador de Medidas |
-| `#medidas?rep=matriz&w=3,2,0,0,1` | Matriz con sus pesos |
-| `#medidas/M01-M06` | Comparar dos medidas |
+| `#situacion/alquiler/48020` | Situación (Living Atlas), Alquiler, Bilbao |
+| `#municipios`, `#municipios/48020`, `#municipios/48020-48013` | Municipios: ficha y comparación |
+| `#acceso` | Acceso: alquiler, escalera, supuestos y alcance |
+| `#medidas`, `#medidas?rep=matriz&w=3,2,0,0,1`, `#medidas/M01-M06` | Medidas: explorar, matriz con pesos, comparar |
+| `#normas` | Normas: competencias y línea de tiempo |
+| `#metodo`, `#metodo/glosario` | Método, glosario y fuentes |
 
-`?limpio` oculta la etiqueta de prototipo; `?abrir=M10` abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos.
+Las direcciones de antes de la web publicada (`#compra`, `#diagnostico`, `#comparar/A-B`, `#ideas`…) se traducen con el mismo `rutas.js` original.
+
+`?limpio` oculta la etiqueta de prototipo; `?abrir=M10` abre la ficha de esa medida (solo para capturas); `?marcar` resalta los textos propuestos que aún no ha aprobado el autor.
 
 ## Cómo está hecha
 
-- **Un marco** (`app/index.html`, `css/marco.css`): cabecera, menú, pie, tokens.
-- **Un router** (`app/js/app.js`): una sola vista montada a la vez; al cambiar se desmonta la anterior (oyentes y DOM) y se activa solo la hoja de estilos de la nueva. La navegación está serializada: dos montajes nunca se solapan.
-- **Un almacén de datos** (`app/js/datos.js`): el `createStore` original, cargado una vez y compartido.
-- **Una hoja tipográfica** (`app/css/typography.css`): fuente de verdad de las familias.
-- Las vistas son los `main.js` de los sprints convertidos en `montar()` (conversión ya hecha; el historial de git conserva los scripts y los sprints de origen): cambia de dónde salen el almacén y el DOM, no la lógica.
-- `app/original/`: 20 ficheros copiados byte a byte de la web servida (módulos y JSON).
+- **Un marco** (`app/index.html`, `css/marco.css`): cabecera, menú, pie.
+- **Un router** (`app/js/app.js`): una sola vista montada a la vez; al cambiar se desmonta la anterior y se activa solo la hoja de estilos de la nueva.
+- **Un almacén de datos** (`app/js/datos.js`): el `createStore` original, cargado una vez y compartido por las seis vistas.
+- **Tipografía y tokens** (`css/typography.css`, `css/tokens.css`): única fuente de familias, colores de interfaz, radios, elevaciones y materiales L0/L1/L2.
+- **Contenido original, composición propia**: Municipios, Acceso, Normas y Método dibujan su contenido con los renderizadores originales de la web publicada (`app/original/js`, copiados **byte a byte**); cada vista los monta en una composición propia con `app/js/lectura.js`. Situación y Medidas son los módulos de los sprints anteriores convertidos en `montar()`.
+- `app/original/`: módulos y datos de la web publicada (sin tocar; los hashes están en `_qa/original-hashes.json`).
 
 ## Pruebas
 
 ```bash
-python -I sprint-03-1/_qa/integridad.py
+python -I sprint-03-1/_qa/integridad.py        # originales idénticos, CSS solo de presentación, tokens
+python -B sprint-03-1/_qa/acceso_vs_python.py  # calculo-acceso.js contra las fórmulas del análisis (necesita DATA/ y Node)
 ```
-Las de navegador (`_qa/qa-navegacion.js`, `qa-situacion.js`, `qa-equivalencia.js`, `qa-flujos.js`, `qa-tipografia.js`) se ejecutan desde la consola con la app abierta; el servidor local las sirve en `/_qa/`. Detalle y resultados en `docs/continuidad/TIPOGRAFIA_APLICADA.md`.
 
-## Medidas: una sola composición
-
-Escenario (Plano o Matriz) + panel lateral fijo con la ficha y la lista de las medidas a la vista, filtros en una cinta superior y bandeja de comparación flotante. Documentación completa, pruebas y diferencias deliberadas en `docs/continuidad/COMPOSICION_UNICA.md`.
-
-Design System (materiales L0/L1/L2, componentes, degradación): `docs/diseno/DESIGN_SYSTEM.md`.
+Las de navegador (`_qa/qa-*.js`: navegación, Situación, equivalencia, flujos, composición, `qa-vistas`, tipografía, contraste y desborde) se ejecutan desde la consola con la app abierta; el servidor local las sirve en `/_qa/`. Resultados y diferencias en `docs/diseno/`.
 
 ## Estructura
 
 ```text
 sprint-03-1/
   app/index.html          marco único (cabecera, menú, pie)
-  app/css/                typography.css (familias) · tokens.css (tokens y materiales Liquid Glass) · marco.css · situacion.css · medidas.css · medidas-diseno.css
+  app/css/                typography · tokens · marco · lectura · una hoja por vista
   app/js/app.js           router (una vista montada a la vez)
-  app/js/situacion/       Living Atlas (Sprint 02)
-  app/js/medidas/         Explorador (Sprint 03) + lista.js
-  app/js/pendiente/       página «aún no rediseñada»
-  app/original/           módulos y datos de la web servida (sin tocar)
-  _qa/                    pruebas (navegador y integridad.py)
+  app/js/datos.js         almacén de datos único
+  app/js/lectura.js       composición compartida de las vistas de consulta
+  app/js/{situacion,medidas,municipios,acceso,normas,metodo}/   una carpeta por vista
+  app/original/           módulos y datos de la web publicada (sin tocar)
+  _qa/                    pruebas (navegador, integridad.py y acceso_vs_python.py)
 ```
+
+Design System (materiales, componentes, degradación): `docs/diseno/DESIGN_SYSTEM.md`.

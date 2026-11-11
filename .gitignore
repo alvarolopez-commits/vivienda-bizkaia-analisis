@@ -1,6 +1,6 @@
 # Repositorio real de la web publicada y auditoria: solo locales, no se suben (el repositorio de GitHub es publico)
-DATA/
-docs/audit/
+/DATA/
+/docs/audit/
 
 # Sistema y editores
 __pycache__/

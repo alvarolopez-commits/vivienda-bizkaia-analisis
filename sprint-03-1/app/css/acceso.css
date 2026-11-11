@@ -1,0 +1,94 @@
+/* Acceso · simulador de alquiler y compra. Controles de parámetros en vidrio (L1); resultados, rejilla numérica, mapa, escalera y
+   explicaciones en superficies sólidas (L0). Estilos de las clases que dibuja el renderizador original (app/original/js/acceso). */
+
+/* ---------- El alquiler, municipio a municipio ---------- */
+.v-acceso .filas-pesa { display: grid; gap: 2px; }
+.v-acceso a.pesa { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 8.5rem; gap: var(--s5); align-items: center; padding: 10px var(--s4); border-radius: 12px; color: inherit; text-decoration: none; transition: background-color var(--dur-control); }
+.v-acceso .filas-pesa li:nth-child(odd) .pesa { background: var(--bg); }
+.v-acceso a.pesa:hover { background: var(--dato-a-fondo) !important; }
+.v-acceso .pesa-nombre { font-size: .9375rem; font-weight: 500; }
+.v-acceso .pesa-pista { position: relative; height: 24px; }
+.v-acceso .pesa-pista::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: rgba(34, 30, 65, .08); border-radius: 2px; }
+.v-acceso .pesa-pista > span { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.v-acceso .pesa-pista .tope { height: 24px; width: 0; border-left: 2px dashed var(--dato-b); }
+.v-acceso .pesa-pista .barra { height: 6px; border-radius: 3px; background: rgba(26, 77, 122, .25); transform: translateY(-50%); }
+.v-acceso .pesa-pista .p-medio { width: 12px; height: 12px; border-radius: 50%; border: 3px solid var(--dato-a); background: var(--surface); }
+.v-acceso .pesa-pista .p-bajo { z-index: 2; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--surface); }
+.v-acceso .pesa-pista .p-bajo.mal { background: var(--dato-b); border-radius: 3px; transform: translate(-50%, -50%) rotate(45deg); }  /* rombo: pasa del límite (no solo color) */
+.v-acceso .pesa-cifra { font-size: .8125rem; color: var(--muted); text-align: right; }
+.v-acceso .pesa-cifra b { color: var(--ink); font-size: 1rem; font-weight: 600; }
+.v-acceso .k-punto i { width: 14px; height: 14px; border-radius: 50%; background: var(--surface); border: 3px solid var(--dato-a); }
+.v-acceso .k-punto.d1 i { background: var(--ink); border-color: var(--ink); }
+.v-acceso .k-bizkaia i { width: 0; height: 16px; border-left: 2px dashed var(--dato-b); }
+
+/* ---------- La escalera ---------- */
+.v-acceso .escalera { display: grid; gap: 4px; }
+.v-acceso .esc-fila { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(4, minmax(0, 1fr)); align-items: center; gap: var(--s3); padding: 12px var(--s4); border-radius: 14px; }
+.v-acceso .esc-fila:nth-child(even) { background: var(--bg); }
+.v-acceso .esc-fila.cab { background: transparent !important; color: var(--muted); font-size: .8125rem; font-weight: 600; }
+.v-acceso .esc-fila > span:first-child { font-weight: 600; }
+.v-acceso .paso-e { display: grid; gap: 4px; justify-items: start; font-size: .875rem; color: var(--ink-2); }
+.v-acceso .veredicto { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: var(--r-pildora); font-size: .75rem; font-weight: 700; border: 1px solid transparent; }
+.v-acceso .veredicto::before { font-size: .75rem; }
+.v-acceso .paso-e.bien .veredicto { background: var(--dato-a-fondo); border-color: var(--dato-a); color: var(--dato-a); }
+.v-acceso .paso-e.bien .veredicto::before { content: "✓"; }
+.v-acceso .paso-e.mal .veredicto { background: var(--dato-b-fondo); border-color: var(--dato-b); color: #8c2f37; }
+.v-acceso .paso-e.mal .veredicto::before { content: "✕"; }
+.v-acceso .paso-e.depende .veredicto { background: var(--surface); border: 1px dashed var(--ink-2); color: var(--ink-2); }
+.v-acceso .paso-e.depende .veredicto::before { content: "≈"; }
+
+/* ---------- Explorador: supuestos a la izquierda, resultados a la derecha ---------- */
+.v-acceso .explorador { display: grid; grid-template-columns: minmax(300px, 22rem) minmax(0, 1fr); gap: var(--s5); align-items: start; }
+.v-acceso .x-lado { display: grid; gap: var(--s4); position: sticky; top: calc(var(--banda) + 72px); }
+.v-acceso .x-lado-t, .v-acceso .x-fijos-t { margin: 0 0 6px 6px; font-size: .6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.v-acceso .x-controles { display: grid; gap: var(--s4); padding: var(--s4); border-radius: var(--r-tarjeta); }
+.v-acceso .x-grupo { display: grid; gap: 6px; }
+.v-acceso .x-etq { font-size: .8125rem; font-weight: 600; color: var(--ink-2); }
+.v-acceso .x-controles .x-botones { padding: 3px; background: rgba(255, 255, 255, .55); }
+.v-acceso .x-controles .opcion { min-height: 36px; padding: 0 12px; font-size: .8125rem; }
+.v-acceso .x-controles select { width: 100%; height: 40px; }
+.v-acceso .x-fijos { padding: var(--s4); border-radius: var(--r-tarjeta); box-shadow: var(--elev-1); }
+.v-acceso .x-fijos ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: .875rem; line-height: 1.45; color: var(--ink-2); }
+.v-acceso .x-fijos li { display: grid; grid-template-columns: 14px 1fr; gap: 8px; }
+.v-acceso .x-fijos li::before { content: "•"; color: var(--muted); }
+.v-acceso .x-fijos li.largo::before { content: "◆"; font-size: .625rem; line-height: 1.9; color: var(--dato-b); }
+
+.v-acceso .x-resultado { display: grid; gap: var(--s5); min-width: 0; }
+.v-acceso .x-kpi { display: grid; align-content: start; gap: 4px; padding: var(--s4) var(--s5); border: 1px solid var(--opaco-borde); border-radius: var(--r-tarjeta); background: var(--bg); }
+.v-acceso .x-resultado { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.v-acceso .x-resultado > :not(.x-kpi) { grid-column: 1 / -1; }
+.v-acceso .x-num { font: 600 clamp(1.75rem, 1.4rem + 1vw, 2.375rem)/1.1 var(--f-ui); letter-spacing: -.02em; }
+.v-acceso .x-num.mal { color: #8c2f37; }
+.v-acceso .x-num.mal::after { content: " ▲"; font-size: .5em; vertical-align: .35em; }   /* texto/icono además del color */
+.v-acceso .x-lab { font-size: .8125rem; line-height: 1.4; color: var(--muted); }
+.v-acceso .rj-titulo { margin: var(--s2) 0 0; }
+.v-acceso .rejilla { display: grid; gap: 4px; }
+.v-acceso .rj-fila { display: grid; grid-template-columns: 4.5rem repeat(5, minmax(0, 1fr)); gap: 4px; align-items: center; }
+.v-acceso .rj-fila > span { text-align: center; font-size: .8125rem; font-weight: 600; color: var(--muted); }
+.v-acceso .rj-casilla { min-height: 44px; border: 1px solid var(--opaco-borde); border-radius: 12px; background: var(--surface); color: var(--ink); font: 500 .9375rem/1 var(--f-ui); cursor: pointer; transition: background-color var(--dur-control), border-color var(--dur-control); }
+.v-acceso .rj-casilla:hover { border-color: var(--ink); }
+.v-acceso .rj-casilla.mal { background: var(--dato-b-fondo); color: #8c2f37; }
+.v-acceso .rj-casilla.mal::before { content: "◆ "; font-size: .625rem; vertical-align: .1em; }   /* 10 años o más: marca además del color */
+.v-acceso .rj-casilla[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); }
+
+/* ---------- ¿Hasta dónde llega mi hogar? ---------- */
+.v-acceso .alcance { display: grid; gap: var(--s5); }
+.v-acceso .alcance-controles { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s4); padding: var(--s3); border-radius: var(--r-tarjeta); }
+.v-acceso .alcance-controles .x-botones { padding: 3px; background: rgba(255, 255, 255, .55); }
+.v-acceso .alcance-cuerpo { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s6); align-items: start; }
+.v-acceso .mapa-lienzo { padding: 3%; border-radius: var(--r-tarjeta); background: var(--bg); }
+.v-acceso .mapa-lienzo svg { display: block; width: 100%; height: auto; max-height: 68vh; }
+.v-acceso .alcance-lado { display: grid; gap: var(--s4); }
+.v-acceso .alcance-total { font-size: 1.0625rem; line-height: 1.45; color: var(--ink-2); }
+.v-acceso .alcance-total b { display: block; font-size: 2.25rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+.v-acceso .alcance-clave { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: .875rem; }
+.v-acceso .alcance-clave li { display: flex; align-items: center; gap: 10px; }
+.v-acceso .alcance-clave i { width: 22px; height: 14px; border-radius: 4px; box-shadow: 0 0 0 1px rgba(34, 30, 65, .18) inset; }
+
+@media (max-width: 1279px) {
+  .v-acceso .explorador { grid-template-columns: minmax(0, 1fr); }
+  .v-acceso .x-lado { position: static; }
+  .v-acceso .alcance-cuerpo { grid-template-columns: minmax(0, 1fr); }
+  .v-acceso .esc-fila { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .v-acceso .esc-fila.cab { display: none; }
+}
