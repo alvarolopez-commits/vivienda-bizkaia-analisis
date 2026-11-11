@@ -71,28 +71,40 @@
     <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
   </dialog>
 
-  <!-- Inicio: solo se ve con la dirección raíz (html.con-inicio). Debajo, sin cambios, está la vista Situación; al bajar, la página lleva a ella de una vez. Los textos son los de la web publicada (su descripción); los números salen de los datos (js/inicio.js). -->
+  <!-- Inicio: solo se ve con la dirección raíz (html.con-inicio). Primero el hero (dos composiciones del MISMO contenido: ?hero=a editorial inmersiva, ?hero=b atlas primero),
+       después la puerta a los tres productos y, debajo, la vista Situación de siempre. Los textos son los de las tres webs publicadas (sus descripciones); no hay cifras de adorno. -->
   <section id="inicio" class="hero" aria-label="Inicio">
-    <div class="hero-card focal">
-      <div class="hero-fotos" aria-hidden="true"></div>
-      <span class="hero-velo" aria-hidden="true"></span>
-      <p class="hero-kicker rise" style="--i:0">Vivienda en Bizkaia · Análisis</p>
-      <h1 class="hero-t rise" style="--i:1">El acceso a la vivienda en los <span class="hero-n" data-roll></span> municipios de Bizkaia</h1>
-      <div class="hero-pie">
-        <nav class="hero-secciones rise" style="--i:3" aria-label="Secciones">
-          <a href="#situacion">Situación</a><a href="#municipios">Municipios</a><a href="#acceso">Acceso</a><a href="#medidas">Medidas</a><a href="#normas">Normas</a><a href="#metodo">Método</a>
-        </nav>
-        <button type="button" class="hero-bajar" aria-label="Bajar al análisis" data-propuesta><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6.5 8 11l4.5-4.5"/></svg></button>
-        <div class="hero-lado rise" style="--i:2">
-          <p class="hero-sub">Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.</p>
-          <div class="hero-cta">
-            <a class="hero-btn primario" href="https://vizcaya-vivienda-resumen.vercel.app/" target="_blank" rel="noopener">Ver el resumen <span aria-hidden="true">↗</span></a>
-            <a class="hero-btn vidrio" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a>
-          </div>
+    <div class="hero-card">
+      <div class="hero-fondo" aria-hidden="true"><img alt="" decoding="async"></div>
+      <div class="hero-mapa" aria-hidden="true"></div>
+      <div class="hero-texto">
+        <p class="hero-kicker rise" style="--i:0">Vivienda en Bizkaia · Análisis</p>
+        <h1 class="hero-t rise" style="--i:1">El acceso a la vivienda en los <span class="hero-n n-munis" data-roll></span> municipios de Bizkaia</h1>
+        <p class="hero-sub rise" style="--i:2">Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.</p>
+        <div class="hero-cta rise" style="--i:3">
+          <a class="hero-btn primario" href="#situacion" data-ir="analisis" data-propuesta>Explorar el análisis <span aria-hidden="true">↓</span></a>
+          <a class="hero-btn vidrio" href="https://vizcaya-vivienda-resumen.vercel.app/" target="_blank" rel="noopener">Ver el resumen <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>
-    <ul class="hero-cifras" aria-label="Qué contiene el análisis"></ul>
+
+    <div class="puertas" role="group" aria-label="Los tres productos">
+      <article class="puerta">
+        <h2 class="puerta-t">Análisis y medidas</h2>
+        <p class="puerta-d">El acceso a la vivienda en los <span class="n-munis"></span> municipios de Bizkaia: dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.</p>
+        <a class="puerta-a" href="#situacion" data-ir="analisis">Entrar al análisis <span aria-hidden="true">↓</span></a>
+      </article>
+      <article class="puerta">
+        <h2 class="puerta-t">Resumen</h2>
+        <p class="puerta-d">Resumen del acceso a la vivienda en Bizkaia: qué pasa con el alquiler y la compra, en qué municipios, cuánta vivienda hace falta y qué se puede hacer.</p>
+        <a class="puerta-a" href="https://vizcaya-vivienda-resumen.vercel.app/" target="_blank" rel="noopener">Abrir el resumen <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="puerta">
+        <h2 class="puerta-t">Radar <span class="puerta-tag" data-propuesta>Propuesta</span></h2>
+        <p class="puerta-d">Radar de vivienda: cómo está cada indicador, si las medidas en marcha funcionan y qué puede pasar hasta 2040. Datos oficiales con su fuente y su fecha.</p>
+        <a class="puerta-a" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Abrir el radar <span aria-hidden="true">↗</span></a>
+      </article>
+    </div>
   </section>
 
   <!-- La vista activa se monta aquí; solo hay una montada a la vez -->
