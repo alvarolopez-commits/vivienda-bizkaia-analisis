@@ -1,35 +1,32 @@
 # Vivienda en Bizkaia · Análisis y medidas (rediseño)
 
-Rediseño de la web interactiva [vizcaya-vivienda-analisis.vercel.app](https://vizcaya-vivienda-analisis.vercel.app/) en el lenguaje visual del dashboard PCI de Astara Intelligence. Los textos, datos y cálculos son los de la web publicada; este repositorio solo cambia cómo se presentan.
-
-**Estado:** prototipo de la vista **Situación**, solo escritorio. No sustituye a la web publicada.
+Rediseño de la web interactiva [vizcaya-vivienda-analisis.vercel.app](https://vizcaya-vivienda-analisis.vercel.app/) en el lenguaje visual de Astara Intelligence (Design System inspirado en Liquid Glass). Los textos, datos y cálculos son los de la web publicada; este repositorio solo cambia cómo se presentan. No sustituye a la web publicada. Solo escritorio.
 
 ## Estructura
 
 | Carpeta | Qué hay |
 |---|---|
-| `prototipo-situacion/` | El prototipo: `index.html`, `css/`, `js/`, `data/`, `assets/`, `vendor/three/` |
-| `prototipo-situacion/js/indicadores.js`, `mapa.js`, `territorio.js` | Copias del código de la web publicada (solo cambian las rutas de import) |
-| `prototipo-situacion/js/colores.js` | Paleta azul PCI de los cinco problemas, sin tocar valores ni cortes |
-| `prototipo-situacion/tools/` | `extract_data.py` (subconjunto de datos con comprobación de igualdad) y `build_artifact.py` (versión publicable) |
-| `prototipo-situacion/_origen/` | Copias de los ficheros originales de la web, como referencia |
-| `docs/01-web/` | Auditoría, decisiones y notas del prototipo (`PROTOTIPO_NOTAS.md` resume qué es literal y qué es nuevo) |
+| `sprint-03-1/` | **La aplicación integrada** (el nombre es el de la ruta publicada; no hay más prototipos). Ver `sprint-03-1/README.md` |
+| `docs/diseno/` | Design System (`DESIGN_SYSTEM.md`) e informe de la intervención en curso |
+| `docs/continuidad/` | Informes de tipografía y de la composición de Medidas, con las capturas finales |
+| `docs/audit/` | Auditoría de la web publicada (solo local, no se sube) |
+| `DATA/` | Repositorio real de la web publicada (solo local, no se sube). `web-analisis/` es idéntico a lo que sirve Vercel |
 | `PRODUCT.md` | Contexto del producto |
+
+El historial de git conserva los prototipos anteriores (Sprint 01, 02 y 03); ya no están en el árbol de trabajo.
 
 ## Verlo en local
 
-Doble clic en `prototipo-situacion/Abrir prototipo.bat`, o:
-
 ```bash
-python -m http.server 4173 --bind 127.0.0.1 --directory prototipo-situacion
+python sprint-03-1/servidor.py
 ```
 
-Abre http://localhost:4173/ (con `?marcar` se rodea en naranja lo que es nuevo y está pendiente de aprobar). Abriendo `index.html` directamente no cargan los datos.
+Abre http://localhost:4179/ (o doble clic en `sprint-03-1/Abrir Sprint 03.1.bat`).
 
-## Regenerar datos y versión publicable
+## Comprobaciones
 
 ```bash
-cd prototipo-situacion
-python -I tools/extract_data.py
-python -I tools/build_artifact.py
+python -I sprint-03-1/_qa/integridad.py
 ```
+
+Las pruebas de navegador (`sprint-03-1/_qa/*.js`) se ejecutan con la app abierta; ver `sprint-03-1/README.md`.

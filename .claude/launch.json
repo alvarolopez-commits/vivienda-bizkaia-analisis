@@ -2,33 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "prototipo-situacion",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4173", "--bind", "127.0.0.1", "--directory", "prototipo-situacion"],
-      "port": 4173
-    },
-    {
-      "name": "sprint01-comparar",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4176", "--bind", "127.0.0.1", "--directory", "sprint-01"],
-      "port": 4176
-    },
-    {
-      "name": "sprint02-atlas",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["sprint-02/servidor.py"],
-      "port": 4177
-    },
-    {
-      "name": "sprint03-medidas",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["sprint-03/servidor.py"],
-      "port": 4178
-    },
-    {
       "name": "sprint031-integrada",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["sprint-03-1/servidor.py"],
+      "runtimeArgs": [
+        "sprint-03-1/servidor.py"
+      ],
       "port": 4179
     }
   ]

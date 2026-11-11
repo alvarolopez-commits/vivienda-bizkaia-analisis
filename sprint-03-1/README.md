@@ -25,7 +25,7 @@ Después abrir http://localhost:4179/ (o doble clic en `Abrir Sprint 03.1.bat`).
 - **Un router** (`app/js/app.js`): una sola vista montada a la vez; al cambiar se desmonta la anterior (oyentes y DOM) y se activa solo la hoja de estilos de la nueva. La navegación está serializada: dos montajes nunca se solapan.
 - **Un almacén de datos** (`app/js/datos.js`): el `createStore` original, cargado una vez y compartido.
 - **Una hoja tipográfica** (`app/css/typography.css`): fuente de verdad de las familias.
-- Las vistas son los `main.js` de los sprints convertidos en `montar()` (ver `tools/convertir_vistas.py`): cambia de dónde salen el almacén y el DOM, no la lógica.
+- Las vistas son los `main.js` de los sprints convertidos en `montar()` (conversión ya hecha; el historial de git conserva los scripts y los sprints de origen): cambia de dónde salen el almacén y el DOM, no la lógica.
 - `app/original/`: 20 ficheros copiados byte a byte de la web servida (módulos y JSON).
 
 ## Pruebas
@@ -53,5 +53,4 @@ sprint-03-1/
   app/js/pendiente/       página «aún no rediseñada»
   app/original/           módulos y datos de la web servida (sin tocar)
   _qa/                    pruebas (navegador y integridad.py)
-  tools/                  scripts de conversión usados (históricos)
 ```

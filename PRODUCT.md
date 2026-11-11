@@ -50,9 +50,10 @@ Cada cifra declara si es «Cálculo propio», «Aproximación» o dato oficial y
 ## Evidence on Hand
 
 - Web publicada: https://vizcaya-vivienda-analisis.vercel.app/
-- Auditoría observada (sin verificar en código): `docs/01-web/AS_IS_INVENTORY.md`, `UX_AUDIT.md`, `REGRESSION_BASELINE.md`, `TO_BE_SITEMAP.md`.
+- Auditoría de la web publicada (verificada sobre el código servido): `docs/audit/` (solo local).
 - Brief de arquitectura: `01_WEB_INTERACTIVA_ARCHITECTURE_v0_2.md` (en Descargas).
-- Ausencias que no se deben inventar: repo real, fórmulas del código, definición de BM30, referencias visuales aprobadas de Astara.
+- Repositorio real de la web: `DATA/vizcaya-vivienda-main/` (solo local; `web-analisis/` es idéntico a lo publicado).
+- Ausencias que no se deben inventar: definición de BM30 y decisiones editoriales del autor.
 
 ## Product Principles
 

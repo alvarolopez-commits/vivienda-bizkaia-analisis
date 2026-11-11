@@ -72,7 +72,7 @@ Todo vive en una rama local sin commit. Respecto a los Sprint 02 y 03 no se ha m
 
 **Copias sin cambios de lógica** (idénticas a su sprint salvo la ruta de importación): `app/js/situacion/mapa-atlas.js` y `app/js/medidas/{calculo,comparar,detalle,entender,estado-app,matriz-vista,plano}.js`. **`app/original/`**: 20 ficheros idénticos a la web servida.
 
-**Pruebas y herramientas:** `sprint-03-1/_qa/*` y `sprint-03-1/tools/*`. **Capturas:** `docs/continuidad/capturas/`.
+**Pruebas:** `sprint-03-1/_qa/*`. **Capturas:** `docs/continuidad/capturas/final/`. Las capturas «antes/después» de esta fase y los scripts de aplicación se retiraron en la limpieza del 11-11-2026; siguen en el historial de git.
 
 ## 7. Comprobaciones realizadas (escritorio, 1440 × 900)
 

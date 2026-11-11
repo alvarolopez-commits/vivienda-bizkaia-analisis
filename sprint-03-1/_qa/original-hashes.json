@@ -1,0 +1,25 @@
+{
+  "nota": "sha256 de los 20 ficheros de sprint-03-1/app/original (copia byte a byte de lo que sirve https://vizcaya-vivienda-analisis.vercel.app). Verificados además contra DATA/vizcaya-vivienda-main/web-analisis el 11-11-2026.",
+  "ficheros": {
+    "data/ideas.json": "fbebc8030e54c151c6087c87b5ff14e25f83e4913784faa9244c2e5d68964852",
+    "data/medidas.json": "c5e4f30d00eb4bc4a67d557f134e537f64ed8f6ecef19a6fd27dcca24cd40e9a",
+    "data/meta.json": "64d5e5ffe1065fc2f83ec291590b8989ef5875386be82b7471a73c0259916444",
+    "data/municipios.geojson": "f13a46a0340367844363b7c5f021d7276f29561fca97185cae4a0aa2281257a0",
+    "data/municipios.json": "a5d2d1ee6d90bcbd3cebef6b8fbaec50b48d2067cbb1158a39ebed1190d3a3f6",
+    "data/resumen.json": "d0e5eaf2a1f03402abf7e92cd1a3b0674b54a44c82079972ffe21e290cdaa38d",
+    "js/alternativas.js": "f54a8bf36fdc54d5d64f40577a6d19e3db2cd0c921992af853f0fce5ad4661fe",
+    "js/comun.js": "6829de5e6c137ac67a0fa70dbed7940aa958d540a360140a7e2f9ac8db8a54d6",
+    "js/estado.js": "866e35bb53aa9ec0e819333a0e3e59803ef3bad54c1fac914197d4938a34a23a",
+    "js/mapa.js": "c4163ef14a91be54296afb13198a184c30e247a9fd04d935cde0de830b7501d0",
+    "js/matriz.js": "d43f8aaf52d673fb8b197ac5ac4a173e34eb3d77ad08e7a2ad635e6b7e998c42",
+    "js/medidas/burbujas.js": "f630b1fb866824aa7888624bc5bb9d66fd81a5a1c8037572fe8a1b098da362a2",
+    "js/medidas/enlaces.js": "0b19e61b249847be0b750e00c9fade05bb6bd2d6ae7003fb6792e02af6d5956f",
+    "js/medidas/ficha.js": "54469bb6b137353dff4d95d5e05ed8ac872e263c35bde3dcbc6d9524d1d9bef6",
+    "js/medidas/index.js": "41eda7d02ebd13500c891d2ea90c227f2873d37a0ca15fea7cff7461f4441d37",
+    "js/movimiento.js": "4f271fc2a7d996f8db2c96a57e939cd386bf0558c20316f76386b9e72be251d4",
+    "js/rutas.js": "21ffbc877fa613505762fc06aa8488ab797d61953745b3c00458a46067154bc9",
+    "js/situacion/indicadores.js": "79c4fbd80ae2a4b50604e2a1440e8990d57cef9b169419f8be3a8e40c213c7ac",
+    "js/store.js": "54a152aab3f06527ad2f35512105c6bf7ebc26a82c0604be11c7ef867501959b",
+    "js/ui.js": "c5891e73c1fade7c3db72476c6a10a0772a51ca591b1686420f7e669d16cef5d"
+  }
+}

@@ -1,8 +1,6 @@
-# Maquetas temporales del brainstorming
-.superpowers/
-
-# Página generada para el artifact (se crea con tools/build_artifact.py)
-prototipo-situacion/dist/
+# Repositorio real de la web publicada y auditoria: solo locales, no se suben (el repositorio de GitHub es publico)
+DATA/
+docs/audit/
 
 # Sistema y editores
 __pycache__/
@@ -10,6 +8,3 @@ __pycache__/
 .DS_Store
 Thumbs.db
 *.log
-
-# Sprint 01: copia íntegra de lo que sirve la web publicada, solo para comparar (los sha256 están en sprint-01/_qa/original-hashes.json)
-sprint-01/_original-servido/
