@@ -1,0 +1,24 @@
+<div class="medidas" id="medidas" data-diseno="a">
+  <header class="m-cab">
+    <div class="vista-cab" id="vista-cab"></div>
+    <div class="cabecera-modos" id="cabecera-modos">
+      <nav class="modos" id="modos" aria-label="Qué quieres hacer con las medidas"></nav>
+    </div>
+  </header>
+
+  <!-- cinta de criterios (solo en Explorar): lo más usado a la vista, el resto en desplegables -->
+  <div class="m-barra" id="filtros" aria-label="Criterios y pesos"></div>
+
+  <div class="shell" data-detalle="cerrado" data-modo="explorar">
+    <div class="escenario" id="escenario">
+      <section id="v-explorar" aria-labelledby="rep-t"></section>
+      <section id="v-entender" hidden aria-label="Entender las medidas"></section>
+      <section id="v-comparar" hidden aria-label="Comparar medidas"></section>
+      <section id="v-ficha" hidden aria-label="Ficha de la medida"></section>
+      <section id="v-alternativas" hidden aria-labelledby="alt-t"></section>
+    </div>
+  </div>
+</div>
+
+<!-- Bandeja de comparación: visible con 1 a 3 medidas elegidas -->
+<section class="bandeja" id="bandeja" aria-label="Medidas elegidas para comparar" hidden></section>

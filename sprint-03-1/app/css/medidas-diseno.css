@@ -1,0 +1,137 @@
+/* Medidas · composición de las dos propuestas (A · Escenario, B · Mesa). Se carga después de medidas.css y solo cambia la
+   colocación y el aspecto de las piezas; la lógica, los datos y los textos son los del Sprint 03. Mismas superficies, radios,
+   cristal, estados y botones que Living Atlas (css/situacion.css); la tipografía viene de typography.css. */
+
+.medidas { --stage-h: clamp(540px, calc(100dvh - 340px), 760px); max-width: 1520px; position: relative; }
+.medidas[data-diseno="b"] { --stage-h: clamp(520px, calc(100dvh - 340px), 640px); }
+
+/* ---------- Cabecera: título a la izquierda, modos a la derecha (como los cinco problemas del Atlas) ---------- */
+.m-cab { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s4) var(--s6); padding-block: var(--s7) var(--s4); }
+.m-cab .vista-cab { padding: 0; min-width: 0; flex: 1 1 560px; }
+.m-cab .vista-cab h1 { font: 600 clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem)/1.08 var(--f-display); letter-spacing: -.025em; }
+.cabecera-modos { position: static; margin: 0; padding: 0; border: 0; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.modos { flex: none; display: grid; grid-template-columns: repeat(4, auto); gap: 4px; padding: 4px; background: var(--panel); border-radius: 18px; }
+.modo { min-height: 52px; padding: 0 var(--s4); border-radius: 14px; }
+.m-disenos { position: absolute; top: var(--s2); right: max(var(--margen), env(safe-area-inset-right, 0px)); z-index: 5; display: inline-flex; align-items: center; gap: 4px; padding: 3px 3px 3px 12px; background: rgba(255, 255, 255, .78); border: 1px solid var(--line); border-radius: 999px; font-size: .75rem; color: var(--muted); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.m-disenos button { min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; font-size: .75rem; font-weight: 600; cursor: pointer; }
+.m-disenos button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+/* ---------- Cinta de criterios con revelado progresivo ---------- */
+.m-barra { display: flex; flex-wrap: nowrap; align-items: stretch; gap: var(--s3) var(--s4); padding-bottom: var(--s4); }
+.m-lineas { display: flex; flex: 1 1 0; gap: 4px; padding: 4px; background: var(--panel); border-radius: 18px; min-width: 0; }
+.m-lineas .opcion { position: relative; flex: 1 1 0; min-width: 0; display: grid; align-content: center; justify-items: start; gap: 2px; min-height: 56px; padding: 9px 12px 14px; border: 0; border-radius: 14px; background: transparent; text-align: left; transition: background-color .22s var(--ease), box-shadow .22s var(--ease); }
+.m-lineas .opcion .t { font: 600 .8125rem/1.2 var(--f-ui); overflow-wrap: anywhere; }
+.m-lineas .opcion .n { font: 400 .75rem/1 var(--f-ui); color: var(--muted); }
+.m-lineas .opcion[style]::before { display: none; }
+.m-lineas .opcion[data-linea=""] { flex-grow: .45; }
+.m-lineas .opcion[data-linea="parque"] { flex-grow: 1.6; }
+.m-lineas .opcion[data-linea="alquiler"] { flex-grow: 1.25; }
+.m-lineas .opcion[style]::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 6px; height: 3px; border-radius: 3px; background: var(--punto); opacity: .45; transition: opacity .22s; }
+.m-lineas .opcion:hover { background: rgba(255, 255, 255, .7); }
+.m-lineas .opcion[aria-pressed="true"] { background: var(--ink); color: #fff; box-shadow: 0 8px 20px -10px rgba(34, 30, 65, .6); }
+.m-lineas .opcion[aria-pressed="true"] .n { color: #c3cde6; }
+.m-lineas .opcion[aria-pressed="true"]::after { opacity: 1; }
+.m-ctrl { position: relative; flex: none; display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; }
+.m-ctrl .opcion, .m-ctrl .opcion.ancho { width: auto; min-height: 48px; padding: 0 var(--s4); gap: 8px; font-weight: 600; white-space: nowrap; }
+.m-ctrl .opcion .n { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: #fff; font: 600 .6875rem/20px var(--f-ui); text-align: center; }
+.m-ctrl .opcion .n:empty { display: none; }
+.m-ctrl .opcion[aria-pressed="true"] .n, .m-ctrl .opcion[aria-expanded="true"] .n { background: #fff; color: var(--ink); }
+.m-ctrl .opcion[aria-expanded="true"] { background: var(--panel); border-color: var(--ink); }
+.m-ctrl .pesos-aviso { max-width: 24ch; font-size: .75rem; }
+.m-ctrl .opcion .n.pto { min-width: 8px; width: 8px; height: 8px; padding: 0; background: var(--accent); }
+.m-ctrl .opcion .n.pto:not(.on) { display: none; }
+.m-ctrl .opcion .n.pto.on:empty { display: inline-block; }
+.m-pop-wrap { position: relative; }
+.m-pop { position: absolute; z-index: 50; top: calc(100% + 8px); right: 0; width: 320px; display: grid; gap: var(--s3); padding: var(--s5); background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 24px 48px -20px rgba(26, 36, 70, .35); }
+.m-pop-pesos { width: 360px; max-height: calc(100dvh - 220px); overflow: auto; }
+.m-pop .pesos { border-top: 0; padding-top: 0; }
+
+/* ---------- Escenario: la superficie protagonista (como el lienzo del Atlas) ---------- */
+.shell[data-modo="explorar"] { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); align-items: stretch; padding-block: 0 var(--s7); }
+.m-stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "titulo cab" "cuerpo cuerpo"; grid-template-rows: auto minmax(0, 1fr); gap: var(--s4) var(--s5); min-height: var(--stage-h); padding: var(--s5); border: 1px solid var(--line); border-radius: 28px; box-shadow: 0 1px 0 #fff inset;
+  background: radial-gradient(rgba(34, 30, 65, .07) 1px, transparent 1.3px) 0 0 / 22px 22px, radial-gradient(120% 95% at 50% 38%, #f8fafd 0%, #edf2f7 58%, #e2e9f1 100%); }
+.m-stage .rep-titulo { grid-area: titulo; margin: 0; align-content: start; }
+.m-stage .rep-titulo h2 { font: 600 1.0625rem/1.3 var(--f-display); letter-spacing: -.01em; }
+.m-stage .rep-titulo .sub { font-size: .875rem; max-width: 64ch; }
+.m-stage .rep-cab { grid-area: cab; align-self: start; justify-self: end; max-width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 5px 14px 5px 5px; background: rgba(255, 255, 255, .78); border: 1px solid var(--line); border-radius: 26px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--sombra-flotante); }
+.m-stage .rep-cab .chips-filtro:empty { display: none; }
+.m-stage .rep-toggle { background: var(--panel); }
+.m-stage > .vacio, .m-stage > div:last-child { grid-area: cuerpo; min-height: 0; }
+.m-stage > div:last-child { display: grid; align-content: start; overflow: auto; scrollbar-width: thin; }
+.m-stage .vacio { align-self: center; justify-self: center; background: rgba(255, 255, 255, .7); border-radius: 20px; }
+
+/* Plano: sin marco blanco, escalado a la altura del escenario (las coordenadas no cambian) y leyenda de cristal */
+.m-stage .plano-caja { max-width: none; display: grid; place-items: center; }
+.m-stage .burbujas-marco { width: 100%; padding: 0; border: 0; background: transparent; display: grid; place-items: center; }
+.m-stage .burbujas { width: 100%; height: auto; max-height: calc(var(--stage-h) - 200px); }
+.burbujas .eje { fill: var(--ink-2); }
+.m-stage .leyenda-lineas { justify-content: center; width: fit-content; margin: var(--s3) auto 0; padding: 10px 18px; background: rgba(255, 255, 255, .8); border: 1px solid var(--line); border-radius: 18px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: var(--sombra-flotante); }
+.burbuja { transition: opacity .25s; }
+.burbujas:has(.burbuja:hover) .burbuja:not(:hover):not(.elegida):not(.abierta), .burbujas:has(.burbuja:focus-visible) .burbuja:not(:focus-visible):not(.elegida):not(.abierta) { opacity: .5; }
+.burbuja.abierta .aro-foco { stroke: var(--accent); stroke-width: 2.5; stroke-dasharray: none; filter: drop-shadow(0 0 5px rgba(26, 77, 122, .5)); }
+
+/* Matriz: jerarquía de cabecera, filas alternas y recuadro con profundidad */
+.m-stage .table-wrap { max-height: calc(var(--stage-h) - 240px); border-radius: 18px; box-shadow: var(--sombra-flotante); }
+.matrix-table thead th { height: 46px; font: 600 .75rem/1.2 var(--f-ui); letter-spacing: .02em; color: var(--ink-2); }
+.matrix-table tbody tr:nth-child(even) > * { background: #fafbfd; }
+.matrix-table tbody tr:hover > * { background: #f1f5fb; }
+.matrix-table tr.elegida > * { background: var(--accent-soft); }
+.m-stage .matriz-notas { margin-top: var(--s4); }
+
+/* ---------- Propuesta A · Escenario: panel lateral persistente con ficha y lista (espejo del Atlas) ---------- */
+.medidas[data-diseno="a"] .shell[data-modo="explorar"] { grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); grid-template-rows: var(--stage-h); }
+.medidas[data-diseno="a"] .m-stage { height: var(--stage-h); }
+.m-side { display: flex; flex-direction: column; min-height: 0; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; }
+.m-resumen { display: grid; gap: 6px; padding: var(--s5); border-bottom: 1px solid var(--line); }
+.m-resumen-cifra { font: 600 clamp(2rem, 1.6rem + 1vw, 2.5rem)/1.05 var(--f-ui); letter-spacing: -.025em; color: var(--accent); }
+.m-resumen-sub { font-size: .875rem; color: var(--ink-2); }
+.m-resumen-pista { margin-top: var(--s2); font-size: .8125rem; color: var(--muted); }
+.m-side .panel-medida { position: static; flex: none; max-height: 52%; overflow: auto; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+.m-lista-caja { flex: 1; min-height: 0; display: flex; flex-direction: column; padding-top: var(--s4); }
+.m-lista-caja h2 { padding: 0 var(--s5) var(--s2); }
+.m-lista { flex: 1; min-height: 0; overflow: auto; display: grid; align-content: start; gap: 2px; padding: 0 var(--s3) var(--s3); scrollbar-width: thin; }
+.m-lista li { display: grid; grid-template-columns: minmax(0, 1fr) 36px; align-items: center; gap: 4px; border-radius: 12px; }
+.m-lista li.elegida { background: var(--accent-soft); }
+.m-fila { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "id nombre" "id v"; column-gap: 10px; align-items: center; min-height: 52px; padding: 8px 10px; border: 0; border-radius: 12px; background: transparent; text-align: left; cursor: pointer; transition: background-color .16s; }
+.m-fila:hover { background: var(--bg); }
+.m-fila[aria-pressed="true"] { background: var(--accent-soft); box-shadow: 3px 0 0 var(--accent) inset; }
+.m-fila-id { grid-area: id; min-width: 3.25rem; }
+.m-fila-n { grid-area: nombre; font-size: .8125rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.m-fila-v { grid-area: v; font-size: .75rem; color: var(--muted); }
+.m-fila-add { width: 34px; height: 34px; border: 1px solid var(--line-2); border-radius: 50%; background: var(--surface); font-size: 1rem; line-height: 1; cursor: pointer; transition: background-color .16s, color .16s; }
+.m-fila-add:hover:not(:disabled) { border-color: var(--ink); }
+.m-fila-add[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.m-fila-add:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ---------- Propuesta B · Mesa: escenario a todo el ancho y franja inferior con la ficha rápida ---------- */
+.medidas[data-diseno="b"] .m-stage { min-height: var(--stage-h); }
+.medidas[data-diseno="b"] .m-stage .burbujas { max-height: max(380px, calc(100dvh - 500px)); width: min(100%, 980px); }
+.medidas[data-diseno="b"] .m-stage > div:last-child { overflow: visible; }
+.medidas[data-diseno="b"] .m-stage .table-wrap { max-height: calc(100dvh - 420px); min-height: 360px; }
+.m-dock { position: sticky; bottom: 0; z-index: 35; margin-top: var(--s2); padding: var(--s3) var(--s5) var(--s4); background: rgba(255, 255, 255, .92); border: 1px solid var(--line-2); border-bottom: 0; border-radius: 24px 24px 0 0; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 -16px 36px -22px rgba(34, 30, 65, .4); }
+.m-inspector { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "cab acc" "crit crit" "ext ext"; gap: 8px var(--s5); align-items: center; }
+.m-inspector-vacio { grid-column: 1 / -1; font-size: .875rem; color: var(--muted); }
+.m-inspector-cab { grid-area: cab; display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--s3); min-width: 0; }
+.m-inspector-cab .medida-nombre { font-size: 1.125rem; outline: none; }
+.m-inspector-cab .pill, .m-inspector-cab .fuera-nota { margin: 0; padding: 2px 10px; }
+.m-inspector-criterios { grid-area: crit; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s3); margin: 0; }
+.m-inspector-criterios dt { font-size: .6875rem; color: var(--muted); }
+.m-inspector-criterios dd { margin: 0; font-size: .8125rem; font-weight: 600; line-height: 1.3; }
+.m-inspector-extracto { grid-area: ext; margin: 0; font-size: .8125rem; line-height: 1.5; color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.m-inspector-acciones { grid-area: acc; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.medidas[data-diseno="b"] > .panel-medida { position: fixed; z-index: 60; right: var(--s4); top: calc(var(--banda) + var(--s4)); bottom: var(--s4); width: 420px; max-height: none; }
+
+/* ---------- Bandeja: flotante de cristal, igual en las dos propuestas ---------- */
+.bandeja { left: 50%; right: auto; bottom: 20px; width: min(1120px, calc(100vw - 32px)); gap: var(--s4); transform: translateX(-50%); padding: 10px 14px 10px 22px; border: 1px solid var(--line-2); border-radius: 22px; background: rgba(255, 255, 255, .86); box-shadow: 0 20px 44px -18px rgba(26, 36, 70, .45); }
+.medidas[data-diseno="b"]:has(.m-dock:not([hidden])) ~ .bandeja { bottom: 168px; }
+.medidas[data-diseno="b"]:has(.m-inspector-vacio) ~ .bandeja { bottom: 92px; }
+.bandeja-lista { flex-wrap: nowrap; }
+.bandeja-lista li { flex: 0 1 auto; min-width: 0; max-width: 15rem; }
+.bandeja-nota { white-space: normal; max-width: 16ch; line-height: 1.3; }
+body.con-bandeja .medidas { padding-bottom: 96px; }
+
+/* ---------- Entender, Comparar, Ficha y Alternativas: mismas superficies que el escenario ---------- */
+.shell[data-modo]:not([data-modo="explorar"]) { padding-top: 0; }
+.shell[data-modo]:not([data-modo="explorar"]) .escenario > section:not([hidden]) { padding: var(--s6); background: var(--surface); border: 1px solid var(--line); border-radius: 28px; }
+.shell[data-modo]:not([data-modo="explorar"]) .tabla.comparar-medidas { border-color: var(--line); }
+.shell[data-modo]:not([data-modo="explorar"]) .comparar-medidas .cab { top: calc(var(--banda) + 8px); }

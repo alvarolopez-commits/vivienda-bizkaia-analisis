@@ -24,6 +24,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["sprint-03/servidor.py"],
       "port": 4178
+    },
+    {
+      "name": "sprint031-integrada",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["sprint-03-1/servidor.py"],
+      "port": 4179
     }
   ]
 }

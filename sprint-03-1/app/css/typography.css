@@ -1,0 +1,25 @@
+/* BIZKAIA · Sistema tipografico compartido v1.0 | Sprints 02 y 03
+   Titulares: Montserrat. UI, texto y TODOS los numeros: Geist.
+   Geist Mono se reserva exclusivamente para codigo tecnico (code/pre/kbd/samp).
+   No cambia datos, unidades, formulas ni escalas cartograficas. */
+:root {
+  --font-heading: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Geist", "Segoe UI", system-ui, sans-serif;
+  --font-number: var(--font-body);
+  --font-code: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  /* Compatibilidad con las hojas de estilo existentes */
+  --f-display: var(--font-heading);
+  --f-ui: var(--font-body);
+  --f-data: var(--font-number);
+  --f-code: var(--font-code);
+}
+body, button, input, select, textarea, table, svg text {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+svg text { font-family: var(--font-body); }
+code, pre, kbd, samp { font-family: var(--font-code); }
+
+/* Norma de cifras en TODA la interfaz. La regla de arriba solo alcanzaba a los elementos sin atajo `font:`; el atajo reinicia
+   font-variant-numeric, así que cifras grandes, ranking y contadores quedaban sin cifras tabulares. !important para que gane
+   al atajo en cualquier hoja de vista. No cambia ningún número, unidad ni formato: solo el diseño de los dígitos de Geist. */
+*, *::before, *::after { font-variant-numeric: lining-nums tabular-nums !important; }

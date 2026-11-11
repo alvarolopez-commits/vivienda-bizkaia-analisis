@@ -6,3 +6,4 @@ sprint-02/atlas/original/** -text
 # Lanzadores de Windows
 *.bat text eol=crlf
 sprint-03/medidas/original/** -text
+sprint-03-1/app/original/** -text
