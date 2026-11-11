@@ -4,15 +4,7 @@
 .v-metodo .method-wrap { display: grid; gap: var(--s5); }
 .v-metodo .lec-contenido { max-width: none; }   /* los bloques llegan al mismo borde derecho que el buscador y la cabecera; el texto sigue limitado por línea (72ch) */
 .v-metodo .method-block { padding: var(--s6) var(--s7); }
-/* cada tipo de bloque lleva su marca de color en el rótulo (el rótulo también lo dice con texto) */
-.v-metodo .method-block { --tipo: var(--line-2); }
-.v-metodo .method-block[data-grupo="glosario"] { --tipo: var(--dato-a); }
-.v-metodo .method-block[data-grupo="como-se-hizo"] { --tipo: var(--ink); }
-.v-metodo .method-block[data-grupo="limites-y-revision"] { --tipo: var(--dato-b); }
-.v-metodo .method-block[data-grupo="historial"] { --tipo: var(--ice); }
-.v-metodo .method-block[data-grupo="fuentes"] { --tipo: var(--muted); }
-.v-metodo .lec-kicker { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-size: .6875rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
-.v-metodo .lec-kicker::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--tipo); }
+.v-metodo .lec-kicker { margin: 0 0 6px; font-size: .6875rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
 
 /* texto de lectura: ritmo editorial, ancho de línea controlado */
 .v-metodo .method-block > p, .v-metodo .method-block li, .v-metodo .method-item p, .v-metodo .method-block dd { max-width: 72ch; font-size: 1rem; line-height: 1.65; color: var(--ink-2); }

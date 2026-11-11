@@ -81,6 +81,7 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 .ficha-cab { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
 .ficha-tipo { display: flex; align-items: center; gap: 8px; font-size: .8125rem; color: var(--muted); }
 .punto-tipo { display: inline-block; flex: none; width: 9px; height: 9px; border-radius: 50%; }
+.ficha-tipo .punto-tipo { display: none; }   /* en la ficha el tipo ya lo dice el texto; el punto de color se queda solo en la lista, donde es la única pista del tipo */
 .ficha-cerrar { display: grid; place-items: center; width: 36px; height: 36px; margin: -6px -8px -6px 0; border: 0; border-radius: 999px; background: transparent; font-size: 1.375rem; line-height: 1; color: var(--muted); cursor: pointer; }
 .ficha-cerrar:hover { background: rgba(255, 255, 255, .8); color: var(--ink); }
 .ficha-nombre { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); margin-top: 2px; }

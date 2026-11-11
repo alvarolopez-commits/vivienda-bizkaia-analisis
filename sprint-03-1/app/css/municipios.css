@@ -21,6 +21,7 @@
 .v-municipios .cabeceras.n2 .muni-nombre { font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); }
 .v-municipios .muni-datos { margin-top: var(--s3); color: var(--muted); font-size: 1rem; }
 .v-municipios .muni-datos b, .v-municipios .muni-datos [data-roll] { color: var(--ink); font-weight: 600; }
+.v-municipios .muni-datos .punto-tipo { display: none; }   /* el tipo ya lo dice el texto: sin puntos decorativos en la cabecera */
 .v-municipios .punto-tipo { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 50%; vertical-align: baseline; }
 
 /* ---------- Banner territorial (cabecera del municipio primario) ----------
@@ -33,7 +34,6 @@
 .v-municipios .muni-banner .muni-nombre { color: #fff; text-shadow: 0 1px 18px rgba(10, 14, 40, .35); max-width: 24ch; }
 .v-municipios .muni-banner .muni-datos { align-self: flex-start; max-width: min(100%, 46rem); margin-top: var(--s3); padding: 7px 14px; border: 1px solid rgba(255, 255, 255, .22); border-radius: 16px; background: rgba(20, 24, 58, .55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: rgba(255, 255, 255, .92); font-size: .9375rem; line-height: 1.45; }
 .v-municipios .muni-banner .muni-datos b, .v-municipios .muni-banner .muni-datos [data-roll] { color: #fff; }
-.v-municipios .muni-banner .punto-tipo { box-shadow: 0 0 0 2px rgba(255, 255, 255, .85); }
 /* con comparación: sin dos banners gigantes (el comparado conserva su tarjeta) */
 .v-municipios .cabeceras.n2 .muni-banner { min-height: 168px; }
 @media (prefers-reduced-transparency: reduce) { .v-municipios .muni-banner .muni-datos { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); } }
