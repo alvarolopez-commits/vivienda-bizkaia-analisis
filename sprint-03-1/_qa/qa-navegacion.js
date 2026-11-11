@@ -25,10 +25,10 @@ export async function run() {
   // --- el marco: un solo header, un solo menú, un solo main ---
   ok("Un único marco: 1 cabecera, 1 menú, 1 <main> y ningún pie con texto de prototipo", $$("header.banda").length === 1 && $$("dialog#menu").length === 1 && $$("main").length === 1 && $$("footer").length === 0);
   const enlaces = Object.fromEntries($$(".vistas a").map((a) => [a.textContent.replace("↗", "").trim(), a]));
-  ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", enlaces["Situación"].getAttribute("href") === "#situacion" && enlaces["Medidas"].getAttribute("href") === "#medidas" && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
+  ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", /^#situacion(\/|$)/.test(enlaces["Situación"].getAttribute("href")) && /^#medidas(\?|$)/.test(enlaces["Medidas"].getAttribute("href")) && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
   ok("La marca de la cabecera vuelve al inicio local", $(".marca").getAttribute("href") === "#inicio");
   const otras = ["Municipios", "Acceso", "Normas", "Método"];
-  ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app)", otras.every((n) => enlaces[n].getAttribute("href") === `#${n.toLowerCase().replace("é", "e")}` && !enlaces[n].hasAttribute("target")));
+  ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app)", otras.every((n) => enlaces[n].getAttribute("href").startsWith(`#${n.toLowerCase().replace("é", "e")}`) && !enlaces[n].hasAttribute("target")));
   ok("En el menú, las seis vistas son locales (ningún salto a otra web)", $$("#menu .menu-lista a").length === 6 && $$("#menu .menu-lista a").every((a) => a.getAttribute("href").startsWith("#")));
 
   // --- Situación → Medidas → Situación con clics reales ---
@@ -79,7 +79,7 @@ export async function run() {
   // las otras cuatro vistas: se abren en el mismo marco, con su composición propia y sin salir de la app
   await ir("#situacion/alquiler/48020");
   await clic('.vistas a[data-vista="municipios"]');
-  ok("Clic en «Municipios»: misma app y pestaña (mismo origen, sin recarga), solo esa vista montada", location.origin === origen && location.hash === "#municipios" && vista() === "municipios" && $$("main").length === 1 && $$("header.banda").length === 1 && !montadas().atlas && !montadas().medidas && !!$(".v-municipios"), location.href);
+  ok("Clic en «Municipios»: misma app y pestaña (mismo origen, sin recarga), solo esa vista montada", location.origin === origen && location.hash.startsWith("#municipios") && vista() === "municipios" && $$("main").length === 1 && $$("header.banda").length === 1 && !montadas().atlas && !montadas().medidas && !!$(".v-municipios"), location.href);
   ok("Municipios muestra su ficha real: 113 municipios en el selector, el perfil de Bilbao y 13 indicadores", $$(".v-municipios #muni-a option").length === 113 && $(".v-municipios .muni-nombre")?.textContent === "Bilbao" && $$(".v-municipios .fila-ind").length === 13);
   ok("La pestaña activa del marco es Municipios (y solo ella)", $$('.vistas a[aria-current="page"]').length === 1 && $('.vistas a[data-vista="municipios"]').getAttribute("aria-current") === "page" && $("#vista-activa").textContent === "Municipios" && /^Municipios/.test(document.title));
   const fuentes = (sel) => new Set([...$$(sel)].map((e) => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, "")));
@@ -101,11 +101,11 @@ export async function run() {
   const publicados = () => $$("#vista a[href*='vizcaya-vivienda']").map((a) => a.getAttribute("href").split("vercel.app/")[1]);
   await ir("#situacion/alquiler/48020");
   const enSit = publicados();
-  ok("«Ver su ficha» de Situación abre la web publicada en pestaña nueva", $$("#vista a[href*='vizcaya-vivienda']")[0]?.target === "_blank");
+  ok("«Ver su ficha» de Situación lleva a Municipios dentro de la app (ya no a la web antigua ni en pestaña nueva)", $$("#vista a[href*='vizcaya-vivienda']").length === 0 && $(".ficha-nombre a")?.getAttribute("href") === "#municipios/48020" && !$(".ficha-nombre a").target);
   await ir("#medidas");
   window.__medidas.openPanel("M10"); await sleep(200);
   const enMed = publicados();
-  ok("Dentro de Situación solo hay un enlace a la web publicada: «Ver su ficha» (Municipios, aún no rediseñada)", enSit.length === 1 && enSit[0].startsWith("#municipios/"), enSit.join(","));
+  ok("Dentro de Situación ya no hay ningún enlace a la web publicada antigua («Ver su ficha» lleva a Municipios, integrada)", enSit.length === 0, enSit.join(","));
   ok("Dentro de Medidas no hay ningún enlace a la web publicada", enMed.length === 0, enMed.join(","));
 
   const fail = out.filter((t) => !t.pass);

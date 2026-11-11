@@ -3,6 +3,7 @@
 // Un único estado (estado-app.js) gobierna Plano, Matriz, filtros, pesos, bandeja, panel contextual y la URL. Nada se calcula
 // aquí: valores, criterios, pesos y orden salen de calculo.js (copia literal de las funciones privadas de la web original) y
 // de data/medidas.json; los textos, de data/medidas.json y de los módulos originales servidos en original/.
+import { filaContexto } from "../contexto.js";
 import { alternatives } from "../../original/js/alternativas.js";
 import { announce } from "../../original/js/comun.js";
 import { LINE_COLORS } from "../../original/js/medidas/burbujas.js";
@@ -46,6 +47,7 @@ export async function montar(raiz, { store }) {
     el("h1", { text: "Las medidas, con los mismos criterios" }),
     el("p", { class: "sub" }, [el("b", { text: `${es(ya)} de ${es(total)}` }), " se pueden aplicar ya, sin cambiar ninguna ley. Ninguna tiene una nota única: cada criterio se ve aparte."]),
   );
+  $("#vista-cab").append(filaContexto("medidas", { clase: "en-medidas" }));   // «Seguir con <municipio>» (Situación, Municipios, Acceso)
 
   // ---------- navegación: dirección ↔ estado ----------
   const targetOf = (href) => {

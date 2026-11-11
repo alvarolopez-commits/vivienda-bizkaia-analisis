@@ -74,7 +74,7 @@ def lineas_cambiadas(o, n):
     return sum(1 for l in difflib.unified_diff(a, b, lineterm="", n=0) if l[:1] in "+-" and l[:3] not in ("+++", "---"))
 
 
-for o, n, esperado in (("sprint-02/atlas/js/main.js", APP / "js/situacion/index.js", 40), ("sprint-03/medidas/js/main.js", APP / "js/medidas/index.js", 160)):
+for o, n, esperado in (("sprint-02/atlas/js/main.js", APP / "js/situacion/index.js", 75), ("sprint-03/medidas/js/main.js", APP / "js/medidas/index.js", 160)):
     h = hist(o)
     c = lineas_cambiadas(h, n) if h else None
     ok(f"{n.relative_to(APP).as_posix()}: solo {c} líneas distintas del main.js original (montaje, oyentes y, en Medidas, la recomposición; el cálculo vive en módulos idénticos)", c is not None and c <= esperado, c)
@@ -97,10 +97,10 @@ PRESENTACION = {"background", "background-image", "background-color", "backgroun
                 "border-top", "scrollbar-width", "scrollbar-color", "min-width", "min-height", "box-shadow", "backdrop-filter", "-webkit-backdrop-filter", "color", "font", "transition", "padding", "margin", "opacity"}
 
 
-# Cambios de maquetación PEDIDOS por el autor: la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo;
+# Cambios de maquetación PEDIDOS por el autor (y, en la cabecera, el sitio del botón «Copiar enlace» y de la fila de contexto): la leyenda del mapa (Situación) y la del Plano (Medidas) van ARRIBA del gráfico y el +/− del mapa abajo;
 # los bloques de Situación y Medidas comparten columnas y huecos (alineación de la página); y fuera el punto decorativo de la ficha (el tipo ya lo dice el texto).
 # Solo afecta a los contenedores del lienzo de Situación y a la leyenda del Plano; ningún dato, texto ni cálculo.
-LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario", ".marca") or ":has(> .leyenda-lineas)" in s or s == ".ficha-tipo .punto-tipo" or s == ".marca img" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
+LEYENDA_ARRIBA = lambda s: s.split(" ")[0] in (".lienzo", ".lienzo-cab", ".mapa-zona", ".mapa", ".herramientas", ".leyenda-bloque", ".escenario", ".marca", ".banda", ".vistas") or ":has(> .leyenda-lineas)" in s or s.startswith(".ctx-") or s == ".ficha-tipo .punto-tipo" or s == ".marca img" or s.startswith(".m-barra:has(+ .shell") or s == ".medidas .shell[data-modo=\"explorar\"]"
 
 
 def reglas(texto):

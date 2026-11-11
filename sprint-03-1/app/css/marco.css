@@ -36,12 +36,12 @@ main:focus { outline: none; }
 
 /* ---------- Banda (igual que Sprint 01) ---------- */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-.banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s5); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: var(--vidrio-barra-fondo); -webkit-backdrop-filter: var(--vidrio-filtro); backdrop-filter: var(--vidrio-filtro); border-bottom: 1px solid var(--vidrio-barra-linea); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset; }
+.banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s4); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: var(--vidrio-barra-fondo); -webkit-backdrop-filter: var(--vidrio-filtro); backdrop-filter: var(--vidrio-filtro); border-bottom: 1px solid var(--vidrio-barra-linea); box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset; }
 .marca { display: inline-flex; align-items: center; justify-self: start; text-decoration: none; white-space: nowrap; padding: var(--s2) 0; }
 /* logotipo aprobado: sin efectos, sin deformar (la altura fija el tamaño y el ancho sale de su proporción) y nítido sobre el vidrio de la cabecera */
 .marca img { display: block; height: 40px; width: auto; max-width: none; }
 /* navegación global: cápsula de vidrio L1; la sección abierta es una píldora oscura (estado inequívoco, también por peso y aria-current) */
-.vistas { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
+.vistas { justify-self: center; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
 .vistas a { position: relative; padding: 7px 16px; border-radius: var(--r-pildora); font-size: .9375rem; font-weight: 500; color: var(--ink-2); text-decoration: none; transition: color var(--dur-control) var(--ease), background-color var(--dur-control) var(--ease), box-shadow var(--dur-control) var(--ease); }
 .vistas a:hover { color: var(--ink); background: rgba(255, 255, 255, .7); }
 .vistas a[aria-current="page"] { background: var(--ink); color: #fff; font-weight: 600; box-shadow: 0 6px 14px -8px rgba(34, 30, 65, .65); }
@@ -81,3 +81,14 @@ html.modal { overflow: hidden; }
 
 /* pie base: Situación y Medidas lo redefinen en su hoja; el resto de vistas usa este */
 .pie { display: grid; gap: var(--s1); max-width: 1520px; margin-inline: auto; padding: var(--s6) max(var(--margen), env(safe-area-inset-right, 0px)) var(--s9) max(var(--margen), env(safe-area-inset-left, 0px)); border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
+
+/* ---------- «Seguir con <municipio>»: saltos entre vistas con el mismo contexto (js/contexto.js) ---------- */
+.ctx-enlaces { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: var(--s3) 0 0; font-size: .875rem; color: var(--ink-2); }
+.ctx-enlaces[hidden] { display: none; }
+.ctx-t b { color: var(--ink); font-weight: 600; }
+.ctx-a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid var(--vidrio-borde); border-radius: var(--r-pildora); background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: var(--vidrio-filtro); backdrop-filter: var(--vidrio-filtro); box-shadow: 0 0 0 1px var(--vidrio-contorno); color: var(--ink); font-weight: 500; text-decoration: none; transition: background-color var(--dur-control) var(--ease), border-color var(--dur-control) var(--ease); }
+.ctx-a:hover { background: var(--surface); border-color: var(--ink); }
+.ctx-enlaces.en-ficha { margin: var(--s3) 0 0; padding-top: var(--s3); border-top: 1px solid var(--line); }
+.ctx-enlaces.en-municipios { margin: 0; }
+.ctx-enlaces.en-acceso { margin: 0 0 var(--s4); }
+@media (prefers-reduced-transparency: reduce) { .ctx-a { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); } }

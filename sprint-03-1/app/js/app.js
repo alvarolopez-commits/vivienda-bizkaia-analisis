@@ -14,6 +14,8 @@ import { cargarStore } from "./datos.js";
 import { redirectOf } from "../original/js/rutas.js";
 import { entrada, iniciar, lente, lentes, modo, observarTick } from "./movimiento.js";
 import { sincronizar as sincronizarInicio } from "./inicio.js";
+import { iniciar as iniciarContexto } from "./contexto.js";
+import "./compartir.js";
 
 iniciar(); // intensidad del movimiento (body[data-motion]); la píldora de la cabecera es la misma en las seis vistas
 lente(document.querySelector(".vistas"));
@@ -61,6 +63,7 @@ async function ir() {
     // 2) lo lento (módulos, datos, hojas de estilo) se hace MIENTRAS el velo se cierra, no después
     const [store, modulo] = await Promise.all([cargarStore(), import(`./${nombre}/index.js`), Promise.all(Object.values(HOJAS).flat().map(hojaLista)), cubrir ? pausa(150) : null]);
     // 3) con el velo cerrado se cambia la vista (nada de esto se ve)
+    iniciarContexto(store);   // el contexto de investigación (municipio, problema) y los enlaces de la cabecera
     limpieza?.(); limpieza = null;
     actual?.vista.desmontar?.();
     actual = null;

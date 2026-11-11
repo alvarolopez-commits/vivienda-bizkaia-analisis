@@ -122,7 +122,7 @@ export async function run() {
   ok("Quién decide · los 7 diagramas (Todas + 6 líneas) idénticos a los originales", badD === 0, badD);
 
   // ---------- 4. Cabeceras y textos de sección ----------
-  ok("Título y entradilla de Medidas, literales de la web original", $("#vista-cab").textContent === $(".vista-cab", root).textContent, $("#vista-cab").textContent.slice(0, 50));
+  ok("Título y entradilla de Medidas, literales de la web original", (() => { const c = $("#vista-cab").cloneNode(true); c.querySelectorAll(".ctx-enlaces").forEach((n) => n.remove()); return c.textContent; })() === $(".vista-cab", root).textContent, $("#vista-cab").textContent.slice(0, 50));
   S.rep = "plano"; render();
   ok("Frase del Plano (calculada con los datos) idéntica a la original", $("#v-explorar .rep-titulo .sub").textContent === $("#plano .sub", root).textContent);
   ok("Título y subtítulo de la Matriz, literales", (S.rep = "matriz", render(), $("#rep-t").textContent === $("#matriz-t", root).textContent && $("#v-explorar .rep-titulo .sub").textContent === $("#matriz .sub", root).textContent));

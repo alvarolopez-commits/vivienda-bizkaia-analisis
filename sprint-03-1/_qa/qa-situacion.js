@@ -63,7 +63,7 @@ export async function run() {
   ok("Clic en Bilbao: marca elevada", !!$("#mapa .marca-sel"));
   ok("Clic en Bilbao: fila de la lista marcada", $('#filas .fila[data-code="48020"]')?.getAttribute("aria-pressed") === "true");
   ok("Clic en Bilbao: URL", location.hash === "#situacion/alquiler/48020");
-  ok("Enlace a la ficha completa #municipios/48020", $(".ficha .ir")?.getAttribute("href") === "https://vizcaya-vivienda-analisis.vercel.app/#municipios/48020");
+  ok("Enlace a la ficha completa #municipios/48020", $(".ficha .ir")?.getAttribute("href") === "#municipios/48020");
   const esperados = INDICADORES.map((x) => { const v = x.valor(store.municipios["48020"]); return v ? x.texto(v).replace(" (aproximado)", "*") : "Sin dato"; });
   ok("Bilbao: sus cinco valores", $$(".perfil-v").map((e) => e.textContent).join("|") === esperados.join("|"), esperados.join(" | "));
   $$(".perfil-b")[3].click(); await sleep(600);

@@ -155,3 +155,8 @@ body.con-bandeja .medidas { padding-bottom: 96px; }
 .medidas .shell[data-modo="explorar"] { gap: var(--s5); }
 .m-barra:has(+ .shell[data-modo="explorar"]) { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); gap: var(--s3) var(--s5); }
 .m-barra:has(+ .shell[data-modo="explorar"]) .m-ctrl { flex-wrap: wrap; justify-content: flex-start; min-width: 0; }
+
+/* Con la fila «Seguir con <municipio>» en la cabecera de Medidas, la cabecera pierde 24 px de aire arriba y el escenario 20 px de alto, para que el escenario siga cabiendo en la ventana. */
+.m-cab:has(.ctx-enlaces:not([hidden])) { padding: var(--s5) 0 var(--s4); }
+.medidas:has(.ctx-enlaces:not([hidden])) { --stage-h: clamp(540px, calc(100dvh - 360px), 760px); }
+.ctx-enlaces.en-medidas { margin: var(--s2) 0 0; }

@@ -7,6 +7,7 @@ import { parseHash } from "../../original/js/rutas.js";
 import { el } from "../../original/js/ui.js";
 import { cifrasPlanas, envolver, lupa, norm } from "../lectura.js";
 import { bannerDe } from "./imagenes.js";
+import { fijar, filaContexto } from "../contexto.js";
 
 export function montar(raiz, { store }) {
   const lec = envolver(raiz, { clase: "v-municipios", indice: "lateral", dibujar: (c) => renderMunicipios(c, store), herramientas: (c) => c.querySelector(".eligen") });
@@ -48,6 +49,9 @@ export function montar(raiz, { store }) {
   const mostrar = (primera) => {
     lec.vista.show?.(parseHash(location.hash).sub);
     banner();
+    // contexto de investigación: el municipio principal y el comparado; y los saltos a Situación, Acceso y Medidas con este municipio
+    fijar({ muni: raiz.querySelector("#muni-a")?.value || null, muniB: raiz.querySelector("#muni-b")?.value || null });
+    lec.nodos.contenido.querySelector(".cabeceras")?.after(filaContexto("municipios", { clase: "en-municipios" }));
     cifrasPlanas(lec.nodos.contenido);
     // el nombre de cada municipio es el titular de su perfil (el original lo dibuja con un <p>): se anuncia como encabezado
     lec.nodos.contenido.querySelectorAll(".muni-nombre").forEach((n) => { n.setAttribute("role", "heading"); n.setAttribute("aria-level", "2"); });

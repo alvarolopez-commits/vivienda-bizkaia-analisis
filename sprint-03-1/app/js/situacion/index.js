@@ -13,8 +13,8 @@ import { announce, reduced } from "../../original/js/comun.js";
 import { el, es, sourceLine, TYPE_COLORS } from "../../original/js/ui.js";
 import { INDICADORES, ranking } from "../../original/js/situacion/indicadores.js";
 import { crearMapa } from "./mapa-atlas.js";
+import { filaContexto, fijar } from "../contexto.js";
 
-const WEB = "https://vizcaya-vivienda-analisis.vercel.app/";
 const FIRST = 10; // como lista.js: diez primeros y un botón para ver todos (solo cuando la lista no tiene su propio scroll)
 const $ = (s) => document.querySelector(s);
 // mismo formato de fecha que main.js original
@@ -38,12 +38,23 @@ export async function montar(raiz, { store }) {
 
   // ---------- URL compartible (PROPUESTA de formato, compatible con rutas.js: #situacion/<indicador>/<INE>) ----------
   const fromHash = () => {
-    const [view, a, b] = location.hash.replace(/^#/, "").split("?")[0].split("/");
+    const [ruta, qs = ""] = location.hash.replace(/^#/, "").split("?");
+    const [view, a, b] = ruta.split("/");
     if (view !== "situacion") return null;
     const i = INDICADORES.findIndex((x) => x.id === a);
-    return { i: i < 0 ? 0 : i, code: b && Object.hasOwn(store.municipios, b) ? b : null };
+    // los filtros de la lista (tipo de municipio y búsqueda) viajan en la query: #situacion/<indicador>/<INE>?tipo=<tipo>&q=<texto>
+    const q = new URLSearchParams(qs);
+    const tipo = q.get("tipo");
+    return { i: i < 0 ? 0 : i, code: b && Object.hasOwn(store.municipios, b) ? b : null, tipo: store.typeKeys.includes(tipo) ? tipo : null, q: (q.get("q") ?? "").slice(0, 60) };
   };
-  const toHash = () => `#situacion/${ind().id}${S.code ? `/${S.code}` : ""}`;
+  const toHash = () => {
+    const q = new URLSearchParams();
+    if (S.tipo) q.set("tipo", S.tipo);
+    if (S.q.trim()) q.set("q", S.q.trim());
+    const qs = q.toString();
+    return `#situacion/${ind().id}${S.code ? `/${S.code}` : ""}${qs ? `?${qs}` : ""}`;
+  };
+  const sincronizarFiltros = () => { tipoSel.value = S.tipo ?? ""; buscar.value = S.q; };
 
   // ---------- mapa ----------
   const tip = $("#tip");
@@ -140,7 +151,7 @@ export async function montar(raiz, { store }) {
         ]),
         el("div", { class: "ficha-nombre" }, [
           el("h2", { class: "ficha-muni", text: m.nombre }),
-          el("a", { class: "btn primary ir", href: `${WEB}#municipios/${S.code}`, target: "_blank", rel: "noopener", title: "Versión actual publicada (aún no rediseñada). Se abre en una pestaña nueva." }, [el("span", { text: "Ver su ficha" }), el("span", { "aria-hidden": "true", text: "→" })]),
+          el("a", { class: "btn primary ir", href: `#municipios/${S.code}`, title: "La ficha de este municipio en Municipios" }, [el("span", { text: "Ver su ficha" }), el("span", { "aria-hidden": "true", text: "→" })]),
         ]),
         prop(el("p", { class: "ficha-meta", text: `${m.comarca} · ${es(m.poblacion)} habitantes` })),
         el("div", { class: "ficha-dato" }, [
@@ -163,6 +174,7 @@ export async function montar(raiz, { store }) {
           })),
         ]),
         fuenteInd(x),
+        filaContexto("situacion", { clase: "en-ficha" }),
       ];
       f.dataset.modo = "municipio";
     }
@@ -253,6 +265,7 @@ export async function montar(raiz, { store }) {
       document.querySelector(".lienzo").scrollIntoView({ behavior: reduced() ? "auto" : "smooth", block: "start" });
     }
 
+    fijar({ problema: ind().id, muni: S.code });
     if (location.hash === "" || location.hash.startsWith("#situacion")) history.replaceState(null, "", toHash());
     if (anuncio) {
       if (cambiaInd) announce(`Mapa: ${ind().titulo}`);
@@ -262,7 +275,7 @@ export async function montar(raiz, { store }) {
   }
 
   // el router de la aplicación avisa de los cambios de dirección (alCambiarDireccion); aquí solo el cambio de ancho de pantalla
-  const alCambiarDireccion = () => { const h = fromHash(); if (h && (h.i !== S.i || h.code !== S.code)) set(h); };
+  const alCambiarDireccion = () => { const h = fromHash(); if (h && (h.i !== S.i || h.code !== S.code || h.tipo !== S.tipo || h.q !== S.q)) { set(h); sincronizarFiltros(); } };
   const mq = matchMedia("(min-width: 1100px)"), alCambiarAncho = () => pintarLista(false);
   mq.addEventListener("change", alCambiarAncho);
   baja.push(() => mq.removeEventListener("change", alCambiarAncho));
@@ -270,8 +283,9 @@ export async function montar(raiz, { store }) {
   // ---------- arranque: la entrada se reproduce una sola vez por sesión ----------
   let primera = true;
   try { primera = !sessionStorage.getItem("atlas-entrada"); sessionStorage.setItem("atlas-entrada", "1"); } catch { /* sin almacenamiento: se reproduce */ }
-  const h = fromHash() || { i: 0, code: null };
-  Object.assign(S, { i: h.i, code: h.code });
+  const h = fromHash() || { i: 0, code: null, tipo: null, q: "" };
+  Object.assign(S, { i: h.i, code: h.code, tipo: h.tipo, q: h.q });
+  sincronizarFiltros();
   $("#fecha").textContent = `Datos descargados el ${dateLabel(store.meta.fecha_datos)}. Solo totales y porcentajes: ninguna cifra identifica a una persona.`;
   document.querySelector(".lienzo").classList.toggle("entrada", primera && !reduced());
   pintarProblemas();
@@ -280,6 +294,7 @@ export async function montar(raiz, { store }) {
   mapa.select(S.code);
   pintarFicha(false);
   pintarLista(false);
+  fijar({ problema: ind().id, muni: S.code });
   history.replaceState(null, "", toHash());
   $("#atlas").setAttribute("aria-busy", "false");
   window.__atlas = { S, store, set }; // solo para las pruebas de _qa
