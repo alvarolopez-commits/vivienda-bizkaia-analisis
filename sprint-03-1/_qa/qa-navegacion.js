@@ -26,7 +26,7 @@ export async function run() {
   ok("Un único marco: 1 cabecera, 1 menú, 1 <main> y ningún pie con texto de prototipo", $$("header.banda").length === 1 && $$("dialog#menu").length === 1 && $$("main").length === 1 && $$("footer").length === 0);
   const enlaces = Object.fromEntries($$(".vistas a").map((a) => [a.textContent.replace("↗", "").trim(), a]));
   ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", enlaces["Situación"].getAttribute("href") === "#situacion" && enlaces["Medidas"].getAttribute("href") === "#medidas" && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
-  ok("La marca de la cabecera vuelve a Situación local", $(".marca").getAttribute("href") === "#situacion");
+  ok("La marca de la cabecera vuelve al inicio local", $(".marca").getAttribute("href") === "#inicio");
   const otras = ["Municipios", "Acceso", "Normas", "Método"];
   ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app)", otras.every((n) => enlaces[n].getAttribute("href") === `#${n.toLowerCase().replace("é", "e")}` && !enlaces[n].hasAttribute("target")));
   ok("En el menú, las seis vistas son locales (ningún salto a otra web)", $$("#menu .menu-lista a").length === 6 && $$("#menu .menu-lista a").every((a) => a.getAttribute("href").startsWith("#")));
@@ -44,7 +44,7 @@ export async function run() {
   ok("Clic en «Situación»: vuelve el Living Atlas, en la misma app", vista() === "situacion" && location.origin === origen && !!$("#mapa svg") && $$("#mapa .munis path").length === 113 && montadas().atlas && !montadas().medidas, location.hash);
   ok("Situación vuelve con su selección reproducible desde la URL", /^#situacion\//.test(location.hash));
   ok("Solo la hoja de Situación está activa", $("#css-medidas").disabled && !$("#css-situacion").disabled);
-  ok("La marca de la cabecera vuelve a Situación desde Medidas", await (async () => { await clic('.vistas a[data-vista="medidas"]'); await clic(".marca"); return vista() === "situacion"; })());
+  ok("La marca de la cabecera vuelve al inicio (hero sobre Situación) desde Medidas", await (async () => { await clic('.vistas a[data-vista="medidas"]'); await clic(".marca"); return vista() === "situacion"; })());
 
   // --- deep links de Sprint 02 y de Sprint 03 ---
   await ir("#situacion/alquiler/48020");

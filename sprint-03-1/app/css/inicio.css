@@ -1,0 +1,64 @@
+/* Inicio (hero) · Design System Astara × Liquid Glass.
+   Una tarjeta oscura a pantalla casi completa con una ilustración de Bizkaia detrás, el titular grande, el acceso a las seis secciones y al resumen y al radar,
+   y debajo una fila de cifras reales. Sin blur sobre la imagen; el vidrio (L1) es solo la píldora superior, las secciones y el botón secundario.
+   Solo se ve con la dirección raíz (html.con-inicio, puesto por js/pre-inicio.js); el resto del tiempo no existe. */
+
+.hero { display: none; }
+.con-inicio .hero { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--s5); max-width: 1520px; margin-inline: auto; height: calc(100dvh - var(--banda)); min-height: 620px; padding: var(--s4) max(var(--margen), env(safe-area-inset-right, 0px)) var(--s5) max(var(--margen), env(safe-area-inset-left, 0px)); }
+
+/* ---------- Tarjeta ---------- */
+.hero-card { position: relative; isolation: isolate; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; gap: var(--s5); min-height: 0; padding: clamp(24px, 3.4vw, 52px); border-radius: var(--r-panel); background: var(--noche); color: #fff; box-shadow: 0 1px 2px rgba(26, 36, 70, .12), 0 28px 60px -28px rgba(26, 36, 70, .55); }
+.hero-fotos { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: var(--noche); }
+.hero-fotos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms var(--ease-inout); }
+.hero-fotos img.on { opacity: 1; }
+.hero-velo { position: absolute; inset: 0; z-index: -1; background:
+  linear-gradient(90deg, rgba(20, 24, 58, .94) 0%, rgba(20, 24, 58, .86) 34%, rgba(20, 24, 58, .6) 62%, rgba(20, 24, 58, .1) 100%),
+  linear-gradient(0deg, rgba(20, 24, 58, .9) 0%, rgba(20, 24, 58, .62) 24%, rgba(20, 24, 58, 0) 56%); }
+
+/* ---------- Texto ---------- */
+.hero-kicker { justify-self: start; display: inline-flex; align-items: center; gap: 10px; margin: 0; padding: 7px 16px 7px 12px; border: 1px solid rgba(255, 255, 255, .24); border-radius: var(--r-pildora); background: rgba(20, 24, 58, .5); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: .8125rem; font-weight: 500; color: rgba(255, 255, 255, .94); }
+.hero-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--ice); }
+.hero-t { align-self: center; max-width: 15em; margin: 0; font: 600 clamp(2.25rem, 1rem + 3.7vw, 4.75rem)/1.02 var(--f-display); letter-spacing: -.03em; text-wrap: balance; text-shadow: 0 2px 30px rgba(10, 14, 40, .35); }
+.hero-n { color: var(--ice); }
+
+.hero-pie { display: grid; grid-template-columns: minmax(0, 1.4fr) auto minmax(0, 1fr); align-items: end; gap: var(--s5); }
+.hero-secciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-secciones a { padding: 8px 16px; border: 1px solid rgba(255, 255, 255, .26); border-radius: var(--r-pildora); background: rgba(20, 24, 58, .42); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: #fff; font-size: .875rem; font-weight: 500; text-decoration: none; transition: background-color var(--dur-control) var(--ease), border-color var(--dur-control) var(--ease), color var(--dur-control) var(--ease); }
+.hero-secciones a:hover { background: #fff; border-color: #fff; color: var(--ink); }
+.hero-lado { justify-self: end; display: grid; gap: var(--s4); max-width: 27rem; }
+.hero-sub { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: rgba(255, 255, 255, .94); text-shadow: 0 1px 14px rgba(10, 14, 40, .4); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 22px; border: 1px solid transparent; border-radius: var(--r-pildora); font-size: .9375rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background-color var(--dur-control) var(--ease), border-color var(--dur-control) var(--ease), color var(--dur-control) var(--ease), transform .14s var(--ease); }
+.hero-btn.primario { background: #fff; color: var(--ink); }
+.hero-btn.primario:hover { background: var(--ice); }
+.hero-btn.vidrio { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .38); color: #fff; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.hero-btn.vidrio:hover { background: rgba(255, 255, 255, .26); }
+.hero-btn:active { transform: translateY(1px); }
+.hero-card :focus-visible { outline-color: var(--ice); }
+
+.hero-bajar { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgba(255, 255, 255, .34); border-radius: 50%; background: rgba(255, 255, 255, .14); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); cursor: pointer; transition: background-color var(--dur-control) var(--ease); }
+.hero-bajar:hover { background: rgba(255, 255, 255, .3); }
+.hero-bajar svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Cifras (reales: salen de los datos) ---------- */
+.hero-cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s6); margin: 0; padding: 0 var(--s2); list-style: none; }
+.hero-cifras a { display: grid; gap: 8px; color: var(--ink); text-decoration: none; }
+.hero-cifras .cifra { font: 600 clamp(1.75rem, 1rem + 1.8vw, 2.75rem)/1 var(--f-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.hero-cifras .linea { display: block; border-bottom: 1px dashed var(--line-2); padding-bottom: 8px; }
+.hero-cifras .etq { font-size: .9375rem; color: var(--ink-2); }
+.hero-cifras a:hover .etq { color: var(--ink); text-decoration: underline; text-underline-offset: .22em; }
+
+/* ---------- Movimiento: la imagen entra con un ligero zoom (solo «expressive»; transform, nada más) ---------- */
+@keyframes hero-zoom { from { scale: 1.07; } to { scale: 1; } }
+body[data-motion="expressive"] .hero-fotos img.on { animation: hero-zoom 9s var(--ease-out) both; }
+body[data-motion="still"] .hero-fotos img { transition: none; }
+
+/* ---------- Degradación ---------- */
+@media (prefers-reduced-transparency: reduce) {
+  .hero-kicker, .hero-secciones a, .hero-btn.vidrio, .hero-bajar { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(20, 24, 58, .86); }
+}
+@media (prefers-contrast: more) { .hero-velo { background: rgba(20, 24, 58, .82); } }
+@media (prefers-reduced-motion: reduce) { .hero-fotos img { transition: none; } .hero-fotos img.on { animation: none !important; } }
+
+@media (max-width: 1279px) { .hero-pie { grid-template-columns: minmax(0, 1fr) auto; } .hero-bajar { display: none; } }
+@media (max-width: 899px) { .con-inicio .hero { height: auto; } .hero-card { min-height: 560px; } .hero-pie { grid-template-columns: minmax(0, 1fr); } .hero-lado { justify-self: start; } .hero-cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

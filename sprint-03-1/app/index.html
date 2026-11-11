@@ -22,7 +22,9 @@
   <link rel="stylesheet" href="css/acceso.css" id="css-acceso">
   <link rel="stylesheet" href="css/normas.css" id="css-normas">
   <link rel="stylesheet" href="css/metodo.css" id="css-metodo">
+  <link rel="stylesheet" href="css/inicio.css">
   <link rel="stylesheet" href="css/movimiento.css">
+  <script src="js/pre-inicio.js"></script>
   <script type="module" src="js/app.js"></script>
   <script type="module" src="js/nav.js"></script>
 </head>
@@ -31,7 +33,7 @@
 
   <!-- Marco único: las seis pestañas (Situación, Municipios, Acceso, Medidas, Normas y Método) se abren aquí, con el mismo marco, el mismo almacén de datos y el mismo sistema de diseño. -->
   <header class="banda">
-    <a class="marca" href="#situacion">Vivienda en Bizkaia</a>
+    <a class="marca" href="#inicio">Vivienda en Bizkaia</a>
     <nav class="vistas vidrio" aria-label="Pestañas">
       <a href="#situacion" data-vista="situacion">Situación</a>
       <a href="#municipios" data-vista="municipios">Municipios</a>
@@ -68,6 +70,30 @@
     </section>
     <form method="dialog"><button class="btn cerrar">Cerrar <span aria-hidden="true">×</span></button></form>
   </dialog>
+
+  <!-- Inicio: solo se ve con la dirección raíz (html.con-inicio). Debajo, sin cambios, está la vista Situación; al bajar, la página lleva a ella de una vez. Los textos son los de la web publicada (su descripción); los números salen de los datos (js/inicio.js). -->
+  <section id="inicio" class="hero" aria-label="Inicio">
+    <div class="hero-card focal">
+      <div class="hero-fotos" aria-hidden="true"></div>
+      <span class="hero-velo" aria-hidden="true"></span>
+      <p class="hero-kicker rise" style="--i:0"><span class="hero-punto" aria-hidden="true"></span>Vivienda en Bizkaia · Análisis</p>
+      <h1 class="hero-t rise" style="--i:1">El acceso a la vivienda en los <span class="hero-n" data-roll></span> municipios de Bizkaia</h1>
+      <div class="hero-pie">
+        <nav class="hero-secciones rise" style="--i:3" aria-label="Secciones">
+          <a href="#situacion">Situación</a><a href="#municipios">Municipios</a><a href="#acceso">Acceso</a><a href="#medidas">Medidas</a><a href="#normas">Normas</a><a href="#metodo">Método</a>
+        </nav>
+        <button type="button" class="hero-bajar" aria-label="Bajar al análisis" data-propuesta><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6.5 8 11l4.5-4.5"/></svg></button>
+        <div class="hero-lado rise" style="--i:2">
+          <p class="hero-sub">Dónde falla, a quién afecta, qué medidas hay y quién decide cada una. Con datos oficiales y su fuente.</p>
+          <div class="hero-cta">
+            <a class="hero-btn primario" href="https://vizcaya-vivienda-resumen.vercel.app/" target="_blank" rel="noopener">Ver el resumen <span aria-hidden="true">↗</span></a>
+            <a class="hero-btn vidrio" href="https://vizcaya-vivienda.vercel.app/" target="_blank" rel="noopener">Ver el radar <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="hero-cifras" aria-label="Qué contiene el análisis"></ul>
+  </section>
 
   <!-- La vista activa se monta aquí; solo hay una montada a la vez -->
   <main id="vista" tabindex="-1"></main>

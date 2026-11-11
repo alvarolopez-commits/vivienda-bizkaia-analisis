@@ -13,9 +13,11 @@
 import { cargarStore } from "./datos.js";
 import { redirectOf } from "../original/js/rutas.js";
 import { entrada, iniciar, lente, lentes, modo, observarTick } from "./movimiento.js";
+import { sincronizar as sincronizarInicio } from "./inicio.js";
 
 iniciar(); // intensidad del movimiento (body[data-motion]); la píldora de la cabecera es la misma en las seis vistas
 lente(document.querySelector(".vistas"));
+sincronizarInicio(); // hero de la dirección raíz (js/inicio.js)
 
 const raiz = document.getElementById("vista");
 // cada vista tiene una o más hojas; solo están activas las de la vista abierta
@@ -67,6 +69,7 @@ async function ir() {
     const vista = await modulo.montar(raiz, { store });
     actual = { nombre, vista };
     window.__vista = nombre; // solo para las pruebas de _qa
+    sincronizarInicio();     // el h1 de la vista pasa a segundo nivel mientras el hero lleva el de la página
     window.scrollTo(0, 0);   // una vista nueva empieza arriba
     entrada(nombre, raiz);
     const sueltaLentes = lentes(raiz), sueltaTick = observarTick(raiz);
