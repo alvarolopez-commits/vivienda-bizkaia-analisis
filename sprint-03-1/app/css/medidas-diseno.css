@@ -145,3 +145,7 @@ body.con-bandeja .medidas { padding-bottom: 96px; }
 /* Con la barra de desplazamiento de la página (ventana de 1425 px útiles) la leyenda del Plano ocupa dos líneas: el Plano se queda 50 px más bajo
    para que escenario, Plano y leyenda quepan sin barra propia. */
 .m-stage .burbujas { max-height: calc(var(--stage-h) - 270px); }
+
+/* Leyenda del Plano ARRIBA del gráfico (como en el mapa de Situación): el contenedor pasa a columna y la leyenda va primero. */
+.m-stage :has(> .leyenda-lineas) { display: flex; flex-direction: column; }
+.m-stage :has(> .leyenda-lineas) > .leyenda-lineas { order: -1; margin: 0 auto var(--s3); }

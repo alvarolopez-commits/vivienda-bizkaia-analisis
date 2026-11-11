@@ -24,23 +24,23 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 /* Escenario: mapa (protagonista) + panel persistente con ficha y lista */
 .escenario { display: grid; grid-template-columns: minmax(0, 1fr) clamp(360px, 27vw, 410px); gap: var(--s4); height: clamp(600px, calc(100dvh - var(--banda) - 32px), 900px); }
 
-.lienzo { position: relative; min-width: 0; overflow: hidden; border-radius: 28px; border: 1px solid var(--line);
+.lienzo { position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden; border-radius: 28px; border: 1px solid var(--line);
   background:
     radial-gradient(rgba(34, 30, 65, .07) 1px, transparent 1.3px) 0 0 / 22px 22px,
     radial-gradient(120% 95% at 50% 38%, #f8fafd 0%, #edf2f7 58%, #e2e9f1 100%);
   box-shadow: 0 1px 0 #fff inset; }
-.lienzo-cab { position: absolute; z-index: 3; inset: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s4); padding: var(--s5) var(--s5) 0; pointer-events: none; }
+.lienzo-cab { position: relative; z-index: 3; flex: none; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--s3) var(--s4); padding: var(--s5) var(--s5) 0; }   /* título y leyenda ARRIBA del mapa */
 .lienzo-cab > * { pointer-events: auto; }
 .ind-titulo { max-width: 34ch; font: 600 1.0625rem/1.3 var(--f-display); letter-spacing: -.01em; text-wrap: balance; }
-.mapa-zona { position: absolute; inset: 0; }
-.herramientas { position: absolute; z-index: 4; top: var(--s5); right: var(--s5); display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
+.mapa-zona { position: relative; flex: 1 1 0; min-height: 0; }
+.herramientas { position: absolute; z-index: 4; bottom: var(--s5); right: var(--s5); display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: var(--r-pildora); }
 .herr { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 999px; background: transparent; cursor: pointer; transition: background-color .16s; }
 .herr svg { width: 16px; height: 16px; fill: none; stroke: var(--ink); stroke-width: 1.7; stroke-linecap: round; }
 .herr:hover:not(:disabled) { background: rgba(255, 255, 255, .75); }
 .herr:disabled { opacity: .35; cursor: default; }
 .herr-texto { width: auto; padding: 0 14px; font-size: .8125rem; font-weight: 600; }
 
-.mapa { position: absolute; inset: 0; padding: 96px 32px 104px; }
+.mapa { position: absolute; inset: 0; padding: var(--s4) 32px 84px; }
 .mapa svg { display: block; width: 100%; height: 100%; overflow: visible; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .mapa svg.ampliado { cursor: grab; touch-action: none; }
 .mapa svg.arrastrando { cursor: grabbing; }
@@ -59,7 +59,7 @@ body { background: var(--ambiente), var(--bg); }   /* sin background-attachment:
 .tip strong { font: 600 .875rem/1.25 var(--f-ui); }
 .tip span { font: 400 .78rem/1.3 var(--f-data); color: #cfd8f0; }
 
-.leyenda-bloque { position: absolute; z-index: 3; left: var(--s5); right: var(--s5); bottom: var(--s5); display: grid; grid-template-columns: minmax(220px, 1.5fr) auto minmax(180px, 1fr); align-items: center; gap: 10px var(--s5); padding: 12px 18px; border-radius: var(--r-tarjeta); background: var(--opaco-fondo); border: 1px solid var(--opaco-borde); box-shadow: var(--elev-1); }
+.leyenda-bloque { position: relative; z-index: 3; flex: 1 1 100%; min-width: 0; display: grid; grid-template-columns: minmax(220px, 1.5fr) auto minmax(180px, 1fr); align-items: center; gap: 10px var(--s5); padding: 12px 18px; border-radius: var(--r-tarjeta); background: var(--opaco-fondo); border: 1px solid var(--opaco-borde); box-shadow: var(--elev-1); }
 .leyenda { display: grid; grid-template-columns: auto minmax(40px, 1fr) auto; align-items: center; gap: 10px; font: 400 .75rem/1.2 var(--f-data); color: var(--ink-2); }
 .leyenda .rampa { height: 10px; border-radius: 999px; box-shadow: 0 0 0 1px rgba(34, 30, 65, .08) inset; }
 .ley-sin { display: flex; align-items: center; gap: 8px; font: 400 .75rem/1.2 var(--f-data); color: var(--ink-2); }
