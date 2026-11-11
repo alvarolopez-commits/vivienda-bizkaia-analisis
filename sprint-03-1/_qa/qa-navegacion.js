@@ -28,7 +28,7 @@ export async function run() {
   ok("Situación y Medidas apuntan a la app nueva (hash local), no a Vercel", enlaces["Situación"].getAttribute("href") === "#situacion" && enlaces["Medidas"].getAttribute("href") === "#medidas" && !/vercel\.app/.test(enlaces["Situación"].href + enlaces["Medidas"].href));
   ok("La marca de la cabecera vuelve a Situación local", $(".marca").getAttribute("href") === "#situacion");
   const antiguas = ["Municipios", "Acceso", "Normas", "Método"];
-  ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app) y se marcan con un punto", antiguas.every((n) => enlaces[n].getAttribute("href") === `#${n.toLowerCase().replace("é", "e")}` && enlaces[n].classList.contains("por-hacer") && !enlaces[n].hasAttribute("target")));
+  ok("Municipios, Acceso, Normas y Método también son locales (hash en la misma app)", antiguas.every((n) => enlaces[n].getAttribute("href") === `#${n.toLowerCase().replace("é", "e")}` && enlaces[n].classList.contains("por-hacer") && !enlaces[n].hasAttribute("target")));
   ok("En el menú, las seis vistas son locales (ningún salto a otra web)", $$("#menu .menu-lista a").length === 6 && $$("#menu .menu-lista a").every((a) => a.getAttribute("href").startsWith("#")));
 
   // --- Situación → Medidas → Situación con clics reales ---

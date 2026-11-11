@@ -38,10 +38,11 @@ main:focus { outline: none; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
 .banda { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; height: var(--banda); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--s5); padding: 0 max(var(--margen), env(safe-area-inset-right, 0px)) 0 max(var(--margen), env(safe-area-inset-left, 0px)); background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: saturate(140%) blur(12px); -webkit-backdrop-filter: saturate(140%) blur(12px); border-bottom: 1px solid var(--line); }
 .marca { font: 600 1rem/1 var(--f-ui); letter-spacing: -.01em; text-decoration: none; white-space: nowrap; padding: var(--s3) 0; }
-.vistas { display: flex; gap: clamp(14px, 1.6vw, 28px); }
-.vistas a { position: relative; padding: var(--s3) 0; font-size: .9375rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .18s; }
-.vistas a:hover, .vistas a[aria-current="page"] { color: var(--ink); }
-.vistas a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; height: 2px; border-radius: 2px; background: var(--ink); }
+.vistas { display: flex; align-items: center; gap: clamp(2px, .5vw, 8px); }
+.vistas a { position: relative; padding: 8px 16px; border-radius: 999px; font-size: .9375rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color .18s, background-color .18s; }
+.vistas a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+/* sección abierta: píldora oscura, como las pestañas de los problemas del Atlas */
+.vistas a[aria-current="page"] { background: var(--ink); color: #fff; font-weight: 600; }
 .vista-activa { display: none; font-weight: 600; font-size: .9375rem; }
 .banda-dcha { justify-self: end; display: flex; align-items: center; gap: var(--s4); }
 .otros-productos { display: flex; align-items: center; gap: var(--s4); }
@@ -74,9 +75,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 html.modal { overflow: hidden; }
 
 
-/* pestañas aún no rediseñadas: un punto discreto; su página lo explica y enlaza la versión actual */
-.vistas a.por-hacer::after { content: ""; display: inline-block; width: 5px; height: 5px; margin-left: 6px; border-radius: 50%; background: currentColor; opacity: .35; vertical-align: middle; }
-.vistas a.por-hacer[aria-current="page"]::after { opacity: .6; }
 /* pie base: las vistas con hoja propia lo redefinen; las pendientes usan este */
 .pie { display: grid; gap: var(--s1); max-width: 1520px; margin-inline: auto; padding: var(--s6) max(var(--margen), env(safe-area-inset-right, 0px)) var(--s9) max(var(--margen), env(safe-area-inset-left, 0px)); border-top: 1px solid var(--line); font-size: .875rem; color: var(--muted); }
 .pendiente { max-width: 640px; margin: clamp(48px, 12vh, 140px) auto; padding: 0 max(var(--margen), env(safe-area-inset-left, 0px)); display: grid; gap: 16px; justify-items: start; }
