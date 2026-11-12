@@ -43,7 +43,7 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 ## 4. Calidad
 - **Cifras comparadas con el Radar publicado:** 50 municipios con alguna alerta (23 graves); 32 viviendas turísticas, 3 contratos que caen, 17 alquiler por encima del límite, 6 zona tensionada; 6 de 12 indicadores empeoran; 971 €/mes en Bilbao (2025, +6,6 % frente a 2024); 281.141 € de compraventa; 32 municipios con dato de alquiler (Getxo 1.121 €/mes, Urduliz 1.005, Leioa 992).
 - **Probado a mano:** elegir tipo (tarjeta y barra, sincronizados), elegir municipio en la lista y en el mapa plano, conmutar 3D/Plano, abrir y cerrar el cajón (botón y Escape), ficha desde el cajón, catálogo y selector de indicador.
-- **No verificado:** contraste WCAG calculado, lector de pantalla real, navegación solo con teclado en toda la página, anchos menores de 1024 px, rendimiento del 3D en equipos modestos, navegador sin WebGL, Safari y Firefox. El detector de impeccable no se ha pasado.
+- **No verificado (actualizado en la sección 10):** lector de pantalla real, anchos menores de 768 px (móvil aplazado), rendimiento del 3D en equipos modestos, navegador sin WebGL, Safari y Firefox. El detector de impeccable no se ha pasado.
 
 ## 5. Qué falta
 - Las otras cuatro vistas (Medidas en marcha, Escenarios con su calculadora, Datos con el calendario, Metodología). Escenarios es la más delicada: su lógica de cálculo no se puede tocar.
@@ -105,3 +105,39 @@ Misma lógica que en Situación (sección 7): lo que se viene a mirar manda, y l
 | El catálogo abría con cuatro mosaicos de recuentos, otra vez el patrón de Situación | La misma barra de estado de 12 segmentos que Situación (módulo compartido `js/estatus.js`); cada segmento abre la ficha de su indicador. |
 **Lo que no cambia:** la serie y «Cómo se mide» siguen en una fila 7/5 porque el gráfico se escala con su contenedor: a todo el ancho su texto se agrandaba demasiado (se probó y se descartó). El orden es isla, serie con «Cómo se mide», y mapa por municipio con su reparto.
 **Pendiente:** pasada de accesibilidad (contraste con el texto a 14 px, teclado, lector de pantalla) y validar con el autor.
+
+## 10. Auditoría de accesibilidad, WCAG 2.1 AA (2026-11-12)
+Revisión con mediciones en Chromium a 1440 px (Situación, catálogo, ficha de indicador clave y de contexto, cajón) más pruebas con teclado real y a 768 px. **Resultado: 7 hallazgos, todos corregidos y comprobados; ninguno bloqueaba el uso con ratón.** No sustituye a una prueba con lector de pantalla.
+
+### Contraste (1.4.3 y 1.4.11)
+- **697 textos sobre superficies claras** (hoja, tarjetas, tablas, cajón): 0 por debajo de 4,5:1 (3:1 en texto grande).
+- **Raíl oscuro:** de 6,1 a 15,2:1. **Islas con imagen de fondo:** el peor caso muestreado sobre la imagen, con su degradado y el cristal, es 9,25:1. **Cabecera del cajón:** el peor, 4,59:1 (el subtítulo; se subió a texto principal).
+- **Bordes de controles** (chips, botones): eran #D3DCE8, 1,4:1 contra blanco; ahora #7B8AA0, 3,5:1.
+- **Anillo de foco:** azul de marca (8,8:1) sobre fondo claro y azul hielo sobre las islas oscuras.
+
+### Hallazgos corregidos
+| # | Hallazgo | Criterio | Gravedad | Corrección |
+|---|---|---|---|---|
+| 1 | «Saltar al contenido» llevaba a `#hoja`, que el router tomaba por una vista: sacaba de Indicadores a Situación y dejaba una dirección rota | 2.4.1 | Mayor | Enlace que mueve el foco a la hoja sin cambiar la dirección. Comprobado. |
+| 2 | La barra de estado añadía 12 paradas de Tab duplicadas de las filas | 2.4.3 | Mayor | Segmentos fuera del orden de tabulación y del árbol de accesibilidad; el mismo acceso lo dan las filas y la tabla. |
+| 3 | Con el cajón abierto el raíl seguía accesible detrás de un diálogo modal | 4.1.2, 2.4.3 | Mayor | Toda la aplicación queda inerte mientras está abierto. |
+| 4 | El catálogo ensanchaba la página a 1196 px en anchos medios | 1.4.4, 1.4.10 | Mayor | `min-width: 0` en los hijos de la rejilla; la tabla se desplaza dentro de su caja. Sin desborde en las cuatro vistas a 768 px. |
+| 5 | Los puntos de alerta de la lista solo se distinguían por color | 1.4.1 | Menor | Texto con el tipo de cada alerta (y si es grave) como nombre accesible y título. |
+| 6 | Enlaces sueltos de 18 a 21 px de alto y borde de controles de 1,4:1 | 2.5.8, 1.4.11 | Menor | Mínimo 24 px de alto y borde de 3,5:1. |
+| 7 | El raíl era un «complementario» con otra navegación dentro, y las flechas «↗» se leían como «flecha» | 1.3.1, 4.1.2 | Menor | Contenedor sin rol y texto «(abre el Radar publicado)» para lectores de pantalla. |
+Además: con «reducir movimiento» se anulan las transiciones y desplazamientos propios de los componentes nuevos.
+
+### Teclado (probado con pulsaciones reales)
+- Orden lógico y sin `tabindex` positivos; foco visible en todos los controles probados.
+- Cajón: Enter o Espacio lo abre, el foco entra en «Cerrar», Tab no se escapa, Escape lo cierra y el foco vuelve a la fila de origen.
+- El título recibe el foco al cambiar de vista; el aviso `aria-live` anuncia la selección de municipio y el recuento del filtro.
+
+### Estructura
+`lang="es"`, un `h1` por vista, `main`, `nav` con nombre y `footer`; orden de títulos h1, h2, h3; gráficos con `role="img"`, nombre y tabla alternativa; mapas con la lista de municipios como alternativa de teclado; lienzo 3D oculto a la tecnología de asistencia.
+
+### Límites conocidos (no corregidos)
+- **Reflow a 320 px (1.4.10) no se cumple en móvil:** el prototipo es solo de escritorio por decisión del usuario. A 768 px no desborda.
+- **En 3D no se puede elegir un municipio con el ratón ni con el teclado**, igual que en el Radar publicado; la lista da el mismo acceso.
+- **La primera columna de la tabla del catálogo es una celda normal** y no una cabecera de fila (`th scope="row"`).
+- **Los gráficos copiados del Radar original** conservan su texto de 11 unidades de dibujo, que se escala con el contenedor.
+- **Sin lector de pantalla real** (VoiceOver o NVDA), sin Safari ni Firefox, sin comprobar con el sistema en modo de alto contraste.
