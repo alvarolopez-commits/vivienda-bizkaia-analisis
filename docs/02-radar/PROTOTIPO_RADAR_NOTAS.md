@@ -141,3 +141,11 @@ Además: con «reducir movimiento» se anulan las transiciones y desplazamientos
 - **La primera columna de la tabla del catálogo es una celda normal** y no una cabecera de fila (`th scope="row"`).
 - **Los gráficos copiados del Radar original** conservan su texto de 11 unidades de dibujo, que se escala con el contenedor.
 - **Sin lector de pantalla real** (VoiceOver o NVDA), sin Safari ni Firefox, sin comprobar con el sistema en modo de alto contraste.
+
+## 11. Revisión del resultado y ajustes (2026-11-12)
+Revisión de lo publicado: la web coincide fichero a fichero con la rama (30 de 30) y los datos con el Radar original. Dos ajustes:
+| Hallazgo | Cambio |
+|---|---|
+| La entradilla de Situación («6 de 12 indicadores clave empeoran… 50 de 113 municipios tienen alguna alerta») y la isla, a 100 px, decían lo mismo | La entradilla se queda, porque es el texto literal del Radar publicado. La isla pasa a «Indicadores clave que empeoran · 6 de 12», cómo se leen («Cada indicador se compara con su periodo anterior comparable. No hay un índice que sume indicadores distintos», frase del apartado Metodología del Radar publicado) y el dato nuevo: **23** municipios con alguna alerta grave, de los 50 con alguna alerta, con el enlace «Ver el mapa». |
+| Las fuentes se pedían a Google Fonts desde cada visita, lo que comparte la dirección IP del visitante con un tercero en una web pública | Montserrat, Geist, Geist Mono y Manrope se alojan en `assets/fonts/` (8 ficheros woff2, 222 kB, solo `latin` y `latin-ext`) con `css/fonts.css` y la licencia en `assets/fonts/LICENCIAS.md` (SIL Open Font License 1.1). Comprobado: las 32 peticiones de la página van al propio sitio. |
+**Sigue pendiente de la revisión:** que la isla oscura es el mismo patrón en las tres vistas; la intro de 4 s en cada carga (propuesta: una vez por sesión, o más corta); recortar el CSS de PCI que el Radar no usa; y las otras cuatro vistas.
