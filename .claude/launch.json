@@ -4,8 +4,30 @@
     {
       "name": "prototipo-situacion",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4173", "--bind", "127.0.0.1", "--directory", "prototipo-situacion"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4173",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "prototipo-situacion"
+      ],
       "port": 4173
+    },
+    {
+      "name": "prototipo-radar",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4174",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "prototipo-radar"
+      ],
+      "port": 4174
     }
   ]
 }
