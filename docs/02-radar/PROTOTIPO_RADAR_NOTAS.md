@@ -24,8 +24,8 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 | Raíl con las dos vistas hechas y las otras cuatro como enlaces al Radar publicado (↗) | Medidas en marcha, Escenarios, Datos y Metodología. |
 | Isla oscura de Situación: 50 municipios, «6 de 12 indicadores clave empeoran» y los cuatro tipos de alerta como selectores | En el Radar publicado esos tipos se recorren con un scroll anclado. Aquí se eligen. |
 | Un solo selector de tipo de alerta (tarjeta de la isla o selector de la barra) que gobierna isla, mapa y lista | Tocar la tarjeta elegida vuelve a «Todas». |
-| Conmutador 3D / Plano del mapa | El original solo ofrece 3D y cae a plano si no hay WebGL. |
-| Lista de municipios con alertas, con barra de proporción y ficha de alertas del municipio elegido | Sustituye a la tabla de alertas. En 3D no se puede tocar un municipio (igual que el original): se elige en la lista. En plano también se toca en el mapa. |
+| Conmutador Plano / 3D en la cabecera del mapa. El plano es el predeterminado y el 3D se monta la primera vez que se pide | El original solo ofrece 3D y cae a plano si no hay WebGL. |
+| Lista de municipios con alertas: barra de proporción, un punto por alerta (con anillo si es grave) y ficha de alertas del municipio elegido | Sustituye a la tabla de alertas. En 3D no se puede tocar un municipio (igual que el original): se elige en la lista. En plano también se toca en el mapa. |
 | Detalle de un indicador clave en un cajón (como el «record sheet» de PCI) | En el original es un panel al lado. Misma información. |
 | Catálogo de indicadores como tabla de PCI, con filtros de dimensión y búsqueda en la barra | Mismos filtros que el original. |
 | Ficha de indicador con isla oscura de cifras | Mismas cifras que la tira del original. |
@@ -49,3 +49,18 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 - Las otras cuatro vistas (Medidas en marcha, Escenarios con su calculadora, Datos con el calendario, Metodología). Escenarios es la más delicada: su lógica de cálculo no se puede tocar.
 - Recorte del CSS de PCI a lo que usa el Radar, una vez cerrado el alcance.
 - Publicación del prototipo como artifact privado y validación con el autor.
+
+## 6. Arreglos tras la crítica de diseño (2026-11-12)
+Primera pasada sobre los fallos concretos que dejó la crítica de Situación e Indicadores. No cambia datos, textos ni orden de bloques.
+| Fallo | Arreglo |
+|---|---|
+| El conmutador 3D / Plano estaba en la barra, lejos del mapa | Pasa a la cabecera del mapa. |
+| El 3D era el predeterminado, poco preciso para vigilar, y cargaba Three.js siempre | Plano por defecto; el 3D (670 kB) se carga al elegirlo. |
+| La columna «Grave» salía en casi todas las filas y no distinguía nada | Un punto por alerta, del color de su tipo; con anillo, grave. Leyenda de una línea sobre la lista. |
+| Las etiquetas del eje X se pisaban en series trimestrales | Periodo corto en el eje (`T1 2010`, `may 2026`) con la opción `xLabel` que ya ofrece `graficos.js`, sin tocar el módulo. |
+| El título mostraba un recuadro de foco al cambiar de vista | Sin recuadro en el foco programático (el foco sigue moviéndose al título). |
+| Pie con contraste de 4,35:1 | Color secundario de PCI. |
+| Los enlaces del raíl al Radar publicado no se distinguían | Insignia ↗ sobre el icono, visible también con el raíl cerrado, y separador entre las vistas propias y las externas. |
+
+**Corrección a la crítica:** el 2,49:1 que se midió en la fecha del raíl era un error de medición (el raíl es cristal oscuro y la medida tomó el fondo claro de la página). Con el fondo real son unos 6:1. Sigue pendiente la pasada completa de contraste.
+**Pendiente de la crítica (más grandes, a aprobar):** reordenar Situación para contar una sola historia, aplanar las cajas anidadas, cerrar la escala tipográfica y sustituir las pastillas por cambio en color con mini serie.
