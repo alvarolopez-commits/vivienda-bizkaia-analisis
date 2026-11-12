@@ -94,3 +94,14 @@ Medido en Situación, catálogo, ficha y cajón a 1440 px: **antes 15 tamaños d
 - **Dónde vive:** tokens `--t-12` a `--t-56` y la capa de sobrescritura al final de `css/radar.css`. `pci.css` no se toca, y los selectores se repiten para ganar por orden.
 - **Efecto:** el texto de ayuda sube de 12 y 12,5 a 14 (descripciones, notas, leyendas); las etiquetas y estados se quedan en 12. Las cifras de las filas suben de 22 a 24. La cifra de la isla fija su tope en 56 (antes llegaba a 64).
 **Pendiente:** contraste calculado con el texto ya a 14, y repetir la revisión de jerarquía en Indicadores (los mosaicos de la ficha pesan demasiado: «Dato oficial» y «Dimensión» se leen como cifras).
+
+## 9. Jerarquía de la ficha de indicador y del catálogo (2026-11-12)
+Misma lógica que en Situación (sección 7): lo que se viene a mirar manda, y los metadatos no se presentan como cifras. No cambia ningún dato ni texto del Radar.
+| Problema de la crítica | Cambio |
+|---|---|
+| Cuatro mosaicos con letra de cifra (24 px) para «Dato oficial», «Dimensión», el próximo dato y los municipios con dato | Un solo panel «De un vistazo»: lista plana de etiqueta (12) y valor (14). Contiene la regla del semáforo (solo en indicadores clave), el próximo dato, el tipo de dato y los municipios con dato. |
+| «Dimensión» aparecía dos veces (chip de la cabecera y mosaico) | Solo en la cabecera. |
+| La regla del semáforo estaba lejos de la cifra, en «Cómo se mide» | Está junto a la cifra, en la isla. «Cómo se mide» ya no repite regla, tipo de dato ni próximo dato. |
+| El catálogo abría con cuatro mosaicos de recuentos, otra vez el patrón de Situación | La misma barra de estado de 12 segmentos que Situación (módulo compartido `js/estatus.js`); cada segmento abre la ficha de su indicador. |
+**Lo que no cambia:** la serie y «Cómo se mide» siguen en una fila 7/5 porque el gráfico se escala con su contenedor: a todo el ancho su texto se agrandaba demasiado (se probó y se descartó). El orden es isla, serie con «Cómo se mide», y mapa por municipio con su reparto.
+**Pendiente:** pasada de accesibilidad (contraste con el texto a 14 px, teclado, lector de pantalla) y validar con el autor.
