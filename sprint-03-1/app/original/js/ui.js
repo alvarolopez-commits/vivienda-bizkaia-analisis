@@ -26,7 +26,7 @@ export const SECTION_LABELS = {
 };
 
 // Fase 13: la vigilancia (alertas, zonas tensionadas, Horizonte 2035, datos que faltan) vive en el radar, la otra web
-export const RADAR_URL = "https://vizcaya-vivienda.vercel.app/";
+export const RADAR_URL = "https://alvarolopez-commits.github.io/radar-vivienda-bizkaia/"; // el radar que se está construyendo (antes: https://vizcaya-vivienda.vercel.app/)
 export const radarLink = (hash, text, cls = "btn-link") => el("a", { class: cls, href: `${RADAR_URL}${hash}`, rel: "noopener", text });
 
 // Tramos de ingresos: hogares ordenados de menos a más ingresos (percentiles), con nombre en lenguaje llano
