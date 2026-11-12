@@ -22,8 +22,8 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 |---|---|
 | Aviso «Prototipo de diseño…» en la barra | Para que no se tome por el Radar final. |
 | Raíl con las dos vistas hechas y las otras cuatro como enlaces al Radar publicado (↗) | Medidas en marcha, Escenarios, Datos y Metodología. |
-| Isla oscura de Situación: 50 municipios, «6 de 12 indicadores clave empeoran» y los cuatro tipos de alerta como selectores | En el Radar publicado esos tipos se recorren con un scroll anclado. Aquí se eligen. |
-| Un solo selector de tipo de alerta (tarjeta de la isla o selector de la barra) que gobierna isla, mapa y lista | Tocar la tarjeta elegida vuelve a «Todas». |
+| Isla oscura de Situación: «6 de 12 indicadores clave empeoran» y una barra con un segmento por indicador, coloreado por estado | En el Radar publicado la escena de entrada son las alertas por municipio. Aquí primero se cuenta el estado de los indicadores y, debajo, el territorio. Es un cambio de orden de bloques, no de textos. |
+| Filtro por tipo de alerta junto al mapa, con sus puntos de color como leyenda | Gobierna el mapa, la lista y el 3D. Sustituye a las cuatro tarjetas de la isla, a la leyenda superpuesta y al selector de la barra. |
 | Conmutador Plano / 3D en la cabecera del mapa. El plano es el predeterminado y el 3D se monta la primera vez que se pide | El original solo ofrece 3D y cae a plano si no hay WebGL. |
 | Lista de municipios con alertas: barra de proporción, un punto por alerta (con anillo si es grave) y ficha de alertas del municipio elegido | Sustituye a la tabla de alertas. En 3D no se puede tocar un municipio (igual que el original): se elige en la lista. En plano también se toca en el mapa. |
 | Detalle de un indicador clave en un cajón (como el «record sheet» de PCI) | En el original es un panel al lado. Misma información. |
@@ -64,3 +64,16 @@ Primera pasada sobre los fallos concretos que dejó la crítica de Situación e 
 
 **Corrección a la crítica:** el 2,49:1 que se midió en la fecha del raíl era un error de medición (el raíl es cristal oscuro y la medida tomó el fondo claro de la página). Con el fondo real son unos 6:1. Sigue pendiente la pasada completa de contraste.
 **Pendiente de la crítica (más grandes, a aprobar):** reordenar Situación para contar una sola historia, aplanar las cajas anidadas, cerrar la escala tipográfica y sustituir las pastillas por cambio en color con mini serie.
+
+## 7. Jerarquía de Situación (2026-11-12)
+Segunda pasada de la crítica: cambia la composición, no los datos ni los textos. **A validar con el autor**, porque altera el orden de los bloques respecto al Radar publicado.
+| Problema de la crítica | Cambio |
+|---|---|
+| Dos historias compiten en la isla (50 municipios y 6 de 12) y tres cifras grandes a la vez | Una sola cifra grande («6 de 12»). Los 50 municipios con alerta pasan a una línea secundaria con enlace «Ver el mapa». |
+| Los cuatro mosaicos de la isla repetían el filtro de alertas | Se quitan. Una barra de 12 segmentos (uno por indicador, de más a menos urgente) y su leyenda con recuentos; cada segmento abre el cajón del indicador. |
+| Cajas anidadas: tarjeta, tarjeta de dimensión y fila | Una tarjeta; los grupos de dimensión no tienen caja y cada indicador es una fila separada por un filete. |
+| Las pastillas «Empeora» dominaban y todos los indicadores pesaban igual | El cambio es una flecha y el porcentaje en color (rojo si empeora, verde si mejora, neutro en el resto); el estado sigue en texto para lectores de pantalla. Cada indicador con serie lleva una mini serie con el punto final del color del estado. |
+| El filtro de tipo de alerta estaba lejos del mapa y duplicado | Fichas con punto de color y recuento sobre el mapa; las mismas hacen de leyenda. La barra global desaparece de Situación porque ya no tiene filtros propios. |
+| El aviso de prototipo ocupaba la barra | Pasa a la cabecera, junto a las demás etiquetas. |
+**Orden resultante:** isla de indicadores, tablero de los 12 indicadores y, al final, mapa y lista de municipios con alertas.
+**Pendiente:** cerrar la escala tipográfica, probar el orden con el autor y repetir la lógica en Indicadores (la ficha sigue con los mosaicos de la isla).
