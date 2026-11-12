@@ -14,6 +14,7 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 - **Textos y reglas:** títulos de dimensiones, preguntas, estados del semáforo, reglas, umbrales, fuentes y próximos datos salen de `catalogo.json`, `alertas.json` y `datos.json`. Los textos de la interfaz que ya existían (frase de arriba, «Alertas por municipio», «Los 12 indicadores clave», «Elige uno para ver su serie», catálogo, ficha) se mantienen.
 - **Lógica de las capas del mapa 3D, del recuento de alertas y de la ficha** (último dato, semáforo, serie, umbral, mapa por municipio, reparto, CSV): adaptada de `situacion.js` e `indicadores.js` originales, guardados en `_origen/` para comparar.
 - **Estilo:** `css/pci.css` es la copia literal del `<style>` de `pci-dashboard/index.html` (líneas 8 a 1140), sin editar. Raíl de cristal, barra de filtros, isla oscura con fondo `flow-01/02`, tarjetas, tabla `mini`, cajón de detalle, tokens `--pci-*`, Geist, Geist Mono y Montserrat. Los iconos son el sprite Phosphor (MIT) del mismo PCI.
+- **Intro:** el mismo reveal que PCI (haz de luz, logotipo que se descubre con un barrido, texto que sube y el logotipo que vuela hasta el raíl). El CSS está en `pci.css`; la secuencia (`js/intro.js`) es la de `playIntro()` de pci-dashboard. Un clic o una tecla la saltan, el botón del raíl la repite y con «reducir movimiento» no se reproduce.
 - **Lo propio del Radar** va aparte, en `css/radar.css` (gráficos y mapas del Radar, etiquetas de estado, lista de municipios, cuadro de indicadores), con los tokens de PCI.
 
 ## 2. Qué es nuevo (a aprobar)
@@ -28,14 +29,16 @@ Abre http://localhost:4174/ (con `?marcar` se rodea en naranja lo nuevo). Sin se
 | Detalle de un indicador clave en un cajón (como el «record sheet» de PCI) | En el original es un panel al lado. Misma información. |
 | Catálogo de indicadores como tabla de PCI, con filtros de dimensión y búsqueda en la barra | Mismos filtros que el original. |
 | Ficha de indicador con isla oscura de cifras | Mismas cifras que la tira del original. |
-| Logotipo «RV» en el raíl | Nuevo. No se usa el logotipo de Astara (el brief pide no atribuir autoría). |
+| Logotipo «RV» en el raíl y en la intro (`assets/radar-logo.svg`) | Nuevo. Mismas medidas, degradados y borde que el logotipo de PCI; las letras son trazos, no texto, para no depender de ninguna tipografía. No se usa el logotipo de Astara (el brief pide no atribuir autoría). |
+| Textos de la intro: «Radar de vivienda» y «Bizkaia · 113 municipios», botón «Saltar la intro» | Nuevos. En PCI la segunda línea es «by Astara Intelligence»; aquí se omite por el mismo motivo. |
 | Mapas por tramos de la ficha en la rampa azul de PCI (`js/colores.js`) | Mismos cortes (quintiles). Cambia solo el color. |
 
 ## 3. Decisiones que conviene validar
 1. **Colores de los cuatro tipos de alerta** (rojo, azul, oliva, celeste): se conservan los del Radar publicado porque codifican una categoría, no una magnitud, y una sola rampa azul no los distinguiría. Es la única zona del prototipo fuera de la rampa PCI.
-2. **Sin intro, sin «budget lens» y sin el cristal con refracción** de PCI: el CSS de PCI trae esas partes pero el Radar no las usa. El cristal funciona sin la refracción (la parte en JavaScript no se ha portado).
+2. **Sin «budget lens» y sin el cristal con refracción** de PCI: el CSS de PCI trae esas partes pero el Radar no las usa. El cristal funciona sin la refracción (la parte en JavaScript no se ha portado).
 3. **Sin Astara en el raíl ni en el pie.** PCI lleva el logotipo de Astara Intelligence; aquí se ha omitido por el compromiso de no atribuir autoría. Se puede añadir si Alvaro y el autor lo aprueban.
-4. **Solo escritorio.** Móvil aplazado, como en el prototipo de Situación del análisis.
+4. **La intro se reproduce en cada carga**, como en PCI. Si resulta pesada para quien entra a menudo, se puede limitar a una vez por sesión.
+5. **Solo escritorio.** Móvil aplazado, como en el prototipo de Situación del análisis.
 
 ## 4. Calidad
 - **Cifras comparadas con el Radar publicado:** 50 municipios con alguna alerta (23 graves); 32 viviendas turísticas, 3 contratos que caen, 17 alquiler por encima del límite, 6 zona tensionada; 6 de 12 indicadores empeoran; 971 €/mes en Bilbao (2025, +6,6 % frente a 2024); 281.141 € de compraventa; 32 municipios con dato de alquiler (Getxo 1.121 €/mes, Urduliz 1.005, Leioa 992).
