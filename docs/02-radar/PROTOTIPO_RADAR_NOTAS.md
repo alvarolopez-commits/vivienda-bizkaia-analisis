@@ -77,3 +77,20 @@ Segunda pasada de la crítica: cambia la composición, no los datos ni los texto
 | El aviso de prototipo ocupaba la barra | Pasa a la cabecera, junto a las demás etiquetas. |
 **Orden resultante:** isla de indicadores, tablero de los 12 indicadores y, al final, mapa y lista de municipios con alertas.
 **Pendiente:** cerrar la escala tipográfica, probar el orden con el autor y repetir la lógica en Indicadores (la ficha sigue con los mosaicos de la isla).
+
+## 8. Escala tipográfica (2026-11-12)
+Medido en Situación, catálogo, ficha y cajón a 1440 px: **antes 15 tamaños de texto** (10,5 · 11 · 12 · 12,5 · 13 · 13,5 · 14 · 15 · 16 · 18 · 22 · 24 · 28 · 44 …); **ahora 7**, cada uno con su papel. Los gráficos SVG quedan fuera porque se escalan con su contenedor (su texto es de 11 unidades de su propio dibujo).
+| Tamaño | Papel |
+|---|---|
+| 12 | Etiquetas, estados, datos pequeños (Geist Mono solo en datos tabulares), cabeceras de ejes |
+| 14 | Texto: cuerpo, descripciones, controles, filas, celdas de tabla, tooltips |
+| 16 | Títulos de grupo y de tarjeta (h3), entradilla, nombre del producto en el raíl |
+| 20 | Títulos de sección (h2) |
+| 24 | Cifras de las filas y de los mosaicos, título del cajón |
+| 32 | Título de página (h1) y cifra del cajón |
+| 56 | Cifra grande de la isla y de la ficha (se reduce hasta 44 en pantallas estrechas) |
+- **Papeles de familia:** Montserrat solo en títulos y cifras; Geist en todo lo demás; Geist Mono solo en datos tabulares y recuentos.
+- **Pesos:** 400 texto, 500 controles, 600 títulos y cifras. La flecha de cambio pasó de 700 a 600; el nombre del producto en el raíl también.
+- **Dónde vive:** tokens `--t-12` a `--t-56` y la capa de sobrescritura al final de `css/radar.css`. `pci.css` no se toca, y los selectores se repiten para ganar por orden.
+- **Efecto:** el texto de ayuda sube de 12 y 12,5 a 14 (descripciones, notas, leyendas); las etiquetas y estados se quedan en 12. Las cifras de las filas suben de 22 a 24. La cifra de la isla fija su tope en 56 (antes llegaba a 64).
+**Pendiente:** contraste calculado con el texto ya a 14, y repetir la revisión de jerarquía en Indicadores (los mosaicos de la ficha pesan demasiado: «Dato oficial» y «Dimensión» se leen como cifras).
