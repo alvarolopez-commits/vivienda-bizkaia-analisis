@@ -26,7 +26,7 @@ Cada cifra declara si es «Cálculo propio», «Aproximación» o dato oficial y
 
 ## Operating Context
 
-- Forma parte de un ecosistema de tres productos separados: esta web de análisis, el Radar (https://vizcaya-vivienda.vercel.app/) y el Resumen (https://vizcaya-vivienda-resumen.vercel.app/). Se enlazan entre sí; no se fusionan.
+- Forma parte de un ecosistema de tres productos separados: esta web de análisis, el Radar (https://vizcaya-vivienda.vercel.app/) y el Resumen (https://vivienda-bizkaia-presentacion.vercel.app/). Se enlazan entre sí; no se fusionan.
 - Autor y responsable de contenido según el PRD local: Ángel. Cualquier cambio editorial requiere su aprobación.
 - El repositorio de la web publicada no se ha recibido. Existe una copia local antigua (26 de octubre) en `DCI research vivienda/vizcaya-vivienda-main`, que no corresponde a la web actual.
 
